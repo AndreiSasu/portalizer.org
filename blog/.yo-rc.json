@@ -1,0 +1,35 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.mycompany.myapp"
+    },
+    "jhipsterVersion": "6.2.0",
+    "applicationType": "microservice",
+    "baseName": "blog",
+    "packageName": "com.mycompany.myapp",
+    "packageFolder": "com/mycompany/myapp",
+    "serverPort": "8081",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "NjE5MTFhYTFjMDBlNTU1NmZlNmEwMzBmODkxNWU1YjdiOGJlOGE2ODc3YmE5NjFkMDc5M2U2MGNhNTQ5ODc0ODZmMDczMWE3ZmM3OTRmZmI1Mjk5ZDQwOGFmMDBiZjE1MmQyNzliZGMyNGEwNTE2ZTBkZGI3NjBjYWEwNTA5Y2Y=",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "clientPackageManager": "npm",
+    "blueprints": [],
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
