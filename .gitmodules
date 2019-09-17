@@ -1,0 +1,3 @@
+[submodule "jhipster-registry"]
+	path = jhipster-registry
+	url = ./jhipster-registry/
