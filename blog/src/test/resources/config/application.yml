@@ -90,9 +90,8 @@ jhipster:
   logging:
     # To test json console appender
     use-json-format: true # By default, logs are in Json format
-    # To test logstash appender
     logstash:
-      enabled: true
+      enabled: false
       host: localhost
       port: 5000
       queue-size: 512
@@ -100,7 +99,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: NjE5MTFhYTFjMDBlNTU1NmZlNmEwMzBmODkxNWU1YjdiOGJlOGE2ODc3YmE5NjFkMDc5M2U2MGNhNTQ5ODc0ODZmMDczMWE3ZmM3OTRmZmI1Mjk5ZDQwOGFmMDBiZjE1MmQyNzliZGMyNGEwNTE2ZTBkZGI3NjBjYWEwNTA5Y2Y=
+        base64-secret: NmJlOTViZTczZTU5OThkN2Y4MmJhMzU1ZjJkMmFiNmE1ZTlmMzljOWM4Y2JmMzY4YTljMWQ4NjI3MzdkNWJiYjg2MjMyNmJiNWY3NzZlOTg0OTcxZDUxZmZjM2E3YTY3ZDAzYzVkOTA2NTJhNzlmZTRkMGJmM2E2YWM0MjUyMzk=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
   metrics:

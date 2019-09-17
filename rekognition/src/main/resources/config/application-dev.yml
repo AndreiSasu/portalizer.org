@@ -86,7 +86,7 @@ spring:
         enabled: true
 
 server:
-  port: 8081
+  port: 8082
 
 # ===================================================================
 # JHipster specific properties
@@ -108,12 +108,12 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: ZTE3MTY2YmUwNGFhNTgzNTY3YmE3YTY5YzllNWIxODM5ZTRmZTBjMTBiN2VlMjE3Y2UxZGZlOGEyODI4ZjA4ZjY3NGY4NWI3ZGE2OThiMTJkOGE5NGE5NDI4NmIxNGFhZDJiNjYxZmYwMDYxYmZhYTRmOTIwMGQ3ZTQzMTkwNzg=
+        base64-secret: MzE1NDVmYzkwYTQ2YTU4MjJjN2ZmZDc2Y2M4ZjNkMTEzOTk1ZGMzMWE1OGI3OWE3MDRlY2Y4NTdkNDg1YmJiODZlNDUxNDc4MjY2NTMwMmUyZDliNmEwODZjNGNmNDI1MmI2NmRhZWU4YjM4NjJhNGRiOTBkNDllYWJiY2JlZTQ=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail: # specific JHipster mail property, for standard properties see MailProperties
-    base-url: http://127.0.0.1:8081
+    base-url: http://127.0.0.1:8082
   metrics:
     logs: # Reports metrics in the logs
       enabled: false
@@ -125,6 +125,9 @@ jhipster:
       host: localhost
       port: 5000
       queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

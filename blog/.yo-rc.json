@@ -3,7 +3,7 @@
     "promptValues": {
       "packageName": "com.mycompany.myapp"
     },
-    "jhipsterVersion": "6.2.0",
+    "jhipsterVersion": "6.3.0",
     "applicationType": "microservice",
     "baseName": "blog",
     "packageName": "com.mycompany.myapp",
@@ -19,8 +19,9 @@
     "messageBroker": false,
     "serviceDiscoveryType": "eureka",
     "buildTool": "maven",
-    "enableSwaggerCodegen": false,
-    "jwtSecretKey": "NjE5MTFhYTFjMDBlNTU1NmZlNmEwMzBmODkxNWU1YjdiOGJlOGE2ODc3YmE5NjFkMDc5M2U2MGNhNTQ5ODc0ODZmMDczMWE3ZmM3OTRmZmI1Mjk5ZDQwOGFmMDBiZjE1MmQyNzliZGMyNGEwNTE2ZTBkZGI3NjBjYWEwNTA5Y2Y=",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "NmJlOTViZTczZTU5OThkN2Y4MmJhMzU1ZjJkMmFiNmE1ZTlmMzljOWM4Y2JmMzY4YTljMWQ4NjI3MzdkNWJiYjg2MjMyNmJiNWY3NzZlOTg0OTcxZDUxZmZjM2E3YTY3ZDAzYzVkOTA2NTJhNzlmZTRkMGJmM2E2YWM0MjUyMzk=",
+    "embeddableLaunchScript": false,
     "testFrameworks": [],
     "jhiPrefix": "jhi",
     "entitySuffix": "",

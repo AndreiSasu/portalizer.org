@@ -3,7 +3,7 @@
     "promptValues": {
       "packageName": "com.mycompany.myapp"
     },
-    "jhipsterVersion": "6.2.0",
+    "jhipsterVersion": "6.3.0",
     "applicationType": "gateway",
     "baseName": "gateway",
     "packageName": "com.mycompany.myapp",
@@ -20,8 +20,9 @@
     "messageBroker": false,
     "serviceDiscoveryType": "eureka",
     "buildTool": "maven",
-    "enableSwaggerCodegen": false,
-    "jwtSecretKey": "MzE3NjhmYTUyNDI1MDJmYzIxOTU2ODYxZTM2ZDE1OWM2MWI4MjdkYzliOTc5MDhjOThkYmEwNDQwOWQwNThlYjdmMDk5MjJlYzc5NjhhYmM3ODYwM2Y1NGQxZmQ2NjljMDVkMzZlOTc5MmRjZjZjMWM0YzE4MzFmNWUyYmMxNWE=",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "NzEyYThmNDJkZGE3MWFkMDk1ZmU0ZTQyYWIwZjU5N2I3MTE5MDM4NjVlOGFlYzJjNGU5Mzc2YjFlNjlmNGNhNzA4MWNhZGMzY2NlZDI3MDYxODBhMjc1N2JkNzY5M2ZjNTJkNjI0YzZhNmMyMmJlZDZlYWFmYjdjZDM4NjQzMzI=",
+    "embeddableLaunchScript": false,
     "useSass": true,
     "clientPackageManager": "npm",
     "clientFramework": "angularX",

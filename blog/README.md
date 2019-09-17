@@ -1,6 +1,6 @@
 # blog
 
-This application was generated using JHipster 6.2.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.2.0](https://www.jhipster.tech/documentation-archive/v6.2.0).
+This application was generated using JHipster 6.3.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v6.3.0](https://www.jhipster.tech/documentation-archive/v6.3.0).
 
 This is a "microservice" application intended to be part of a microservice architecture, please refer to the [Doing microservices with JHipster][] page of the documentation for more information.
 
@@ -13,6 +13,20 @@ To start your application in the dev profile, simply run:
     ./mvnw
 
 For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
+
+### Doing API-First development using openapi-generator
+
+[OpenAPI-Generator]() is configured for this application. You can generate API code from the `src/main/resources/swagger/api.yml` definition file by running:
+
+```bash
+./mvnw generate-sources
+```
+
+Then implements the generated delegate classes with `@Service` classes.
+
+To edit the `api.yml` definition file, you can use a tool such as [Swagger-Editor](). Start a local instance of the swagger-editor using docker by running: `docker-compose -f src/main/docker/swagger-editor.yml up -d`. The editor will then be reachable at [http://localhost:7742](http://localhost:7742).
+
+Refer to [Doing API-First development][] for more details.
 
 ## Building for production
 
@@ -96,12 +110,15 @@ For more information refer to [Using Docker and Docker-Compose][], this page als
 To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`), this will let you generate configuration files for a number of Continuous Integration systems. Consult the [Setting up Continuous Integration][] page for more information.
 
 [jhipster homepage and latest documentation]: https://www.jhipster.tech
-[jhipster 6.2.0 archive]: https://www.jhipster.tech/documentation-archive/v6.2.0
-[doing microservices with jhipster]: https://www.jhipster.tech/documentation-archive/v6.2.0/microservices-architecture/
-[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v6.2.0/development/
-[service discovery and configuration with the jhipster-registry]: https://www.jhipster.tech/documentation-archive/v6.2.0/microservices-architecture/#jhipster-registry
-[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v6.2.0/docker-compose
-[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v6.2.0/production/
-[running tests page]: https://www.jhipster.tech/documentation-archive/v6.2.0/running-tests/
-[code quality page]: https://www.jhipster.tech/documentation-archive/v6.2.0/code-quality/
-[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v6.2.0/setting-up-ci/
+[jhipster 6.3.0 archive]: https://www.jhipster.tech/documentation-archive/v6.3.0
+[doing microservices with jhipster]: https://www.jhipster.tech/documentation-archive/v6.3.0/microservices-architecture/
+[using jhipster in development]: https://www.jhipster.tech/documentation-archive/v6.3.0/development/
+[service discovery and configuration with the jhipster-registry]: https://www.jhipster.tech/documentation-archive/v6.3.0/microservices-architecture/#jhipster-registry
+[using docker and docker-compose]: https://www.jhipster.tech/documentation-archive/v6.3.0/docker-compose
+[using jhipster in production]: https://www.jhipster.tech/documentation-archive/v6.3.0/production/
+[running tests page]: https://www.jhipster.tech/documentation-archive/v6.3.0/running-tests/
+[code quality page]: https://www.jhipster.tech/documentation-archive/v6.3.0/code-quality/
+[setting up continuous integration]: https://www.jhipster.tech/documentation-archive/v6.3.0/setting-up-ci/
+[openapi-generator]: https://openapi-generator.tech
+[swagger-editor]: http://editor.swagger.io
+[doing api-first development]: https://www.jhipster.tech/documentation-archive/v6.3.0/doing-api-first-development/

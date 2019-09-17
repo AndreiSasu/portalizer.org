@@ -125,7 +125,7 @@ jhipster:
         # - In the JHipster Registry (which includes a Spring Cloud Config server)
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
         # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
-        base64-secret: MzE3NjhmYTUyNDI1MDJmYzIxOTU2ODYxZTM2ZDE1OWM2MWI4MjdkYzliOTc5MDhjOThkYmEwNDQwOWQwNThlYjdmMDk5MjJlYzc5NjhhYmM3ODYwM2Y1NGQxZmQ2NjljMDVkMzZlOTc5MmRjZjZjMWM0YzE4MzFmNWUyYmMxNWE=
+        base64-secret: NzEyYThmNDJkZGE3MWFkMDk1ZmU0ZTQyYWIwZjU5N2I3MTE5MDM4NjVlOGFlYzJjNGU5Mzc2YjFlNjlmNGNhNzA4MWNhZGMzY2NlZDI3MDYxODBhMjc1N2JkNzY5M2ZjNTJkNjI0YzZhNmMyMmJlZDZlYWFmYjdjZDM4NjQzMzI=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
@@ -142,6 +142,9 @@ jhipster:
       host: localhost
       port: 5000
       queue-size: 512
+  audit-events:
+    retention-period: 30 # Number of days before audit events are deleted.
+
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
