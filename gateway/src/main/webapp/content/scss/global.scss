@@ -1,6 +1,5 @@
 @import 'bootstrap-variables';
 @import '~bootstrap/scss/functions';
-@import '~bootswatch/dist/materia/variables';
 @import '~bootstrap/scss/variables';
 
 /* ==============================================================
@@ -13,6 +12,13 @@ h2,
 h3,
 h4 {
   font-weight: 300;
+}
+
+/* Increase contrast of links to get 100% on Lighthouse Accessability Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
+a,
+a:hover {
+  color: #533f03;
+  font-weight: bold;
 }
 
 a:hover {
@@ -37,6 +43,16 @@ Browser Upgrade Prompt
 /* ==========================================================================
 Generic styles
 ========================================================================== */
+
+/* Error highlight on input fields */
+.ng-valid[required],
+.ng-valid.required {
+  border-left: 5px solid green;
+}
+
+.ng-invalid:not(form) {
+  border-left: 5px solid red;
+}
 
 /* other generic styles */
 
