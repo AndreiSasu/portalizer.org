@@ -6,6 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'jhi-home',
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   account: Account;
   authSubscription: Subscription;
   modalRef: NgbModalRef;
-
+  faCoffee = faCoffee;
   constructor(
     private accountService: AccountService,
     private loginModalService: LoginModalService,
