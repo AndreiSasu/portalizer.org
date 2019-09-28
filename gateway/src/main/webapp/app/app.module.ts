@@ -1,6 +1,8 @@
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSliderModule } from '@angular/material/slider';
 
 import './vendor';
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
@@ -27,7 +29,10 @@ import { ErrorComponent } from './layouts/error/error.component';
     GatewayHomeModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     GatewayEntityModule,
-    GatewayAppRoutingModule
+    GatewayAppRoutingModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    MatSliderModule
   ],
   declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
   providers: [
