@@ -25,6 +25,7 @@ import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.UUID;
 
 import static com.mycompany.myapp.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -47,6 +48,9 @@ public class BoardSummaryResourceIT {
     private static final LocalDate DEFAULT_DATE_CREATED = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE_CREATED = LocalDate.now(ZoneId.systemDefault());
     private static final LocalDate SMALLER_DATE_CREATED = LocalDate.ofEpochDay(-1L);
+
+    private static final UUID DEFAULT_BOARD_ID = UUID.randomUUID();
+    private static final UUID UPDATED_BOARD_ID = UUID.randomUUID();
 
     @Autowired
     private BoardSummaryRepository boardSummaryRepository;
@@ -98,7 +102,8 @@ public class BoardSummaryResourceIT {
         BoardSummary boardSummary = new BoardSummary()
             .archived(DEFAULT_ARCHIVED)
             .boardName(DEFAULT_BOARD_NAME)
-            .dateCreated(DEFAULT_DATE_CREATED);
+            .dateCreated(DEFAULT_DATE_CREATED)
+            .boardId(DEFAULT_BOARD_ID);
         return boardSummary;
     }
     /**
@@ -111,7 +116,8 @@ public class BoardSummaryResourceIT {
         BoardSummary boardSummary = new BoardSummary()
             .archived(UPDATED_ARCHIVED)
             .boardName(UPDATED_BOARD_NAME)
-            .dateCreated(UPDATED_DATE_CREATED);
+            .dateCreated(UPDATED_DATE_CREATED)
+            .boardId(UPDATED_BOARD_ID);
         return boardSummary;
     }
 
@@ -139,6 +145,7 @@ public class BoardSummaryResourceIT {
         assertThat(testBoardSummary.isArchived()).isEqualTo(DEFAULT_ARCHIVED);
         assertThat(testBoardSummary.getBoardName()).isEqualTo(DEFAULT_BOARD_NAME);
         assertThat(testBoardSummary.getDateCreated()).isEqualTo(DEFAULT_DATE_CREATED);
+        assertThat(testBoardSummary.getBoardId()).isEqualTo(DEFAULT_BOARD_ID);
     }
 
     @Test
@@ -183,6 +190,25 @@ public class BoardSummaryResourceIT {
 
     @Test
     @Transactional
+    public void checkBoardIdIsRequired() throws Exception {
+        int databaseSizeBeforeTest = boardSummaryRepository.findAll().size();
+        // set the field null
+        boardSummary.setBoardId(null);
+
+        // Create the BoardSummary, which fails.
+        BoardSummaryDTO boardSummaryDTO = boardSummaryMapper.toDto(boardSummary);
+
+        restBoardSummaryMockMvc.perform(post("/api/board-summaries")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(boardSummaryDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<BoardSummary> boardSummaryList = boardSummaryRepository.findAll();
+        assertThat(boardSummaryList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllBoardSummaries() throws Exception {
         // Initialize the database
         boardSummaryRepository.saveAndFlush(boardSummary);
@@ -194,7 +220,8 @@ public class BoardSummaryResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(boardSummary.getId().intValue())))
             .andExpect(jsonPath("$.[*].archived").value(hasItem(DEFAULT_ARCHIVED.booleanValue())))
             .andExpect(jsonPath("$.[*].boardName").value(hasItem(DEFAULT_BOARD_NAME.toString())))
-            .andExpect(jsonPath("$.[*].dateCreated").value(hasItem(DEFAULT_DATE_CREATED.toString())));
+            .andExpect(jsonPath("$.[*].dateCreated").value(hasItem(DEFAULT_DATE_CREATED.toString())))
+            .andExpect(jsonPath("$.[*].boardId").value(hasItem(DEFAULT_BOARD_ID.toString())));
     }
     
     @Test
@@ -210,7 +237,8 @@ public class BoardSummaryResourceIT {
             .andExpect(jsonPath("$.id").value(boardSummary.getId().intValue()))
             .andExpect(jsonPath("$.archived").value(DEFAULT_ARCHIVED.booleanValue()))
             .andExpect(jsonPath("$.boardName").value(DEFAULT_BOARD_NAME.toString()))
-            .andExpect(jsonPath("$.dateCreated").value(DEFAULT_DATE_CREATED.toString()));
+            .andExpect(jsonPath("$.dateCreated").value(DEFAULT_DATE_CREATED.toString()))
+            .andExpect(jsonPath("$.boardId").value(DEFAULT_BOARD_ID.toString()));
     }
 
     @Test
@@ -236,7 +264,8 @@ public class BoardSummaryResourceIT {
         updatedBoardSummary
             .archived(UPDATED_ARCHIVED)
             .boardName(UPDATED_BOARD_NAME)
-            .dateCreated(UPDATED_DATE_CREATED);
+            .dateCreated(UPDATED_DATE_CREATED)
+            .boardId(UPDATED_BOARD_ID);
         BoardSummaryDTO boardSummaryDTO = boardSummaryMapper.toDto(updatedBoardSummary);
 
         restBoardSummaryMockMvc.perform(put("/api/board-summaries")
@@ -251,6 +280,7 @@ public class BoardSummaryResourceIT {
         assertThat(testBoardSummary.isArchived()).isEqualTo(UPDATED_ARCHIVED);
         assertThat(testBoardSummary.getBoardName()).isEqualTo(UPDATED_BOARD_NAME);
         assertThat(testBoardSummary.getDateCreated()).isEqualTo(UPDATED_DATE_CREATED);
+        assertThat(testBoardSummary.getBoardId()).isEqualTo(UPDATED_BOARD_ID);
     }
 
     @Test

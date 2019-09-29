@@ -26,6 +26,14 @@
         {
             "fieldName": "dateCreated",
             "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "boardId",
+            "fieldType": "UUID",
+            "fieldValidateRules": [
+                "required",
+                "unique"
+            ]
         }
     ],
     "changelogDate": "20190929111211",

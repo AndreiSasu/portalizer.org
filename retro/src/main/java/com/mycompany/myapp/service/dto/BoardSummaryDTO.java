@@ -4,6 +4,7 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * A DTO for the {@link com.mycompany.myapp.domain.BoardSummary} entity.
@@ -20,7 +21,19 @@ public class BoardSummaryDTO implements Serializable {
 
     private LocalDate dateCreated;
 
+    @NotNull
+    private UUID boardId;
+
     Set<BoardColumnDTO> boardColumns;
+
+    public UUID getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(UUID boardId) {
+        this.boardId = boardId;
+    }
+
 
     public Boolean getArchived() {
         return archived;
@@ -90,10 +103,12 @@ public class BoardSummaryDTO implements Serializable {
     @Override
     public String toString() {
         return "BoardSummaryDTO{" +
-            "id=" + getId() +
-            ", archived='" + isArchived() + "'" +
-            ", boardName='" + getBoardName() + "'" +
-            ", dateCreated='" + getDateCreated() + "'" +
-            "}";
+            "id=" + id +
+            ", archived=" + archived +
+            ", boardName='" + boardName + '\'' +
+            ", dateCreated=" + dateCreated +
+            ", boardId=" + boardId +
+            ", boardColumns=" + boardColumns +
+            '}';
     }
 }

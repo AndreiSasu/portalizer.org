@@ -1,4 +1,5 @@
 package com.mycompany.myapp.domain;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -7,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
  * A BoardSummary.
@@ -31,6 +33,11 @@ public class BoardSummary implements Serializable {
 
     @Column(name = "date_created")
     private LocalDate dateCreated;
+
+    @NotNull
+    @Type(type = "uuid-char")
+    @Column(name = "board_id", length = 36, nullable = false, unique = true)
+    private UUID boardId;
 
     @OneToMany(mappedBy = "boardSummary")
     private Set<BoardColumn> boardColumns = new HashSet<>();
@@ -83,6 +90,19 @@ public class BoardSummary implements Serializable {
         this.dateCreated = dateCreated;
     }
 
+    public UUID getBoardId() {
+        return boardId;
+    }
+
+    public BoardSummary boardId(UUID boardId) {
+        this.boardId = boardId;
+        return this;
+    }
+
+    public void setBoardId(UUID boardId) {
+        this.boardId = boardId;
+    }
+
     public Set<BoardColumn> getBoardColumns() {
         return boardColumns;
     }
@@ -132,6 +152,7 @@ public class BoardSummary implements Serializable {
             ", archived='" + isArchived() + "'" +
             ", boardName='" + getBoardName() + "'" +
             ", dateCreated='" + getDateCreated() + "'" +
+            ", boardId='" + getBoardId() + "'" +
             "}";
     }
 }
