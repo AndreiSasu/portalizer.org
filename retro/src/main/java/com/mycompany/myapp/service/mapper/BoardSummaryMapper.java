@@ -12,7 +12,6 @@ import org.mapstruct.*;
 public interface BoardSummaryMapper extends EntityMapper<BoardSummaryDTO, BoardSummary> {
 
 
-//    @Mapping(target = "removeBoardColumns", ignore = true)
     BoardSummary toEntity(BoardSummaryDTO boardSummaryDTO);
 
     default BoardSummary fromId(Long id) {

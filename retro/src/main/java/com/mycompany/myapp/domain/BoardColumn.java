@@ -34,7 +34,7 @@ public class BoardColumn implements Serializable {
     private String value;
 
     @ManyToOne
-    @JsonIgnoreProperties("boardColumns")
+    @JoinColumn(name = "board_summary_id", referencedColumnName = "id")
     private BoardSummary boardSummary;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

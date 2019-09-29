@@ -23,9 +23,6 @@ public class BoardColumnDTO implements Serializable {
     @Size(min = 1)
     private String value;
 
-
-    private Long boardSummaryId;
-
     public Long getId() {
         return id;
     }
@@ -56,14 +53,6 @@ public class BoardColumnDTO implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public Long getBoardSummaryId() {
-        return boardSummaryId;
-    }
-
-    public void setBoardSummaryId(Long boardSummaryId) {
-        this.boardSummaryId = boardSummaryId;
     }
 
     @Override

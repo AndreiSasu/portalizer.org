@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 
 /**
@@ -39,7 +40,7 @@ public class BoardSummary implements Serializable {
     @Column(name = "board_id", length = 36, nullable = false, updatable = false, unique = true)
     private UUID boardId;
 
-    @OneToMany(targetEntity = BoardColumn.class, mappedBy = "boardSummary", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = BoardColumn.class, fetch = FetchType.EAGER, mappedBy = "boardSummary", cascade = CascadeType.ALL)
     private Set<BoardColumn> boardColumns = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -126,6 +127,9 @@ public class BoardSummary implements Serializable {
 
     public void setBoardColumns(Set<BoardColumn> boardColumns) {
         this.boardColumns = boardColumns;
+        boardColumns.forEach(boardColumn -> {
+            boardColumn.setBoardSummary(this);
+        });
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

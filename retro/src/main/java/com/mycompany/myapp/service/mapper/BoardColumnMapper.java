@@ -11,10 +11,8 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {BoardSummaryMapper.class})
 public interface BoardColumnMapper extends EntityMapper<BoardColumnDTO, BoardColumn> {
 
-    @Mapping(source = "boardSummary.id", target = "boardSummaryId")
     BoardColumnDTO toDto(BoardColumn boardColumn);
 
-    @Mapping(source = "boardSummaryId", target = "boardSummary")
     BoardColumn toEntity(BoardColumnDTO boardColumnDTO);
 
     default BoardColumn fromId(Long id) {
