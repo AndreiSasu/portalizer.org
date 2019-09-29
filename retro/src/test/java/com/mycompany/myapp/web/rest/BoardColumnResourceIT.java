@@ -209,12 +209,11 @@ public class BoardColumnResourceIT {
         restBoardColumnMockMvc.perform(get("/api/board-columns?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(boardColumn.getId().intValue())))
             .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)))
             .andExpect(jsonPath("$.[*].columnId").value(hasItem(DEFAULT_COLUMN_ID)))
             .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getBoardColumn() throws Exception {

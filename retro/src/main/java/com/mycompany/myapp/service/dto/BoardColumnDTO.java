@@ -1,4 +1,7 @@
 package com.mycompany.myapp.service.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -8,6 +11,7 @@ import java.util.Objects;
  */
 public class BoardColumnDTO implements Serializable {
 
+    @JsonIgnore
     private Long id;
 
     private Integer color;
@@ -91,7 +95,6 @@ public class BoardColumnDTO implements Serializable {
             ", color=" + getColor() +
             ", columnId=" + getColumnId() +
             ", value='" + getValue() + "'" +
-            ", boardSummary=" + getBoardSummaryId() +
             "}";
     }
 }

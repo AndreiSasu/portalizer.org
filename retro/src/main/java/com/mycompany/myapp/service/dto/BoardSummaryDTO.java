@@ -1,4 +1,5 @@
 package com.mycompany.myapp.service.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDate;
@@ -13,7 +14,7 @@ import java.util.UUID;
  */
 public class BoardSummaryDTO implements Serializable {
 
-    @JsonIgnoreProperties
+    @JsonIgnore
     private Long id;
 
     private Boolean archived;
@@ -36,7 +37,6 @@ public class BoardSummaryDTO implements Serializable {
     public void setBoardId(UUID boardId) {
         this.boardId = boardId;
     }
-
 
     public Boolean getArchived() {
         return archived;

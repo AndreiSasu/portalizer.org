@@ -19,6 +19,7 @@ public class BoardColumn implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(name = "color")
     private Integer color;
 

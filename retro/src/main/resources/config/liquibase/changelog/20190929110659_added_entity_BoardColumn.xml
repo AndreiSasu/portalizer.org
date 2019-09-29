@@ -18,7 +18,7 @@
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="color" type="integer">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
 
             <column name="column_id" type="integer">
