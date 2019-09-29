@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "retro",
+    "relationships": [
+        {
+            "relationshipName": "boardColumns",
+            "otherEntityName": "boardColumn",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "boardSummary"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "archived",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "boardName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "minlength"
+            ],
+            "fieldValidateRulesMinlength": "1"
+        },
+        {
+            "fieldName": "dateCreated",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20190929111211",
+    "dto": "mapstruct",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "board_summary",
+    "databaseType": "sql",
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination",
+    "microserviceName": "retro"
+}

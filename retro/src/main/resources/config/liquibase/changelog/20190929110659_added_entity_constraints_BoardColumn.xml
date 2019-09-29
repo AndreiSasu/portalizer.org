@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <!--
+        Added the constraints for entity BoardColumn.
+    -->
+    <changeSet id="20190929110659-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="board_summary_id"
+                                 baseTableName="board_column"
+                                 constraintName="fk_board_column_board_summary_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="board_summary"/>
+
+    </changeSet>
+</databaseChangeLog>
