@@ -27,7 +27,7 @@ public class BoardSummaryDTO implements Serializable {
     @NotNull
     private UUID boardId;
 
-    Set<BoardColumnDTO> boardColumns;
+    private Set<BoardColumnDTO> boardColumns;
 
     public UUID getBoardId() {
         return boardId;

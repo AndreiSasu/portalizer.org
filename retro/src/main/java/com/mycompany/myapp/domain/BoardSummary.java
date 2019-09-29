@@ -36,10 +36,10 @@ public class BoardSummary implements Serializable {
 
     @NotNull
     @Type(type = "uuid-char")
-    @Column(name = "board_id", length = 36, nullable = false, unique = true)
+    @Column(name = "board_id", length = 36, nullable = false, updatable = false, unique = true)
     private UUID boardId;
 
-    @OneToMany(mappedBy = "boardSummary")
+    @OneToMany(targetEntity = BoardColumn.class, mappedBy = "boardSummary", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<BoardColumn> boardColumns = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

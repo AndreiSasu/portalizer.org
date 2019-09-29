@@ -1,6 +1,7 @@
 package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.RetroApp;
+import com.mycompany.myapp.domain.BoardColumn;
 import com.mycompany.myapp.domain.BoardSummary;
 import com.mycompany.myapp.repository.BoardSummaryRepository;
 import com.mycompany.myapp.service.BoardSummaryService;
@@ -8,6 +9,7 @@ import com.mycompany.myapp.service.dto.BoardSummaryDTO;
 import com.mycompany.myapp.service.mapper.BoardSummaryMapper;
 import com.mycompany.myapp.web.rest.errors.ExceptionTranslator;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -150,6 +152,36 @@ public class BoardSummaryResourceIT {
 
     @Test
     @Transactional
+    public void createBoardSummaryWithBoardColumn() throws Exception {
+        int databaseSizeBeforeCreate = boardSummaryRepository.findAll().size();
+
+        // Create the BoardSummary
+        BoardColumn expectedBoardColumn = new BoardColumn().color(1).columnId(1).value("Test");
+        BoardSummary boardSummary = createEntity(em).addBoardColumns(expectedBoardColumn);
+        BoardSummaryDTO boardSummaryDTO = boardSummaryMapper.toDto(boardSummary);
+        restBoardSummaryMockMvc.perform(post("/api/board-summaries")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(boardSummaryDTO)))
+            .andExpect(status().isCreated());
+
+        // Validate the BoardSummary in the database
+        List<BoardSummary> boardSummaryList = boardSummaryRepository.findAll();
+        assertThat(boardSummaryList).hasSize(databaseSizeBeforeCreate + 1);
+        BoardSummary testBoardSummary = boardSummaryList.get(boardSummaryList.size() - 1);
+        assertThat(testBoardSummary.isArchived()).isEqualTo(DEFAULT_ARCHIVED);
+        assertThat(testBoardSummary.getBoardName()).isEqualTo(DEFAULT_BOARD_NAME);
+        assertThat(testBoardSummary.getDateCreated()).isEqualTo(DEFAULT_DATE_CREATED);
+        assertThat(testBoardSummary.getBoardId()).isEqualTo(DEFAULT_BOARD_ID);
+
+        BoardColumn boardColumn = testBoardSummary.getBoardColumns().iterator().next();
+        Assertions.assertThat(boardColumn.getId()).isNotNull();
+        Assertions.assertThat(boardColumn.getColor()).isEqualTo(expectedBoardColumn.getColor());
+        Assertions.assertThat(boardColumn.getColumnId()).isEqualTo(expectedBoardColumn.getColumnId());
+        Assertions.assertThat(boardColumn.getValue()).isEqualTo(expectedBoardColumn.getValue());
+    }
+
+    @Test
+    @Transactional
     public void createBoardSummaryWithExistingId() throws Exception {
         int databaseSizeBeforeCreate = boardSummaryRepository.findAll().size();
 
@@ -223,7 +255,7 @@ public class BoardSummaryResourceIT {
             .andExpect(jsonPath("$.[*].dateCreated").value(hasItem(DEFAULT_DATE_CREATED.toString())))
             .andExpect(jsonPath("$.[*].boardId").value(hasItem(DEFAULT_BOARD_ID.toString())));
     }
-    
+
     @Test
     @Transactional
     public void getBoardSummary() throws Exception {
