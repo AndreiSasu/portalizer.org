@@ -14,7 +14,6 @@ import java.util.UUID;
  */
 public class BoardSummaryDTO implements Serializable {
 
-    @JsonIgnore
     private Long id;
 
     private Boolean archived;

@@ -11,7 +11,6 @@ import java.util.Objects;
  */
 public class BoardColumnDTO implements Serializable {
 
-    @JsonIgnore
     private Long id;
 
     private Integer color;

@@ -19,29 +19,6 @@ public class BoardSummary implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Set<BoardColumn> DEFAULT_SET = new HashSet<>();
-
-    public BoardSummary() {
-        BoardColumn mad = new BoardColumn();
-        mad.setColor(1);
-        mad.setColumnId(1);
-        mad.setValue("Mad");
-
-        BoardColumn sad = new BoardColumn();
-        sad.setColor(2);
-        sad.setColumnId(2);
-        mad.setValue("Sad");
-
-        BoardColumn glad = new BoardColumn();
-        glad.setColor(3);
-        glad.setColumnId(3);
-        glad.setValue("Glad");
-
-        DEFAULT_SET.add(mad);
-        DEFAULT_SET.add(sad);
-        DEFAULT_SET.add(glad);
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -54,7 +31,6 @@ public class BoardSummary implements Serializable {
     @Column(name = "board_name", nullable = false)
     private String boardName;
 
-    @NotNull
     @Column(name = "date_created")
     private LocalDate dateCreated;
 
@@ -63,9 +39,8 @@ public class BoardSummary implements Serializable {
     @Column(name = "board_id", length = 36, nullable = false, unique = true)
     private UUID boardId;
 
-    @NotNull
     @OneToMany(mappedBy = "boardSummary")
-    private Set<BoardColumn> boardColumns = DEFAULT_SET;
+    private Set<BoardColumn> boardColumns = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
