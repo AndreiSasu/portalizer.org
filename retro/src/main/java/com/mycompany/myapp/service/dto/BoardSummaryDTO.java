@@ -1,4 +1,6 @@
 package com.mycompany.myapp.service.dto;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDate;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -11,6 +13,7 @@ import java.util.UUID;
  */
 public class BoardSummaryDTO implements Serializable {
 
+    @JsonIgnoreProperties
     private Long id;
 
     private Boolean archived;
