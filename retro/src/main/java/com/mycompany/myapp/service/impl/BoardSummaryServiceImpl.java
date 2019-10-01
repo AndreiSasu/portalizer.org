@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Service Implementation for managing {@link BoardSummary}.
@@ -70,9 +71,9 @@ public class BoardSummaryServiceImpl implements BoardSummaryService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Optional<BoardSummaryDTO> findOne(Long id) {
+    public Optional<BoardSummaryDTO> findOne(UUID id) {
         log.debug("Request to get BoardSummary : {}", id);
-        return boardSummaryRepository.findById(id)
+        return boardSummaryRepository.findByBoardId(id)
             .map(boardSummaryMapper::toDto);
     }
 

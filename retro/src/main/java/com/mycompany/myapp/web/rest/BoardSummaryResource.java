@@ -24,6 +24,7 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * REST controller for managing {@link com.mycompany.myapp.domain.BoardSummary}.
@@ -43,46 +44,6 @@ public class BoardSummaryResource {
 
     public BoardSummaryResource(BoardSummaryService boardSummaryService) {
         this.boardSummaryService = boardSummaryService;
-    }
-
-    /**
-     * {@code POST  /board-summaries} : Create a new boardSummary.
-     *
-     * @param boardSummaryDTO the boardSummaryDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new boardSummaryDTO, or with status {@code 400 (Bad Request)} if the boardSummary has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PostMapping("/board-summaries")
-    public ResponseEntity<BoardSummaryDTO> createBoardSummary(@Valid @RequestBody BoardSummaryDTO boardSummaryDTO) throws URISyntaxException {
-        log.debug("REST request to save BoardSummary : {}", boardSummaryDTO);
-        if (boardSummaryDTO.getId() != null) {
-            throw new BadRequestAlertException("A new boardSummary cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        BoardSummaryDTO result = boardSummaryService.save(boardSummaryDTO);
-        return ResponseEntity.created(new URI("/api/board-summaries/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * {@code PUT  /board-summaries} : Updates an existing boardSummary.
-     *
-     * @param boardSummaryDTO the boardSummaryDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated boardSummaryDTO,
-     * or with status {@code 400 (Bad Request)} if the boardSummaryDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the boardSummaryDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PutMapping("/board-summaries")
-    public ResponseEntity<BoardSummaryDTO> updateBoardSummary(@Valid @RequestBody BoardSummaryDTO boardSummaryDTO) throws URISyntaxException {
-        log.debug("REST request to update BoardSummary : {}", boardSummaryDTO);
-        if (boardSummaryDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        BoardSummaryDTO result = boardSummaryService.save(boardSummaryDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, boardSummaryDTO.getId().toString()))
-            .body(result);
     }
 
     /**
@@ -107,23 +68,11 @@ public class BoardSummaryResource {
      * @param id the id of the boardSummaryDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the boardSummaryDTO, or with status {@code 404 (Not Found)}.
      */
-    @GetMapping("/board-summaries/{id}")
-    public ResponseEntity<BoardSummaryDTO> getBoardSummary(@PathVariable Long id) {
-        log.debug("REST request to get BoardSummary : {}", id);
-        Optional<BoardSummaryDTO> boardSummaryDTO = boardSummaryService.findOne(id);
+    @GetMapping("/board-summaries/{boardId}")
+    public ResponseEntity<BoardSummaryDTO> getBoardSummary(@PathVariable UUID boardId) {
+        log.debug("REST request to get BoardSummary : {}", boardId);
+        Optional<BoardSummaryDTO> boardSummaryDTO = boardSummaryService.findOne(boardId);
         return ResponseUtil.wrapOrNotFound(boardSummaryDTO);
     }
 
-    /**
-     * {@code DELETE  /board-summaries/:id} : delete the "id" boardSummary.
-     *
-     * @param id the id of the boardSummaryDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
-    @DeleteMapping("/board-summaries/{id}")
-    public ResponseEntity<Void> deleteBoardSummary(@PathVariable Long id) {
-        log.debug("REST request to delete BoardSummary : {}", id);
-        boardSummaryService.delete(id);
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString())).build();
-    }
 }

@@ -14,8 +14,6 @@ import java.util.UUID;
  */
 public class BoardSummaryDTO implements Serializable {
 
-    private Long id;
-
     private Boolean archived;
 
     @NotNull
@@ -47,14 +45,6 @@ public class BoardSummaryDTO implements Serializable {
 
     public void setBoardColumns(Set<BoardColumnDTO> boardColumns) {
         this.boardColumns = boardColumns;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Boolean isArchived() {
@@ -91,21 +81,20 @@ public class BoardSummaryDTO implements Serializable {
         }
 
         BoardSummaryDTO boardSummaryDTO = (BoardSummaryDTO) o;
-        if (boardSummaryDTO.getId() == null || getId() == null) {
+        if (boardSummaryDTO.getBoardId() == null || getBoardId() == null) {
             return false;
         }
-        return Objects.equals(getId(), boardSummaryDTO.getId());
+        return Objects.equals(getBoardId(), boardSummaryDTO.getBoardId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return Objects.hashCode(getBoardId());
     }
 
     @Override
     public String toString() {
         return "BoardSummaryDTO{" +
-            "id=" + id +
             ", archived=" + archived +
             ", boardName='" + boardName + '\'' +
             ", dateCreated=" + dateCreated +

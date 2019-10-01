@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
+
 import java.util.UUID;
 
 /**
@@ -127,9 +127,10 @@ public class BoardSummary implements Serializable {
 
     public void setBoardColumns(Set<BoardColumn> boardColumns) {
         this.boardColumns = boardColumns;
-        boardColumns.forEach(boardColumn -> {
-            boardColumn.setBoardSummary(this);
-        });
+        if(null != this.boardColumns)
+            this.boardColumns.forEach(boardColumn -> {
+                boardColumn.setBoardSummary(this);
+            });
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

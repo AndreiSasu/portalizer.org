@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Service Interface for managing {@link com.mycompany.myapp.domain.BoardSummary}.
@@ -35,7 +36,7 @@ public interface BoardSummaryService {
      * @param id the id of the entity.
      * @return the entity.
      */
-    Optional<BoardSummaryDTO> findOne(Long id);
+    Optional<BoardSummaryDTO> findOne(UUID id);
 
     /**
      * Delete the "id" boardSummary.
