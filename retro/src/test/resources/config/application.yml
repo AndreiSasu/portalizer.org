@@ -31,7 +31,7 @@ spring:
     hikari:
       auto-commit: false
   jpa:
-    database-platform: io.github.jhipster.domain.util.FixedH2Dialect
+    database-platform: org.portalizer.retro.H2CustomDialect
     database: H2
     open-in-view: false
     show-sql: true

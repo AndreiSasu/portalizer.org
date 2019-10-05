@@ -29,7 +29,7 @@ public class Board implements Serializable {
         name = "UUID",
         strategy = "org.hibernate.id.UUIDGenerator"
     )
-    @Column(columnDefinition = "varbinary not null")
+//    @Column(columnDefinition = "varbinary(36)")
     private UUID id;
 
     @NotNull

@@ -18,7 +18,7 @@ public class InformationCard {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "board_id", referencedColumnName = "id", columnDefinition = "varbinary not null")
+    @JoinColumn(name = "board_id", referencedColumnName = "id")
     private Board board;
 
     @NotNull
