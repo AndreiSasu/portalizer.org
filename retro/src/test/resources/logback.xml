@@ -38,6 +38,14 @@
     <logger name="sun.net.www" level="INFO"/>
     <logger name="sun.rmi.transport" level="WARN"/>
 
+
+    <logger name="org.hibernate.SQL" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
     <root level="WARN">
         <appender-ref ref="CONSOLE"/>
     </root>

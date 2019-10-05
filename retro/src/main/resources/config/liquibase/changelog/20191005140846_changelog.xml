@@ -1,0 +1,80 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="andrei (generated)" id="1570284532263-1">
+        <createTable tableName="board">
+            <column name="id" type="BINARY(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-2">
+        <createTable tableName="board_column_definitions">
+            <column name="board_id" type="BINARY(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="column_definitions_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-3">
+        <createTable tableName="board_information_cards">
+            <column name="board_id" type="BINARY(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="information_cards_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-4">
+        <createTable tableName="column_definition">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="column_definitionPK"/>
+            </column>
+            <column name="column_type" type="INT"/>
+            <column name="title" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-5">
+        <createTable tableName="information_card">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="information_cardPK"/>
+            </column>
+            <column name="board_id" type="VARCHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="column_type" type="INT"/>
+            <column name="created_at" type="datetime"/>
+            <column name="text" type="VARCHAR(255)"/>
+            <column name="updated_at" type="datetime"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-6">
+        <addPrimaryKey columnNames="board_id, column_definitions_id" tableName="board_column_definitions"/>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-7">
+        <addPrimaryKey columnNames="id" constraintName="boardPK" tableName="board"/>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-8">
+        <addUniqueConstraint columnNames="board_id" constraintName="UC_INFORMATION_CARDBOARD_ID_COL" tableName="information_card"/>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-9">
+        <addUniqueConstraint columnNames="column_definitions_id" constraintName="UK_entpj2oq89og968ntihue5rqd" tableName="board_column_definitions"/>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-10">
+        <addUniqueConstraint columnNames="information_cards_id" constraintName="UK_i0cupk0qn931t27wty6in1ub0" tableName="board_information_cards"/>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-11">
+        <addForeignKeyConstraint baseColumnNames="board_id" baseTableName="board_information_cards" constraintName="FK30la1sp7pm5crotwnspfwfcn3" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="board"/>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-12">
+        <addForeignKeyConstraint baseColumnNames="information_cards_id" baseTableName="board_information_cards" constraintName="FKijxvdfvnjyqd8clu17fn4gsdq" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="information_card"/>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-13">
+        <addForeignKeyConstraint baseColumnNames="board_id" baseTableName="board_column_definitions" constraintName="FKioighm78s58rehgqe5omiki8x" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="board"/>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1570284532263-14">
+        <addForeignKeyConstraint baseColumnNames="column_definitions_id" baseTableName="board_column_definitions" constraintName="FKq8ogxjbx897jpppcfb8rtqux4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="column_definition"/>
+    </changeSet>
+</databaseChangeLog>

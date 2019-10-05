@@ -1,5 +1,6 @@
 package org.portalizer.retro.web.rest;
 
+import org.portalizer.retro.domain.Board;
 import org.portalizer.retro.service.BoardSummaryService;
 import org.portalizer.retro.service.dto.BoardSummaryDTO;
 

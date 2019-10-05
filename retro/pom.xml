@@ -86,6 +86,7 @@
         <jacoco.itReportFile>${jacoco.itReportFolder}/integrationTest.exec</jacoco.itReportFile>
         <junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
         <junit.itReportFolder>${project.testresult.directory}/integrationTest</junit.itReportFolder>
+        <org.projectlombok.version>1.18.10</org.projectlombok.version>
         <!-- jhipster-needle-maven-property -->
     </properties>
 
@@ -108,9 +109,10 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
+            <version>${org.projectlombok.version}</version>
             <scope>provided</scope>
         </dependency>
+
 
         <dependency>
             <groupId>io.github.jhipster</groupId>
@@ -389,6 +391,11 @@
                             <groupId>org.glassfish.jaxb</groupId>
                             <artifactId>jaxb-runtime</artifactId>
                             <version>${jaxb-runtime.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${org.projectlombok.version}</version>
                         </path>
                         <!-- jhipster-needle-maven-add-annotation-processor -->
                     </annotationProcessorPaths>
