@@ -6,11 +6,14 @@ import org.portalizer.retro.RetroApp;
 import org.portalizer.retro.domain.Board;
 import org.portalizer.retro.domain.ColumnDefinition;
 import org.portalizer.retro.domain.ColumnType;
+import org.portalizer.retro.domain.InformationCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.UUID;
+
 
 @SpringBootTest(classes = RetroApp.class)
 public class BoardRepositoryTest {
@@ -18,12 +21,14 @@ public class BoardRepositoryTest {
     @Autowired
     private BoardRepository boardRepository;
 
+    @Autowired
+    private InformationCardRepository informationCardRepository;
+
 
     @Test
-//    @Transactional
     public void testBoardIdLazyLoading() {
         Board board = Board.builder().build();
-        SortedSet<ColumnDefinition> columnDefinitions = buildColumnDefinitions();
+        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         board.setColumnDefinitions(columnDefinitions);
 
         Board savedBoard = boardRepository.save(board);
@@ -36,23 +41,37 @@ public class BoardRepositoryTest {
         Assertions.assertThat(fullBoard.getColumnDefinitions()).isEqualTo(columnDefinitions);
     }
 
-    private SortedSet<ColumnDefinition> buildColumnDefinitions() {
-        ColumnDefinition mad = new ColumnDefinition();
-        mad.setColumnType(ColumnType.MAD);
-        mad.setTitle("What Makes me Mad");
+    @Test
+    public void testCanAddInformationCardToExistingBoard() {
+        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        Board board = Board.builder().build();
+        List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
+        board.setColumnDefinitions(columnDefinitions);
+        board.setInformationCards(informationCards);
 
-        ColumnDefinition sad = new ColumnDefinition();
-        sad.setColumnType(ColumnType.SAD);
-        sad.setTitle("What Makes me Mad");
+        Board savedBoard = boardRepository.save(board);
+        final UUID key = savedBoard.getId();
+        final List<InformationCard> foundInformationCards = informationCardRepository.findAllByBoardId(key).get();
+        Assertions.assertThat(foundInformationCards).hasSize(columnDefinitions.size()).allMatch(informationCard ->
+            savedBoard.getId().equals(informationCard.getBoard().getId()), ""
+        );
 
-        ColumnDefinition glad = new ColumnDefinition();
-        glad.setColumnType(ColumnType.GLAD);
-        glad.setTitle("What Makes me Glad");
+        InformationCard newCard = new InformationCard();
+        newCard.setText("Test Text");
+        newCard.setColumnType(ColumnType.GLAD);
+        newCard.setBoard(savedBoard);
+        informationCardRepository.save(newCard);
+        Assertions.assertThat(informationCardRepository.findAllByBoardId(savedBoard.getId()).get())
+            .hasSize(foundInformationCards.size()+1)
+            .allMatch(informationCard -> savedBoard.getId().equals(informationCard.getBoard().getId()), "");
 
-        SortedSet<ColumnDefinition> columnDefinitions = new TreeSet<>();
-        columnDefinitions.add(mad);
-        columnDefinitions.add(sad);
-        columnDefinitions.add(glad);
-        return columnDefinitions;
+        Board foundBoard = boardRepository.findFullBoardById(key).get();
+
+        Assertions.assertThat(foundBoard.getInformationCards())
+            .hasSize(foundInformationCards.size()+1).
+            allMatch(informationCard -> savedBoard.getId().equals(informationCard.getBoard().getId()), "");
+
     }
+
+
 }

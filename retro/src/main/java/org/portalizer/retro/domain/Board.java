@@ -33,11 +33,11 @@ public class Board implements Serializable {
     private UUID id;
 
     @NotNull
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("columnType ASC")
     private SortedSet<ColumnDefinition> columnDefinitions;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = InformationCard.class, mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<InformationCard> informationCards;
 
     public UUID getId() {

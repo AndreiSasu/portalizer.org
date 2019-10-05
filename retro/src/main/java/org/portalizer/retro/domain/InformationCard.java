@@ -1,15 +1,12 @@
 package org.portalizer.retro.domain;
 
-import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
 @Table(name = "information_card")
@@ -20,10 +17,11 @@ public class InformationCard {
     private Long id;
 
     @NotNull
-    @Type(type = "uuid-char")
-    @Column(name = "board_id", length = 36, nullable = false, updatable = false, unique = true)
-    private UUID boardId;
+    @ManyToOne
+    @JoinColumn(name = "board_id", referencedColumnName = "id", columnDefinition = "varbinary not null")
+    private Board board;
 
+    @NotNull
     private String text;
 
     @NotNull
@@ -35,20 +33,21 @@ public class InformationCard {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public UUID getBoardId() {
-        return boardId;
-    }
-
-    public void setBoardId(UUID boardId) {
-        this.boardId = boardId;
     }
 
     public String getText() {
@@ -89,7 +88,6 @@ public class InformationCard {
         if (o == null || getClass() != o.getClass()) return false;
         InformationCard that = (InformationCard) o;
         return Objects.equals(id, that.id) &&
-            Objects.equals(boardId, that.boardId) &&
             Objects.equals(text, that.text) &&
             columnType == that.columnType &&
             Objects.equals(createdAt, that.createdAt) &&
@@ -105,7 +103,6 @@ public class InformationCard {
     public String toString() {
         return "InformationCard{" +
             "id=" + id +
-            ", boardId=" + boardId +
             ", text='" + text + '\'' +
             ", columnType=" + columnType +
             ", createdAt=" + createdAt +
