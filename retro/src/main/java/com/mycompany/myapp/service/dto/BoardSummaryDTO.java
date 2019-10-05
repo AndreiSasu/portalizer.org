@@ -1,6 +1,4 @@
 package com.mycompany.myapp.service.dto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.time.LocalDate;
 import javax.validation.constraints.*;
