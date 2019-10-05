@@ -4,7 +4,7 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <logger name="com.mycompany.myapp" level="INFO"/>
+    <logger name="org.portalizer.gateway" level="INFO"/>
 
     <logger name="io.github.jhipster" level="WARN"/>
 

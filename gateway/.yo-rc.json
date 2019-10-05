@@ -1,13 +1,13 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com.mycompany.myapp"
+      "packageName": "org.portalizer.gateway"
     },
     "jhipsterVersion": "6.3.0",
     "applicationType": "gateway",
     "baseName": "gateway",
-    "packageName": "com.mycompany.myapp",
-    "packageFolder": "com/mycompany/myapp",
+    "packageName": "org.portalizer.gateway",
+    "packageFolder": "org/portalizer/gateway",
     "serverPort": "8080",
     "authenticationType": "jwt",
     "cacheProvider": "no",

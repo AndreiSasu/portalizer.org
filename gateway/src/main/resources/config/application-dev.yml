@@ -17,7 +17,7 @@ logging:
   level:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
-    com.mycompany.myapp: DEBUG
+    org.portalizer.gateway: DEBUG
 
 eureka:
   instance:
