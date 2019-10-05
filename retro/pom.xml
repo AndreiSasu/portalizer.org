@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mycompany.myapp</groupId>
+    <groupId>org.portalizer.retro</groupId>
     <artifactId>retro</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -609,7 +609,7 @@
                         <defaultSchemaName></defaultSchemaName>
                         <username>root</username>
                         <password></password>
-                        <referenceUrl>hibernate:spring:com.mycompany.myapp.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
+                        <referenceUrl>hibernate:spring:org.portalizer.retro.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                         <verbose>true</verbose>
                         <logging>debug</logging>
                         <contexts>!test</contexts>
@@ -818,8 +818,8 @@
                             <configuration>
                                 <inputSpec>${project.basedir}/src/main/resources/swagger/api.yml</inputSpec>
                                 <generatorName>spring</generatorName>
-                                <apiPackage>com.mycompany.myapp.web.api</apiPackage>
-                                <modelPackage>com.mycompany.myapp.web.api.model</modelPackage>
+                                <apiPackage>org.portalizer.retro.web.api</apiPackage>
+                                <modelPackage>org.portalizer.retro.web.api.model</modelPackage>
                                 <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
                                 <importMappings>Problem=org.zalando.problem.Problem</importMappings>
                                 <skipValidateSpec>false</skipValidateSpec>

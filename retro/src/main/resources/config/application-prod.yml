@@ -16,7 +16,7 @@
 logging:
   level:
     ROOT: INFO
-    com.mycompany.myapp: INFO
+    org.portalizer.retro: INFO
     io.github.jhipster: INFO
 
 eureka:

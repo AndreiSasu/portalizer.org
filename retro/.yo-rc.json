@@ -1,12 +1,12 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com.mycompany.myapp"
+      "packageName": "org.portalizer.retro"
     },
     "jhipsterVersion": "6.3.0",
     "applicationType": "microservice",
     "baseName": "retro",
-    "packageName": "com.mycompany.myapp",
+    "packageName": "org.portalizer.retro",
     "packageFolder": "com/mycompany/myapp",
     "serverPort": "8081",
     "authenticationType": "jwt",
