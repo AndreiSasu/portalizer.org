@@ -60,7 +60,7 @@ public class BoardSummaryResource {
     /**
      * {@code GET  /board-summaries/:id} : get the "id" boardSummary.
      *
-     * @param id the id of the boardSummaryDTO to retrieve.
+     * @param boardId the id of the boardSummaryDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the boardSummaryDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/board-summaries/{boardId}")

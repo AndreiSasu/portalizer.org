@@ -4,7 +4,7 @@ import org.portalizer.retro.domain.ColumnType;
 
 import java.io.Serializable;
 
-public class ColumnDefinitionDTO implements Serializable {
+public class ColumnDefinitionDTO implements Serializable, Comparable<ColumnDefinitionDTO> {
     private ColumnType columnType;
     private String title;
 
@@ -30,5 +30,18 @@ public class ColumnDefinitionDTO implements Serializable {
             "columnType=" + columnType +
             ", title='" + title + '\'' +
             '}';
+    }
+
+    @Override
+    public int compareTo(ColumnDefinitionDTO columnDefinitionDTO) {
+        int thisOrdinal = this.getColumnType().ordinal();
+        int otherOrdinal = columnDefinitionDTO.getColumnType().ordinal();
+        if(thisOrdinal == otherOrdinal) {
+            return 0;
+        }
+        if(thisOrdinal > otherOrdinal){
+            return 1;
+        }
+        return -1;
     }
 }
