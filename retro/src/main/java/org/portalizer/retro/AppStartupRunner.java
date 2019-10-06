@@ -30,7 +30,7 @@ public class AppStartupRunner implements ApplicationRunner {
         if(args.getOptionNames().contains("addtestdata")) {
             for(int i = 0; i < 10; i++) {
                 SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
-                Board board = Board.builder().build();
+                Board board = new Board();
                 List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
                 board.setInformationCards(informationCard);
                 board.setColumnDefinitions(columnDefinitions);

@@ -13,12 +13,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "board")
-
-@Builder(toBuilder = true)
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
-@Setter(value = AccessLevel.PACKAGE)
-@Getter
 public class Board implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -28,7 +28,7 @@ public class BoardRepositoryTest {
 
     @Test
     public void testBoardIdLazyLoading() {
-        Board board = Board.builder().build();
+        Board board = new Board();
         SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         board.setColumnDefinitions(columnDefinitions);
 
@@ -45,7 +45,7 @@ public class BoardRepositoryTest {
     @Test
     public void testCanAddInformationCardToExistingBoard() {
         SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
-        Board board = Board.builder().build();
+        Board board = new Board();
         List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setColumnDefinitions(columnDefinitions);
         board.setInformationCards(informationCards);
