@@ -1,4 +1,4 @@
-package org.portalizer.retro.repository;
+package org.portalizer.retro.utils;
 
 import org.portalizer.retro.domain.Board;
 import org.portalizer.retro.domain.ColumnDefinition;

@@ -18,6 +18,14 @@ public class ColumnDefinition implements Comparable<ColumnDefinition> {
     @NotNull
     private String title;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public ColumnType getColumnType() {
         return columnType;
     }
@@ -35,25 +43,27 @@ public class ColumnDefinition implements Comparable<ColumnDefinition> {
     }
 
     @Override
+    public String toString() {
+        return "ColumnDefinition{" +
+            "id=" + id +
+            ", columnType=" + columnType +
+            ", title='" + title + '\'' +
+            '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ColumnDefinition that = (ColumnDefinition) o;
-        return columnType == that.columnType &&
+        return Objects.equals(id, that.id) &&
+            columnType == that.columnType &&
             Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
         return 31;
-    }
-
-    @Override
-    public String toString() {
-        return "ColumnDefinition{" +
-            "columnType=" + columnType +
-            ", title='" + title + '\'' +
-            '}';
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.portalizer.retro.domain.Board;
 import org.portalizer.retro.domain.ColumnDefinition;
 import org.portalizer.retro.domain.ColumnType;
 import org.portalizer.retro.domain.InformationCard;
+import org.portalizer.retro.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
