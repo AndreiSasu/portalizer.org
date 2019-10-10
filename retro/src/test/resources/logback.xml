@@ -45,6 +45,9 @@
     <logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
+    <logger name="org.springframework.transaction" level="trace" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+    </logger>
 
     <root level="WARN">
         <appender-ref ref="CONSOLE"/>

@@ -2,6 +2,7 @@ package org.portalizer.retro.domain;
 
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ public class Board implements Serializable {
         name = "UUID",
         strategy = "org.hibernate.id.UUIDGenerator"
     )
+    @Type(type="uuid-char")
     private UUID id;
 
     @NotNull
