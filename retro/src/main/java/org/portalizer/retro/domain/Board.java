@@ -1,12 +1,16 @@
 package org.portalizer.retro.domain;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.SortedSet;
@@ -26,6 +30,12 @@ public class Board implements Serializable {
     )
     @Type(type="uuid-char")
     private UUID id;
+
+    @NotEmpty
+    private String name;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @NotNull
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -58,6 +68,23 @@ public class Board implements Serializable {
     public void setColumnDefinitions(SortedSet<ColumnDefinition> columnDefinitions) {
         this.columnDefinitions = columnDefinitions;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -32,6 +32,8 @@ public class BoardServiceImpl implements BoardService {
         return boardRepository.findAll().stream().map(board -> {
             BoardDTO boardDTO = new BoardDTO();
             boardDTO.setId(board.getId());
+            boardDTO.setName(board.getName());
+            boardDTO.setCreatedAt(board.getCreatedAt());
             SortedSet<ColumnDefinitionDTO> columnDefinitionDTOS = new TreeSet<>();
             board.getColumnDefinitions().forEach(columnDefinition -> {
                 columnDefinitionDTOS.add(columnDefinitionMapper.toDto(columnDefinition));

@@ -29,6 +29,7 @@ public class BoardRepositoryTest {
     @Test
     public void testBoardIdLazyLoading() {
         Board board = new Board();
+        board.setName("Test");
         SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         board.setColumnDefinitions(columnDefinitions);
 
@@ -49,7 +50,7 @@ public class BoardRepositoryTest {
         List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setColumnDefinitions(columnDefinitions);
         board.setInformationCards(informationCards);
-
+        board.setName("Test");
         Board savedBoard = boardRepository.save(board);
         final UUID key = savedBoard.getId();
         final List<InformationCard> foundInformationCards = informationCardRepository.findAllByBoardId(key).get();
