@@ -106,7 +106,6 @@ public class Board implements Serializable {
         return "Board{" +
             "id=" + id +
             ", columnDefinitions=" + columnDefinitions +
-            ", informationCards=" + informationCards +
             '}';
     }
 }

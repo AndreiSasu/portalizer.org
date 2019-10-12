@@ -1,6 +1,6 @@
 package org.portalizer.retro.web.rest;
 
-import org.hamcrest.Matchers;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
@@ -11,6 +11,8 @@ import org.portalizer.retro.domain.ColumnDefinition;
 import org.portalizer.retro.domain.InformationCard;
 import org.portalizer.retro.repository.BoardRepository;
 import org.portalizer.retro.service.BoardService;
+import org.portalizer.retro.service.dto.BoardDTO;
+import org.portalizer.retro.service.mapper.BoardMapper;
 import org.portalizer.retro.utils.EntityUtils;
 import org.portalizer.retro.web.rest.errors.ExceptionTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,9 @@ import java.util.List;
 import java.util.SortedSet;
 
 import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.is;
+
 import static org.portalizer.retro.web.rest.TestUtil.createFormattingConversionService;
-import static org.portalizer.retro.web.rest.TestUtil.findAll;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -54,6 +55,9 @@ public class BoardResourceIT {
 
     @Autowired
     private Validator validator;
+
+    @Autowired
+    private BoardMapper boardMapper;
 
     private MockMvc boardResourceMockMVC;
 
@@ -109,6 +113,51 @@ public class BoardResourceIT {
             .andExpect(jsonPath("$.createdAt").isNotEmpty())
             .andExpect(jsonPath("$.columnDefinitions").isNotEmpty())
             .andExpect(jsonPath("$.informationCards").isNotEmpty());
+    }
+
+    @Test
+    public void testCreateBoard() throws Exception {
+        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        Board board = new Board();
+        board.setColumnDefinitions(columnDefinitions);
+        board.setName("Test");
+
+        BoardDTO boardDTO = boardMapper.toDto(board);
+
+        boardResourceMockMVC.perform(post("/api/boards")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(boardDTO)))
+            .andExpect(status().isCreated());
+
+        List<Board> allBoards = boardRepository.findAll();
+        Assertions.assertThat(allBoards).hasSize(1);
+
+        final Board savedBoard = allBoards.get(0);
+
+        Assertions.assertThat(savedBoard.getId()).isNotNull();
+        Assertions.assertThat(savedBoard.getName()).isEqualTo("Test");
+        Assertions.assertThat(savedBoard.getCreatedAt()).isNotNull();
+        Assertions.assertThat(savedBoard.getColumnDefinitions()).isEqualTo(columnDefinitions);
+
+    }
+
+    @Test
+    public void testDeleteBoard() throws Exception {
+
+        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        Board board = new Board();
+        List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
+        board.setInformationCards(informationCard);
+        board.setColumnDefinitions(columnDefinitions);
+        board.setName("Test");
+
+        final Board savedBoard = boardRepository.save(board);
+        boardResourceMockMVC.perform(delete("/api/boards/{id}", savedBoard.getId())
+                .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isNoContent());
+        final List<Board> boards = boardRepository.findAll();
+        Assertions.assertThat(boards).isEmpty();
+
     }
 
 }

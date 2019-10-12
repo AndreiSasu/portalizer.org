@@ -9,4 +9,6 @@ public interface BoardService {
 
     List<BoardDTO> findAll();
     BoardDTO findOne(UUID id);
+    BoardDTO save(BoardDTO boardDTO);
+    void delete(UUID id);
 }
