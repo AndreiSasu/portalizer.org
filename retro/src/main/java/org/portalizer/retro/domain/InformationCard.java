@@ -1,12 +1,15 @@
 package org.portalizer.retro.domain;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "information_card")
@@ -15,6 +18,14 @@ public class InformationCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Type(type="uuid-char")
+    private UUID cardId;
 
     @NotNull
     @ManyToOne
@@ -33,6 +44,13 @@ public class InformationCard {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public UUID getCardId() {
+        return cardId;
+    }
+
+    public void setCardId(UUID cardId) {
+        this.cardId = cardId;
+    }
 
     public Board getBoard() {
         return board;
