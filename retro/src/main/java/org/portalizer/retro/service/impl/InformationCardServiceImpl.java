@@ -2,10 +2,13 @@ package org.portalizer.retro.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.portalizer.retro.domain.Board;
+import org.portalizer.retro.domain.InformationCard;
 import org.portalizer.retro.repository.BoardRepository;
 import org.portalizer.retro.repository.InformationCardRepository;
 import org.portalizer.retro.service.InformationCardService;
 import org.portalizer.retro.service.dto.InformationCardDTO;
+import org.portalizer.retro.service.mapper.InformationCardMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -19,6 +22,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class InformationCardServiceImpl implements InformationCardService {
 
+    private InformationCardMapper informationCardMapper;
     private BoardRepository boardRepository;
     private InformationCardRepository informationCardRepository;
 
@@ -32,9 +36,14 @@ public class InformationCardServiceImpl implements InformationCardService {
     @Override
     public InformationCardDTO update(@Valid InformationCardDTO informationCardDTO) {
         final UUID boardId = informationCardDTO.getBoardId();
-        final UUID cardId = informationCardDTO.getCardId();
+        final UUID cardId = informationCardDTO.getId();
         validateCardId(cardId, boardId);
-        return null;
+        final InformationCard beforeUpdate = informationCardRepository.findByIdAndBoardId(cardId, boardId).get();
+        InformationCard informationCard = informationCardMapper.toEntity(informationCardDTO);
+        informationCard.setBoard(beforeUpdate.getBoard());
+        informationCard.setCreatedAt(beforeUpdate.getCreatedAt());
+        informationCard = informationCardRepository.save(informationCard);
+        return informationCardMapper.toDto(informationCard);
     }
 
     @Override

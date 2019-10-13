@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public class InformationCardDTO implements Serializable {
 
-    private UUID cardId;
+    private UUID id;
 
     @NotNull private UUID boardId;
 
@@ -29,12 +29,12 @@ public class InformationCardDTO implements Serializable {
         this.boardId = boardId;
     }
 
-    public UUID getCardId() {
-        return cardId;
+    public UUID getId() {
+        return id;
     }
 
-    public void setCardId(UUID cardId) {
-        this.cardId = cardId;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getText() {

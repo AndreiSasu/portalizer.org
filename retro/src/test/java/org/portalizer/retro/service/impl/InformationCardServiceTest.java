@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.portalizer.retro.RetroApp;
 import org.portalizer.retro.domain.Board;
-import org.portalizer.retro.domain.ColumnDefinition;
 import org.portalizer.retro.domain.ColumnType;
 import org.portalizer.retro.domain.InformationCard;
 import org.portalizer.retro.repository.BoardRepository;
@@ -79,7 +78,7 @@ public class InformationCardServiceTest {
         final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(informationCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
             .hasMessageContaining(String.format("Board with board id: %s and card id: %s does not exist!", informationCardDTO.getBoardId(),
-                informationCardDTO.getCardId()));
+                informationCardDTO.getId()));
     }
 
 
@@ -94,13 +93,42 @@ public class InformationCardServiceTest {
         final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(informationCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
             .hasMessageContaining(String.format("Board with board id: %s and card id: %s does not exist!", informationCardDTO.getBoardId(),
-                informationCardDTO.getCardId()));
+                informationCardDTO.getId()));
     }
 
     @Test
-    public void testExceptionThrownIfBoardDoesNotHaveColumnType() {
+    public void testExceptionThrownAddIfBoardDoesNotHaveColumnType() {
         InformationCardDTO informationCardDTO = new InformationCardDTO();
         informationCardDTO.setText("Some text");
+        informationCardDTO.setBoardId(savedBoard.getId());
+        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.add(informationCardDTO));
+        Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
+            .hasMessageContaining("columnType");
+    }
+
+    @Test
+    public void testExceptionThrownUpdateIfBoardDoesNotHaveColumnType() {
+        final InformationCard informationCard = savedBoard.getInformationCards().get(0);
+        final InformationCardDTO informationCardDTO = informationCardMapper.toDto(informationCard);
+        informationCardDTO.setColumnType(null);
+        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(informationCardDTO));
+        Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
+            .hasMessageContaining("columnType");
+    }
+
+    @Test
+    public void testUpdateExistingInformationCardHappyPath() {
+        final InformationCard beforeUpdate = savedBoard.getInformationCards().get(0);
+        final InformationCardDTO informationCardDTO = informationCardMapper.toDto(beforeUpdate);
+        informationCardDTO.setText("This has changed");
+        informationCardService.update(informationCardDTO);
+
+        final InformationCard afterUpdate = informationCardRepository.findById(informationCardDTO.getId()).get();
+        Assertions.assertThat(afterUpdate.getText()).isEqualTo("This has changed");
+        Assertions.assertThat(afterUpdate.getCreatedAt()).isEqualTo(beforeUpdate.getCreatedAt());
+        Assertions.assertThat(afterUpdate.getUpdatedAt()).isAfter(beforeUpdate.getUpdatedAt());
+        Assertions.assertThat(afterUpdate.getColumnType()).isEqualTo(beforeUpdate.getColumnType());
+        Assertions.assertThat(afterUpdate.getBoard().getId()).isEqualTo(beforeUpdate.getBoard().getId());
     }
 
 
