@@ -1,5 +1,6 @@
 package org.portalizer.retro.service.impl;
 
+import io.swagger.models.auth.In;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -139,6 +140,30 @@ public class InformationCardServiceTest {
         int sizeAfter = informationCardRepository.findAllByBoardId(savedBoard.getId()).get().size();
         Assertions.assertThat(sizeAfter).isEqualTo(sizeBefore - 1);
         Assertions.assertThat(informationCardRepository.findById(deletedId)).isNotPresent();
+    }
+
+    @Test
+    public void testAddInformationCardHappyPath() {
+        final InformationCardDTO toAdd = new InformationCardDTO();
+        toAdd.setBoardId(savedBoard.getId());
+        toAdd.setText("Added text");
+        toAdd.setColumnType(ColumnType.GLAD);
+
+        final InformationCardDTO added = informationCardService.add(toAdd);
+
+        final InformationCard afterAdd = informationCardRepository.findById(added.getId()).get();
+        Assertions.assertThat(afterAdd.getText()).isEqualTo("Added text");
+        Assertions.assertThat(afterAdd.getCreatedAt()).isNotNull();
+        Assertions.assertThat(afterAdd.getUpdatedAt()).isEqualTo(afterAdd.getCreatedAt());
+        Assertions.assertThat(afterAdd.getColumnType()).isEqualTo(ColumnType.GLAD);
+        Assertions.assertThat(afterAdd.getBoard().getId()).isEqualTo(savedBoard.getId());
+
+
+        Assertions.assertThat(added.getText()).isEqualTo("Added text");
+        Assertions.assertThat(added.getCreatedAt()).isNotNull();
+        Assertions.assertThat(added.getUpdatedAt()).isEqualTo(afterAdd.getCreatedAt());
+        Assertions.assertThat(added.getColumnType()).isEqualTo(ColumnType.GLAD);
+        Assertions.assertThat(added.getBoardId()).isEqualTo(savedBoard.getId());
     }
 
 

@@ -30,7 +30,15 @@ public class InformationCardServiceImpl implements InformationCardService {
     public InformationCardDTO add(@Valid InformationCardDTO informationCardDTO) {
         final UUID boardId = informationCardDTO.getBoardId();
         validateBoardId(boardId);
-        return null;
+
+        final InformationCard toAdd = informationCardMapper.toEntity(informationCardDTO);
+        toAdd.setId(null);
+
+        final Board board = boardRepository.findById(boardId).get();
+        toAdd.setBoard(board);
+
+        final InformationCard added = informationCardRepository.save(toAdd);
+        return informationCardMapper.toDto(added);
     }
 
     @Override
