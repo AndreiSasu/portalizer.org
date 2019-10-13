@@ -12,6 +12,17 @@ import java.util.TreeSet;
 
 public class EntityUtils {
 
+
+    public static Board validBoard() {
+        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        Board board = new Board();
+        List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
+        board.setColumnDefinitions(columnDefinitions);
+        board.setInformationCards(informationCards);
+        board.setName("Test");
+        return board;
+    }
+
     public static List<InformationCard> cardForEachColumn(final Board board, final SortedSet<ColumnDefinition> columnDefinitions) {
         final List<InformationCard> informationCards = new ArrayList<>();
         columnDefinitions.forEach(columnDefinition -> {

@@ -59,6 +59,26 @@ public class InformationCardRepositoryTest {
         informationCard.setColumnType(ColumnType.GLAD);
         informationCard.setText("Some text");
         final Throwable throwable = Assertions.catchThrowable(() -> informationCardRepository.save(informationCard));
-        Assertions.assertThat(throwable).isInstanceOf(javax.validation.ConstraintViolationException.class);
+        Assertions.assertThat(throwable.getCause().getCause()).isInstanceOf(javax.validation.ConstraintViolationException.class);
+    }
+
+    @Test
+    public void testCannotAddCardWithoutColumnType() {
+        InformationCard informationCard = new InformationCard();
+        informationCard.setText("Some text");
+        informationCard.setBoard(savedBoard);
+        final Throwable throwable = Assertions.catchThrowable(() -> informationCardRepository.save(informationCard));
+        Assertions.assertThat(throwable.getCause().getCause()).isInstanceOf(javax.validation.ConstraintViolationException.class);
+    }
+
+    @Test
+    public void testAddCardToExistingBoardAutoGeneratesFields() {
+        InformationCard informationCard = new InformationCard();
+        informationCard.setColumnType(ColumnType.GLAD);
+        informationCard.setText("Some text 123");
+        informationCard.setBoard(savedBoard);
+        InformationCard savedCard = informationCardRepository.save(informationCard);
+        Assertions.assertThat(savedCard.getId()).isNotNull();
+        Assertions.assertThat(savedCard.getCreatedAt()).isNotNull();
     }
 }
