@@ -81,7 +81,6 @@ public class InformationCardServiceTest {
                 informationCardDTO.getId()));
     }
 
-
     @Test
     public void testExceptionThrownIfBoardIdNotFoundForUpdate() {
         InformationCardDTO informationCardDTO = new InformationCardDTO();
@@ -129,6 +128,17 @@ public class InformationCardServiceTest {
         Assertions.assertThat(afterUpdate.getUpdatedAt()).isAfter(beforeUpdate.getUpdatedAt());
         Assertions.assertThat(afterUpdate.getColumnType()).isEqualTo(beforeUpdate.getColumnType());
         Assertions.assertThat(afterUpdate.getBoard().getId()).isEqualTo(beforeUpdate.getBoard().getId());
+    }
+
+    @Test
+    public void testDeleteById() {
+        final InformationCard toDelete = savedBoard.getInformationCards().get(0);
+        final UUID deletedId = toDelete.getId();
+        int sizeBefore = savedBoard.getInformationCards().size();
+        informationCardService.delete(deletedId);
+        int sizeAfter = informationCardRepository.findAllByBoardId(savedBoard.getId()).get().size();
+        Assertions.assertThat(sizeAfter).isEqualTo(sizeBefore - 1);
+        Assertions.assertThat(informationCardRepository.findById(deletedId)).isNotPresent();
     }
 
 

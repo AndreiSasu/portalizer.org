@@ -38,7 +38,7 @@ public class InformationCardServiceImpl implements InformationCardService {
         final UUID boardId = informationCardDTO.getBoardId();
         final UUID cardId = informationCardDTO.getId();
         validateCardId(cardId, boardId);
-        final InformationCard beforeUpdate = informationCardRepository.findByIdAndBoardId(cardId, boardId).get();
+        final InformationCard beforeUpdate = informationCardRepository.findById(cardId).get();
         InformationCard informationCard = informationCardMapper.toEntity(informationCardDTO);
         informationCard.setBoard(beforeUpdate.getBoard());
         informationCard.setCreatedAt(beforeUpdate.getCreatedAt());
@@ -48,7 +48,7 @@ public class InformationCardServiceImpl implements InformationCardService {
 
     @Override
     public void delete(UUID cardId) {
-
+        informationCardRepository.deleteById(cardId);
     }
 
     @Override
