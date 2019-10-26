@@ -27,10 +27,11 @@ public class AppStartupRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         logger.info("Your application started with option names : {}", args.getOptionNames());
-        if(args.getOptionNames().contains("addtestdata")) {
+        if(args.getNonOptionArgs().contains("addtestdata")) {
             for(int i = 0; i < 10; i++) {
                 SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
                 Board board = new Board();
+                board.setName("Generated " + i);
                 List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
                 board.setInformationCards(informationCard);
                 board.setColumnDefinitions(columnDefinitions);

@@ -2,6 +2,7 @@ package org.portalizer.retro.web.rest;
 
 import org.portalizer.retro.service.InformationCardService;
 import org.portalizer.retro.service.dto.InformationCardDTO;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,16 +20,19 @@ public class InformationCardResource {
 
     @PostMapping("/information-card")
     public ResponseEntity<InformationCardDTO> addCard(@RequestBody InformationCardDTO informationCardDTO) {
-        return null;
+        final InformationCardDTO savedCard = informationCardService.add(informationCardDTO);
+        return new ResponseEntity<>(savedCard, HttpStatus.CREATED);
     }
 
     @PutMapping("/information-card")
     public ResponseEntity<InformationCardDTO> updateCard(@RequestBody InformationCardDTO informationCardDTO) {
-        return null;
+        final InformationCardDTO updatedCard = informationCardService.update(informationCardDTO);
+        return new ResponseEntity<>(updatedCard, HttpStatus.OK);
     }
 
     @DeleteMapping("/information-card/{cardId}")
-    public ResponseEntity<InformationCardDTO> deleteCard(@PathVariable UUID cardId) {
-        return null;
+    public ResponseEntity<Void> deleteCard(@PathVariable UUID cardId) {
+        informationCardService.delete(cardId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
