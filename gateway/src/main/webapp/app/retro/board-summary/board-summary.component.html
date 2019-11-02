@@ -1,1 +1,6 @@
 <p>board-summary works!</p>
+<ul>
+    <li *ngFor="let boardsummary of boardSummaries">
+        {{ boardsummary | json }}
+    </li>
+</ul>
