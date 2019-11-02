@@ -13,8 +13,16 @@
                         [ngClass]="[columnDefinition.color]">{{columnDefinition.columnType}}</span>
                 </p>
 
-                <button type="button" class="btn btn-primary card-link">Open</button>
-                <button type="button" class="btn btn-secondary card-link" data-dismiss="modal">Remove</button>
+
+                <div class="btn-group">
+                    <a href="retro/boards/{{boardsummary.id}}" class="btn btn-primary active">
+                        <fa-icon [icon]="faEye"></fa-icon> View
+                    </a>
+                    <a href="/cancel/1" class="btn btn-secondary card-link" data-dismiss="modal">
+
+                        <fa-icon [icon]="faTrash"></fa-icon> Remove
+                    </a>
+                </div>
             </div>
         </div>
     </div>
