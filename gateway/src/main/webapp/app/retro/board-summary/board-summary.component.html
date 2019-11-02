@@ -1,23 +1,5 @@
-<mat-grid-list cols="4" role="list">
-    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows"
-        [style.background]="tile.color" role="listitem">
-        <div class="card border-primary mb-3">
-            <div class="card-header"> Sprint 21 - {{ tile.boardSummary.createdAt }} </div>
-            <div class="card-body">
-                <h4 class="card-title">{{ tile.boardSummary.name }}</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
-
-                <a href="#" class="card-link">Open </a>
-                <a href="#" class="card-link">Remove</a>
-            </div>
-        </div>
-    </mat-grid-tile>
-</mat-grid-list>
-
-<ul>
-    <li *ngFor="let boardsummary of boardSummaries">
+<div class="cardList">
+    <div *ngFor="let boardsummary of boardSummaries">
         <div class="card border-primary mb-3" style="max-width: 20rem;">
             <div class="card-header"> Sprint 21 - {{ boardsummary.createdAt }} </div>
             <div class="card-body">
@@ -26,9 +8,20 @@
                     card's
                     content.</p>
 
-                <a href="#" class="card-link">Open </a>
-                <a href="#" class="card-link">Remove</a>
+                <p>
+                    <span class="badge badge-primary">Primary</span>
+                    <span class="badge badge-secondary">Secondary</span>
+                    <span class="badge badge-success">Success</span>
+                    <span class="badge badge-danger">Danger</span>
+                    <span class="badge badge-warning">Warning</span>
+                    <span class="badge badge-info">Info</span>
+                    <span class="badge badge-light">Light</span>
+                    <span class="badge badge-dark">Dark</span>
+                </p>
+
+                <button type="button" class="btn btn-primary card-link">Open</button>
+                <button type="button" class="btn btn-secondary card-link" data-dismiss="modal">Remove</button>
             </div>
         </div>
-    </li>
-</ul>
+    </div>
+</div>
