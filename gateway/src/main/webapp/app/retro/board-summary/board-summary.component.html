@@ -13,14 +13,16 @@
                         [ngClass]="[columnDefinition.color]">{{columnDefinition.columnType}}</span>
                 </p>
 
-
                 <div class="btn-group">
                     <a href="retro/boards/{{boardsummary.id}}" class="btn btn-primary active">
                         <fa-icon [icon]="faEye"></fa-icon> View
                     </a>
                     <a href="/cancel/1" class="btn btn-secondary card-link" data-dismiss="modal">
-
                         <fa-icon [icon]="faTrash"></fa-icon> Remove
+                    </a>
+
+                    <a href="/cancel/1" class="btn btn-info card-link" data-dismiss="modal">
+                        <fa-icon [icon]="faArchive"></fa-icon> Archive
                     </a>
                 </div>
             </div>

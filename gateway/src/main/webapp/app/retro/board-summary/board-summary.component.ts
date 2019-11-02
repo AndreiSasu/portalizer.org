@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
 import { BoardSummary } from '../model/boards';
-import { faEye, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faTrash, faArchive } from '@fortawesome/free-solid-svg-icons';
 
 export class Tile {
   color: string;
@@ -31,6 +31,7 @@ export class BoardSummaryComponent implements OnInit {
 
   faEye = faEye;
   faTrash = faTrash;
+  faArchive = faArchive;
 
   colorMap: Map<string, string> = new Map();
 
