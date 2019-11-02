@@ -8,4 +8,5 @@ export class BoardSummary {
 export class BoardColumn {
   columnType: string;
   title: string;
+  color: string;
 }

@@ -9,12 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.SortedSet;
 
 @Component
+@Profile("testdata")
 public class AppStartupRunner implements ApplicationRunner {
     private static final Logger logger = LoggerFactory.getLogger(AppStartupRunner.class);
 
@@ -26,17 +28,14 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        logger.info("Your application started with option names : {}", args.getOptionNames());
-        if(args.getNonOptionArgs().contains("addtestdata")) {
-            for(int i = 0; i < 10; i++) {
-                SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
-                Board board = new Board();
-                board.setName("Generated " + i);
-                List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
-                board.setInformationCards(informationCard);
-                board.setColumnDefinitions(columnDefinitions);
-                boardRepository.save(board);
-            }
+        for (int i = 0; i < 10; i++) {
+            SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+            Board board = new Board();
+            board.setName("Generated " + i);
+            List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
+            board.setInformationCards(informationCard);
+            board.setColumnDefinitions(columnDefinitions);
+            boardRepository.save(board);
         }
     }
 }

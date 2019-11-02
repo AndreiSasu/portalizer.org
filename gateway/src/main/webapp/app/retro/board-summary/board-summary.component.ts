@@ -28,7 +28,13 @@ export class BoardSummaryComponent implements OnInit {
     // {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
   ];
 
-  constructor(private boardService: BoardService) {}
+  colorMap: Map<string, string> = new Map();
+
+  constructor(private boardService: BoardService) {
+    this.colorMap.set('MAD', 'badge badge-danger');
+    this.colorMap.set('SAD', 'badge badge-warning');
+    this.colorMap.set('GLAD', 'badge badge-success');
+  }
 
   ngOnInit() {
     this.boardService.getBoardSummaries().subscribe(boardSummaries => {
@@ -39,6 +45,9 @@ export class BoardSummaryComponent implements OnInit {
         tile.color = 'lightblue';
         tile.cols = 1;
         tile.rows = 1;
+        boardSummarry.columnDefinitions.forEach(columnDefinition => {
+          columnDefinition.color = this.colorMap.get(columnDefinition.columnType);
+        });
         this.tiles.push(tile);
       });
     });
