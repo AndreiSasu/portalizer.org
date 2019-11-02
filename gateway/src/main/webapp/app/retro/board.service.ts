@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of, from } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 import { BoardSummary } from './model/boards';
 
@@ -21,9 +21,10 @@ export class BoardService {
   constructor(private http: HttpClient) {}
 
   /** GET heroes from the server */
+  /* eslint-disable */
   getBoardSummaries(): Observable<BoardSummary[]> {
     return this.http.get<BoardSummary[]>(this.boardSummaryUrl).pipe(
-      tap(_ => this.log(`fetched heroes ${this.boardSummaryUrl}`)),
+      tap(_ => console.log(`fetched boardsummaries ${this.boardSummaryUrl}`)),
       catchError(this.handleError<BoardSummary[]>('getBoardSummaries', []))
     );
   }
@@ -34,21 +35,17 @@ export class BoardService {
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
+  /* eslint-disable */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       console.error(error); // log to console instead
 
       // TODO: better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`);
+      console.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
-  }
-
-  /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    console.log(`PROD BoardService: ${message}`);
   }
 }

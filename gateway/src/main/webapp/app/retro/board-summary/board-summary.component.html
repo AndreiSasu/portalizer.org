@@ -1,6 +1,34 @@
-<p>board-summary works!</p>
+<mat-grid-list cols="4" role="list">
+    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows"
+        [style.background]="tile.color" role="listitem">
+        <div class="card border-primary mb-3">
+            <div class="card-header"> Sprint 21 - {{ tile.boardSummary.createdAt }} </div>
+            <div class="card-body">
+                <h4 class="card-title">{{ tile.boardSummary.name }}</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p>
+
+                <a href="#" class="card-link">Open </a>
+                <a href="#" class="card-link">Remove</a>
+            </div>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
+
 <ul>
     <li *ngFor="let boardsummary of boardSummaries">
-        {{ boardsummary | json }}
+        <div class="card border-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"> Sprint 21 - {{ boardsummary.createdAt }} </div>
+            <div class="card-body">
+                <h4 class="card-title">{{ boardsummary.name }}</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p>
+
+                <a href="#" class="card-link">Open </a>
+                <a href="#" class="card-link">Remove</a>
+            </div>
+        </div>
     </li>
 </ul>
