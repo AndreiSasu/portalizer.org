@@ -26,7 +26,7 @@ public class AppStartupRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        logger.info("Your application started with option names : {}", args.getNonOptionArgs());
+        logger.info("Your application started with option names : {}", args.getOptionNames());
         if(args.getNonOptionArgs().contains("addtestdata")) {
             for(int i = 0; i < 10; i++) {
                 SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
