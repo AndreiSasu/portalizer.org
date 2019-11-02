@@ -22,6 +22,8 @@ eureka:
 spring:
   application:
     name: retro
+  jackson:
+    default-property-inclusion: non_null
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:h2:mem:retro;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MULTI_THREADED=FALSE

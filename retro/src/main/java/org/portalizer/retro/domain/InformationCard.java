@@ -1,20 +1,31 @@
 package org.portalizer.retro.domain;
 
+
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "information_card")
 public class InformationCard {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(generator = "UUID", strategy = GenerationType.IDENTITY)
+    @GenericGenerator(
+        name = "UUID",
+        strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Type(type="uuid-char")
+    private UUID id;
 
     @NotNull
     @ManyToOne
@@ -33,6 +44,13 @@ public class InformationCard {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public Board getBoard() {
         return board;
@@ -40,14 +58,6 @@ public class InformationCard {
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getText() {
@@ -102,7 +112,7 @@ public class InformationCard {
     @Override
     public String toString() {
         return "InformationCard{" +
-            "id=" + id +
+            "cardId=" + id +
             ", text='" + text + '\'' +
             ", columnType=" + columnType +
             ", createdAt=" + createdAt +

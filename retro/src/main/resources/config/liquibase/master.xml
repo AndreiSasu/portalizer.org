@@ -14,12 +14,6 @@
     <property name="uuidType" value="varchar(36)" dbms="h2, mysql, mariadb"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-<!--    <include file="config/liquibase/changelog/20190929110659_added_entity_BoardColumn.xml" relativeToChangelogFile="false"/>-->
-<!--    <include file="config/liquibase/changelog/20190929111211_added_entity_BoardSummary.xml" relativeToChangelogFile="false"/>-->
-<!--    &lt;!&ndash; jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here &ndash;&gt;-->
-<!--    <include file="config/liquibase/changelog/20190929110659_added_entity_constraints_BoardColumn.xml" relativeToChangelogFile="false"/>-->
-    <include file="config/liquibase/changelog/20191001184329_changelog.xml" relativeToChangelogFile="false"/>
-<!--    <include file="config/liquibase/changelog/20191005140846_changelog.xml" relativeToChangelogFile="false"/>-->
-    <include file="config/liquibase/changelog/20191005205412_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20191026135259_changelog.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

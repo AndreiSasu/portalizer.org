@@ -105,6 +105,8 @@ management:
 spring:
   application:
     name: retro
+  jackson:
+    default-property-inclusion: non_null
   jmx:
     enabled: false
   data:

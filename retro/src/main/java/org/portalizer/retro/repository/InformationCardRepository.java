@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface InformationCardRepository extends JpaRepository<InformationCard, Long> {
+public interface InformationCardRepository extends JpaRepository<InformationCard, UUID> {
     Optional<List<InformationCard>> findAllByBoardId(final UUID boardId);
+    boolean existsByIdAndBoardId(final UUID id, final UUID boardId);
+    Optional<InformationCard> findByIdAndBoardId(final UUID id, final UUID boardId);
 }

@@ -1,6 +1,8 @@
 package org.portalizer.retro.service.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 import org.portalizer.retro.domain.Board;
 import org.portalizer.retro.service.dto.BoardDTO;
 
@@ -10,6 +12,8 @@ import java.util.UUID;
 public interface BoardMapper extends EntityMapper<BoardDTO, Board> {
 
     @Override
+    @Mappings({@Mapping(source = "createdAt", target = "createdAt", ignore = true),
+        @Mapping(source = "id", target = "id", ignore = true)})
     Board toEntity(BoardDTO dto);
 
     @Override
