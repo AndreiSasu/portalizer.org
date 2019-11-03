@@ -12,6 +12,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -31,9 +32,13 @@ public class AppStartupRunner implements ApplicationRunner {
         for (int i = 0; i < 10; i++) {
             SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
             Board board = new Board();
-            board.setName("Generated " + i);
-            List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
-            board.setInformationCards(informationCard);
+            board.setName("Generated Board Name: " + i + " for Sprint " + i);
+            final List<InformationCard> informationCards = new ArrayList<>();
+            for(int x = 0; x < 10; x++) {
+                informationCards.addAll(EntityUtils.cardForEachColumn(board, columnDefinitions));
+            }
+
+            board.setInformationCards(informationCards);
             board.setColumnDefinitions(columnDefinitions);
             boardRepository.save(board);
         }

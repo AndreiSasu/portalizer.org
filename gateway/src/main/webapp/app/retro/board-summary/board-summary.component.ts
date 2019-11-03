@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
 import { BoardSummary } from '../model/boards';
 import { faEye, faTrash, faArchive } from '@fortawesome/free-solid-svg-icons';
+import { ColorsService } from '../colors.service';
 
 export class Tile {
   color: string;
@@ -33,13 +34,7 @@ export class BoardSummaryComponent implements OnInit {
   faTrash = faTrash;
   faArchive = faArchive;
 
-  colorMap: Map<string, string> = new Map();
-
-  constructor(private boardService: BoardService) {
-    this.colorMap.set('MAD', 'badge badge-danger');
-    this.colorMap.set('SAD', 'badge badge-warning');
-    this.colorMap.set('GLAD', 'badge badge-success');
-  }
+  constructor(private boardService: BoardService, private colorService: ColorsService) {}
 
   ngOnInit() {
     this.boardService.getBoardSummaries().subscribe(boardSummaries => {
@@ -50,9 +45,6 @@ export class BoardSummaryComponent implements OnInit {
         tile.color = 'lightblue';
         tile.cols = 1;
         tile.rows = 1;
-        boardSummarry.columnDefinitions.forEach(columnDefinition => {
-          columnDefinition.color = this.colorMap.get(columnDefinition.columnType);
-        });
         this.tiles.push(tile);
       });
     });

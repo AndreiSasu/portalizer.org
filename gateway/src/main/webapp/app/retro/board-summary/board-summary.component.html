@@ -10,7 +10,7 @@
 
                 <p>
                     <span *ngFor="let columnDefinition of boardsummary.columnDefinitions"
-                        [ngClass]="[columnDefinition.color]">{{columnDefinition.columnType}}</span>
+                        [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.columnType)]">{{columnDefinition.columnType}}</span>
                 </p>
 
                 <div class="btn-group">

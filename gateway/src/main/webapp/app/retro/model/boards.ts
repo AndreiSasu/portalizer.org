@@ -23,3 +23,16 @@ export class InformationCard {
 export class Board extends BoardSummary {
   informationCards: Array<InformationCard>;
 }
+
+export class BoardColumnVM extends BoardColumn {
+  informationCards: Array<InformationCard>;
+
+  static of(boardColumn: BoardColumn): BoardColumnVM {
+    const boardColumnVM = new BoardColumnVM();
+    boardColumnVM.color = boardColumn.color;
+    boardColumnVM.columnType = boardColumn.columnType;
+    boardColumnVM.title = boardColumn.title;
+    boardColumnVM.informationCards = [];
+    return boardColumnVM;
+  }
+}
