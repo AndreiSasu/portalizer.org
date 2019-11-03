@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { BoardSummary } from './model/boards';
+import { BoardSummary, Board } from './model/boards';
 
 import { SERVER_API_URL } from '../app.constants';
 
@@ -17,6 +17,7 @@ export class BoardService {
   };
 
   private boardSummaryUrl = SERVER_API_URL + '/services/retro/api/boards';
+  private boardByIdUrl = SERVER_API_URL + '/services/retro/api/boards/';
 
   constructor(private http: HttpClient) {}
 
@@ -26,6 +27,13 @@ export class BoardService {
     return this.http.get<BoardSummary[]>(this.boardSummaryUrl).pipe(
       tap(_ => console.log(`fetched boardsummaries ${this.boardSummaryUrl}`)),
       catchError(this.handleError<BoardSummary[]>('getBoardSummaries', []))
+    );
+  }
+
+  getBoardById(id: string): Observable<Board> {
+    return this.http.get<Board>(this.boardByIdUrl + id).pipe(
+      tap(_ => console.log(`fetched full board ${this.boardByIdUrl}${id}`)),
+      catchError(this.handleError<Board>(`getBoardById ${id}`))
     );
   }
 
@@ -45,6 +53,9 @@ export class BoardService {
       console.log(`${operation} failed: ${error.message}`);
 
       // Let the app keep running by returning an empty result.
+      if (result === undefined) {
+        return of(error);
+      }
       return of(result as T);
     };
   }
