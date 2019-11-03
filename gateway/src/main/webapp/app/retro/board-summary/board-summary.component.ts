@@ -33,8 +33,11 @@ export class BoardSummaryComponent implements OnInit {
   faEye = faEye;
   faTrash = faTrash;
   faArchive = faArchive;
+  colorService: ColorsService;
 
-  constructor(private boardService: BoardService, private colorService: ColorsService) {}
+  constructor(private boardService: BoardService, colorService: ColorsService) {
+    this.colorService = colorService;
+  }
 
   ngOnInit() {
     this.boardService.getBoardSummaries().subscribe(boardSummaries => {

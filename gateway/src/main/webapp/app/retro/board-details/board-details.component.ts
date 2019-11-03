@@ -19,8 +19,11 @@ export class BoardDetailsComponent implements OnInit {
 
   columnAndCards: Map<String, BoardColumnVM> = new Map();
   boardColumnVMs: Array<BoardColumnVM> = [];
+  colorService: ColorsService;
 
-  constructor(private route: ActivatedRoute, private boardService: BoardService, private colorService: ColorsService) {}
+  constructor(private route: ActivatedRoute, private boardService: BoardService, colorService: ColorsService) {
+    this.colorService = colorService;
+  }
 
   /* eslint-disable */
   ngOnInit() {
