@@ -43,7 +43,9 @@ export class NavbarComponent implements OnInit {
     this.isNavbarCollapsed = true;
   }
 
+  /* eslint-disable */
   isAuthenticated() {
+    console.log('---- is authenticated: ' + this.accountService.isAuthenticated());
     return this.accountService.isAuthenticated();
   }
 

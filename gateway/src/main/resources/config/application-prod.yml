@@ -24,7 +24,7 @@ eureka:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://admin:${jhipster.registry.password}@internal-registry-service-1975606347.eu-west-1.elb.amazonaws.com:8761/eureka/
+      defaultZone: http://admin:${jhipster.registry.password}@registry.local:8761/eureka/
 
 management:
   metrics:

@@ -1,0 +1,34 @@
+<h1>
+    {{board.name}}
+    <small class="text-muted">Created at: {{board.createdAt}}</small>
+</h1>
+
+<div class="row">
+    <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs">
+        <div [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.columnType), 'mb-3']">
+            <h4 class="card-header"><b> {{ boardColumnVM.title }}</b>
+            </h4>
+
+            <button type="button" class="btn btn-primary btn-lg btn-block">
+                <fa-icon [icon]="faPlusCircle"></fa-icon> Add item
+            </button>
+
+            <div class="card-body">
+                <div *ngFor="let informationCard of boardColumnVM.informationCards">
+                    <div [ngClass]="['card', 'text-white', 'bg-'+colorService.getColor(boardColumnVM.columnType), 'mb-3']">
+                        <div class="card-body">
+                            <p class="card-text"> {{informationCard.text}} </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<p *ngIf="error">{{ error }} </p>
+<pre>
+    {{ board | json }}
+</pre>

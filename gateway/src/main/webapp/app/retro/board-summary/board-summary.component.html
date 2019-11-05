@@ -1,0 +1,31 @@
+<div class="cardList">
+    <div *ngFor="let boardsummary of boardSummaries">
+        <div class="card border-primary mb-3" style="max-width: 20rem;">
+            <div class="card-header"> Sprint 21 - {{ boardsummary.createdAt }} </div>
+            <div class="card-body">
+                <h4 class="card-title">{{ boardsummary.name }}</h4>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                    card's
+                    content.</p>
+
+                <p>
+                    <span *ngFor="let columnDefinition of boardsummary.columnDefinitions"
+                        [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.columnType)]">{{columnDefinition.columnType}}</span>
+                </p>
+
+                <div class="btn-group">
+                    <a href="retro/boards/{{boardsummary.id}}" class="btn btn-primary active">
+                        <fa-icon [icon]="faEye"></fa-icon> View
+                    </a>
+                    <a href="/cancel/1" class="btn btn-secondary card-link" data-dismiss="modal">
+                        <fa-icon [icon]="faTrash"></fa-icon> Remove
+                    </a>
+
+                    <a href="/cancel/1" class="btn btn-info card-link" data-dismiss="modal">
+                        <fa-icon [icon]="faArchive"></fa-icon> Archive
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
