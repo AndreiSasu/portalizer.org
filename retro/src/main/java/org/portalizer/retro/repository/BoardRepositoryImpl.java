@@ -40,9 +40,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
         //get all information cards
         Optional<List<InformationCard>> informationCards = informationCardRepository.findAllByBoardId(board.getId());
-        if(informationCards.isPresent()) {
-            board.setInformationCards(informationCards.get());
-        }
+        board.setInformationCards(informationCards.orElse(new ArrayList<>()));
         return Optional.ofNullable(board);
     }
 }

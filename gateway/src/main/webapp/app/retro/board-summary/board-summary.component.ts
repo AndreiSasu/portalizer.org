@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary } from '../model/boards';
+import { BoardSummary, Boards, CreateBoardRequest, BoardColumn } from '../model/boards';
 import { faEye, faTrash, faArchive } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export class Tile {
   color: string;
@@ -19,24 +20,24 @@ export class Tile {
 })
 export class BoardSummaryComponent implements OnInit {
   boardSummaries: BoardSummary[];
-  tiles: Tile[] = [
-    // {text: 'One', cols: 1, rows: 1, color: 'lightblue'},
-    // {text: 'Two', cols: 1, rows: 1, color: 'lightgreen'},
-    // {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    // {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-    // {text: 'One', cols: 1, rows: 1, color: 'lightblue'},
-    // {text: 'Two', cols: 1, rows: 1, color: 'lightgreen'},
-    // {text: 'Three', cols: 1, rows: 1, color: 'lightpink'},
-    // {text: 'Four', cols: 1, rows: 1, color: '#DDBDF1'},
-  ];
+  tiles: Tile[] = [];
 
   faEye = faEye;
   faTrash = faTrash;
   faArchive = faArchive;
   colorService: ColorsService;
+  closeResult: string;
+  boards: Boards;
 
-  constructor(private boardService: BoardService, colorService: ColorsService) {
+  formModel = {
+    boardName: '',
+    templateKey: '',
+    description: ''
+  };
+
+  constructor(private boardService: BoardService, colorService: ColorsService, private modalService: NgbModal, boards: Boards) {
     this.colorService = colorService;
+    this.boards = boards;
   }
 
   ngOnInit() {
@@ -51,5 +52,37 @@ export class BoardSummaryComponent implements OnInit {
         this.tiles.push(tile);
       });
     });
+  }
+
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  /* eslint-disable */
+  onSubmit() {
+    const request: CreateBoardRequest = this.formModelToRequest(this.formModel);
+    console.log(request);
+    this.boardService.createBoard(request).subscribe(
+      board => {
+        console.log(board);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  formModelToRequest(formModel): CreateBoardRequest {
+    // MAD - SAD - GLAD: (Most simple 3 column board)
+    const key = formModel.templateKey.split(':')[0];
+    const columnDefinitions: BoardColumn[] = this.boards.getTemplates().filter(boardTemplate => {
+      return boardTemplate.key === key;
+    })[0].boardColumns;
+    return new CreateBoardRequest(formModel.boardName, columnDefinitions);
+  }
+
+  // TODO: Remove this when we're done
+  get diagnostic() {
+    return JSON.stringify(this.formModel);
   }
 }

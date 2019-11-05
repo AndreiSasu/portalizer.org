@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { BoardSummary, Board } from './model/boards';
+import { BoardSummary, Board, CreateBoardRequest } from './model/boards';
 
 import { SERVER_API_URL } from '../app.constants';
 
@@ -37,13 +37,20 @@ export class BoardService {
     );
   }
 
+  /** POST: add a new hero to the server */
+  createBoard(createBoardRequest: CreateBoardRequest): Observable<Board> {
+    return this.http.post<Board>(this.boardSummaryUrl, createBoardRequest, this.httpOptions).pipe(
+      tap((newBoard: Board) => console.log(`added hero w/ id=${newBoard.id}`)),
+      catchError(this.handleError<Board>('createBoard'))
+    );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
-  /* eslint-disable */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure

@@ -44,6 +44,18 @@ public class BoardRepositoryTest {
     }
 
     @Test
+    public void testFindFullBoardByIdNullInformationCardsReturnsEmptyList() {
+        Board board = new Board();
+        board.setName("Test");
+        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        board.setColumnDefinitions(columnDefinitions);
+
+        Board savedBoard = boardRepository.save(board);
+        Board foundBoard = boardRepository.findFullBoardById(savedBoard.getId()).get();
+        Assertions.assertThat(foundBoard.getInformationCards()).isEmpty();
+    }
+
+    @Test
     public void testCanAddInformationCardToExistingBoard() {
         SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();

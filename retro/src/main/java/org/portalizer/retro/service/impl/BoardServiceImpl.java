@@ -16,7 +16,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-                    public class BoardServiceImpl implements BoardService {
+public class BoardServiceImpl implements BoardService {
 
     private BoardRepository boardRepository;
     private BoardMapper boardMapper;
