@@ -13,7 +13,7 @@
                 <fa-icon [icon]="faPlusCircle"></fa-icon> Add item
             </button>
 
-            <div class="card-body">
+            <div class="card-body" style="padding-left: 1%; padding-right: 1%;">
                 <div *ngFor="let informationCard of boardColumnVM.informationCards; let i = index;">
                     <div
                         [ngClass]="['card', 'text-white', 'bg-'+colorService.getColor(boardColumnVM.columnType), 'mb-2']">
