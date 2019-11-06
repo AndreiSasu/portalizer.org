@@ -4,7 +4,7 @@ import { Board, BoardColumn, InformationCard, BoardColumnVM } from '../model/boa
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
 
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'jhi-board-details',
@@ -16,6 +16,8 @@ export class BoardDetailsComponent implements OnInit {
   board: Board;
   error: string;
   faPlusCircle = faPlusCircle;
+  faTrash = faTrash;
+  faEdit = faEdit;
 
   columnAndCards: Map<String, BoardColumnVM> = new Map();
   boardColumnVMs: Array<BoardColumnVM> = [];
@@ -56,5 +58,21 @@ export class BoardDetailsComponent implements OnInit {
     this.columnAndCards.forEach((value: BoardColumnVM, key: string) => {
       this.boardColumnVMs.push(value);
     });
+  }
+
+  addBlankCard(boardColumnVM: BoardColumnVM) {
+    console.log('Adding blank card to ' + JSON.stringify(boardColumnVM));
+    const blankCard = new InformationCard();
+    blankCard.boardId = this.board.id;
+    blankCard.columnType = boardColumnVM.columnType;
+    blankCard.createdAt = new Date();
+    blankCard.updatedAt = new Date();
+    blankCard.text = 'test123';
+    boardColumnVM.informationCards.push(blankCard);
+  }
+
+  removeCard(boardColumnVM: BoardColumnVM, index: number) {
+    console.log('removing card with index ' + index + ' from ' + JSON.stringify(boardColumnVM));
+    boardColumnVM.informationCards.splice(index, 1);
   }
 }
