@@ -7,9 +7,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { BoardDetailsComponent } from './board-details/board-details.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
-
+import { SortByPipe } from './sort-by.pipe';
 @NgModule({
-  declarations: [BoardSummaryComponent, BoardDetailsComponent],
+  declarations: [SortByPipe, BoardSummaryComponent, BoardDetailsComponent],
   imports: [FontAwesomeModule, MatGridListModule, CommonModule, FormsModule, RetroRoutingModule]
 })
 export class RetroModule {}

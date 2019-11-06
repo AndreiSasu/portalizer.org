@@ -16,31 +16,30 @@ export class BoardService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  private boardSummaryUrl = SERVER_API_URL + '/services/retro/api/boards';
-  private boardByIdUrl = SERVER_API_URL + '/services/retro/api/boards/';
+  BOARDS_URL = SERVER_API_URL + '/services/retro/api/boards/';
 
   constructor(private http: HttpClient) {}
 
   /** GET heroes from the server */
   /* eslint-disable */
   getBoardSummaries(): Observable<BoardSummary[]> {
-    return this.http.get<BoardSummary[]>(this.boardSummaryUrl).pipe(
-      tap(_ => console.log(`fetched boardsummaries ${this.boardSummaryUrl}`)),
+    return this.http.get<BoardSummary[]>(this.BOARDS_URL).pipe(
+      tap(_ => console.log(`fetched boardsummaries ${this.BOARDS_URL}`)),
       catchError(this.handleError<BoardSummary[]>('getBoardSummaries', []))
     );
   }
 
   getBoardById(id: string): Observable<Board> {
-    return this.http.get<Board>(this.boardByIdUrl + id).pipe(
-      tap(_ => console.log(`fetched full board ${this.boardByIdUrl}${id}`)),
+    return this.http.get<Board>(this.BOARDS_URL + id).pipe(
+      tap(_ => console.log(`fetched full board ${this.BOARDS_URL}${id}`)),
       catchError(this.handleError<Board>(`getBoardById ${id}`))
     );
   }
 
   /** POST: add a new hero to the server */
   createBoard(createBoardRequest: CreateBoardRequest): Observable<Board> {
-    return this.http.post<Board>(this.boardSummaryUrl, createBoardRequest, this.httpOptions).pipe(
-      tap((newBoard: Board) => console.log(`added hero w/ id=${newBoard.id}`)),
+    return this.http.post<Board>(this.BOARDS_URL, createBoardRequest, this.httpOptions).pipe(
+      tap((newBoard: Board) => console.log(`added board w/ id=${newBoard.id}`)),
       catchError(this.handleError<Board>('createBoard'))
     );
   }

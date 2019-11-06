@@ -57,7 +57,7 @@ export class Boards {
   constructor() {
     this.boardTemplates.push(
       new BoardTemplate(
-        'MAD - SAD - GLAD',
+        'Mad - Sad - Glad',
         [
           {
             columnType: 'MAD',

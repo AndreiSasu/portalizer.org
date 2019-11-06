@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
 import { BoardSummary, Boards, CreateBoardRequest, BoardColumn } from '../model/boards';
-import { faEye, faTrash, faArchive } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faTrash, faArchive, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 export class Tile {
   color: string;
@@ -25,6 +26,7 @@ export class BoardSummaryComponent implements OnInit {
   faEye = faEye;
   faTrash = faTrash;
   faArchive = faArchive;
+  faPlusSquare = faPlusSquare;
   colorService: ColorsService;
   closeResult: string;
   boards: Boards;
@@ -35,7 +37,13 @@ export class BoardSummaryComponent implements OnInit {
     description: ''
   };
 
-  constructor(private boardService: BoardService, colorService: ColorsService, private modalService: NgbModal, boards: Boards) {
+  constructor(
+    private boardService: BoardService,
+    private router: Router,
+    private modalService: NgbModal,
+    colorService: ColorsService,
+    boards: Boards
+  ) {
     this.colorService = colorService;
     this.boards = boards;
   }
@@ -65,6 +73,8 @@ export class BoardSummaryComponent implements OnInit {
     this.boardService.createBoard(request).subscribe(
       board => {
         console.log(board);
+        console.log(this.router.url);
+        this.router.navigateByUrl('retro/boards/' + board.id);
       },
       error => {
         console.log(error);
@@ -73,8 +83,7 @@ export class BoardSummaryComponent implements OnInit {
   }
 
   formModelToRequest(formModel): CreateBoardRequest {
-    // MAD - SAD - GLAD: (Most simple 3 column board)
-    const key = formModel.templateKey.split(':')[0];
+    const key = formModel.templateKey;
     const columnDefinitions: BoardColumn[] = this.boards.getTemplates().filter(boardTemplate => {
       return boardTemplate.key === key;
     })[0].boardColumns;

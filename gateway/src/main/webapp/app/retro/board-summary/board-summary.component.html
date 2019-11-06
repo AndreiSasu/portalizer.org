@@ -8,7 +8,7 @@
     <div class="modal-body">
         {{diagnostic}}
 
-        <form (ngSubmit)="onSubmit(); modal.dismiss('Submitted')" #newBoardForm="ngForm"> 
+        <form (ngSubmit)="onSubmit(); modal.dismiss('Submitted')" #newBoardForm="ngForm">
             <fieldset>
                 <div class="form-group">
                     <label class="col-form-label col-form-label-lg" for="boardName">Board Name</label>
@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <select class="custom-select" [(ngModel)]="formModel.templateKey" name="templateKey" required>
                         <option *ngFor="let boardTemplate of boards.getTemplates()" selected="">
-                            {{boardTemplate.key}}: {{boardTemplate.description}}</option>
+                            {{boardTemplate.key}} </option>
                     </select>
                 </div>
 
@@ -39,12 +39,31 @@
     </div>
 </ng-template>
 
-<div id="toolbar">
-    <button class="btn btn-outline-primary mb-2 mr-2" (click)="openVerticallyCentered(content)">Add New Board</button>
+<div id="toolbar" class="summary-toolbar">
+    <!-- <input class="form-control mr-sm-2" type="text" placeholder="Search">
+    <button class="btn btn-primary" (click)="openVerticallyCentered(content)">Add New
+        Board</button> -->
+    <!-- <div class="input-group mb-3">
+        <div class="input-group-append"> -->
+    <input type="text" class="form-control" placeholder="Default input" id="inputDefault"
+        placeholder="Search Board Name">
+    <!-- </div>
+        <div class="input-group-append">
+            <span class="input-group-text" id="">Search</span>
+        </div>
+    </div> -->
+
 </div>
+<br>
 
 <div class="cardList">
-    <div *ngFor="let boardsummary of boardSummaries">
+
+    <button class="btn btn-outline-primary mb-3" style="max-width: 20rem; vertical-align:middle;" (click)="openVerticallyCentered(content)">
+        <fa-icon [icon]="faPlusSquare" style="size: 9x;" class="fa-10x"></fa-icon>
+        <br>Add New Board
+    </button>
+
+    <div *ngFor="let boardsummary of boardSummaries | sortBy:'desc':'createdAt'">
         <div class="card border-primary mb-3" style="max-width: 20rem;">
             <div class="card-header"> Sprint 21 - {{ boardsummary.createdAt }} </div>
             <div class="card-body">
