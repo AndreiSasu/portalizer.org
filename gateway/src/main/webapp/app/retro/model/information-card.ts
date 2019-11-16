@@ -31,3 +31,5 @@ export class CreateCardRequest {
   columnType: string;
   text: string;
 }
+
+export class UpdateCardRequest {}

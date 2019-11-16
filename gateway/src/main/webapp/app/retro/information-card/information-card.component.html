@@ -1,7 +1,7 @@
 <div [ngClass]="['card', 'text-white', 'bg-'+color, 'mb-2']">
     <div class="card-body">
         <a style="float: right;">
-            <fa-icon [icon]="faTrash" (click)="removeCard(boardColumnVM, i)"></fa-icon>
+            <fa-icon [icon]="faTrash" (click)="onRemove()"></fa-icon>
         </a>
         <br>
         <p *ngIf="!this.editMode" class="card-text"> {{informationCard.text}} </p>

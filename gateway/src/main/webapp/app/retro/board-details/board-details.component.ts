@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board, BoardColumn, BoardColumnVM } from '../model/boards';
 import { InformationCard, CreateCardRequest, InformationCardVM } from '../model/information-card';
@@ -75,49 +75,48 @@ export class BoardDetailsComponent implements OnInit {
     blankCard.columnType = boardColumnVM.columnType;
     blankCard.editMode = true;
     blankCard.key = uuid.v4();
-    boardColumnVM.informationCards.unshift(blankCard);
+    boardColumnVM.informationCards = [...boardColumnVM.informationCards, blankCard];
   }
 
-  removeCard(boardColumnVM: BoardColumnVM, index: number) {
-    console.log('removing card with index ' + index + ' from ' + JSON.stringify(boardColumnVM));
-    boardColumnVM.informationCards.splice(index, 1);
+  removeCard(informationCardVM: InformationCardVM) {
+    const keyToRemove = informationCardVM.key;
+    console.log('removing card with key ' + informationCardVM.key + ' from ' + informationCardVM.columnType);
+    const boardColumnVM = this.columnAndCards.get(informationCardVM.columnType);
+
+    // remove previous unsaved card
+    boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
+      return informationCardVM.key !== keyToRemove;
+    });
   }
 
   onSaveCard(informationCardVM: InformationCardVM) {
     console.log(informationCardVM);
-    const keyToRemove = informationCardVM.key;
     //card was not saved before
     if (null == informationCardVM.id) {
-      const createCardRequest = new CreateCardRequest();
-      createCardRequest.boardId = this.board.id;
-      createCardRequest.columnType = informationCardVM.columnType;
-      createCardRequest.text = informationCardVM.text;
-
-      this.informationCardService.addCard(createCardRequest).subscribe(
-        informationCard => {
-          console.log(informationCard);
-          const boardColumnVM = this.columnAndCards.get(informationCard.columnType);
-          boardColumnVM.informationCards.push(InformationCardVM.of(informationCard));
-        },
-        error => {
-          console.log(error);
-          this.error = error;
-        }
-      );
+      this.createCard(informationCardVM);
     } else {
       console.log('Card was saved before');
+      this.updateCard(informationCardVM);
     }
   }
 
-  createCard(boardColumnVM: BoardColumnVM, index: number) {
+  createCard(informationCardVM: InformationCardVM) {
+    const keyToRemove = informationCardVM.key;
     const createCardRequest = new CreateCardRequest();
     createCardRequest.boardId = this.board.id;
-    createCardRequest.columnType = boardColumnVM.columnType;
-    createCardRequest.text = '';
+    createCardRequest.columnType = informationCardVM.columnType;
+    createCardRequest.text = informationCardVM.text;
 
     this.informationCardService.addCard(createCardRequest).subscribe(
       informationCard => {
         console.log(informationCard);
+        const boardColumnVM = this.columnAndCards.get(informationCard.columnType);
+
+        // remove previous unsaved card
+        boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
+          return informationCardVM.key !== keyToRemove;
+        });
+
         boardColumnVM.informationCards.push(InformationCardVM.of(informationCard));
       },
       error => {
@@ -126,4 +125,6 @@ export class BoardDetailsComponent implements OnInit {
       }
     );
   }
+
+  updateCard(informationCardVM: InformationCardVM) {}
 }

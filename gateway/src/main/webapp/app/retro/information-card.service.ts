@@ -26,6 +26,6 @@ export class InformationCardService {
       .post<InformationCard>(this.CARDS_URL, createCardRequest, this.httpOptions)
       .pipe(tap((newCard: InformationCard) => console.log(`added card w/ id=${newCard.id}`)));
   }
-  removeCard() {}
+  removeCard(id: string) {}
   updateCard() {}
 }

@@ -16,10 +16,12 @@
             </button>
 
             <div class="card-body" style="padding-left: 1%; padding-right: 1%;">
-                <div *ngFor="let informationCard of boardColumnVM.informationCards; let i = index;">
+                <div
+                    *ngFor="let informationCard of boardColumnVM.informationCards | sortBy:'desc':'updatedAt'; let i = index;">
 
                     <jhi-information-card [color]="colorService.getColor(boardColumnVM.columnType)"
-                        [informationCard]="informationCard" (saved)="onSaveCard($event)"></jhi-information-card>
+                        [informationCard]="informationCard" (removed)="removeCard($event)" (saved)="onSaveCard($event)">
+                    </jhi-information-card>
 
                 </div>
             </div>
@@ -28,4 +30,3 @@
 
     </div>
 </div>
-

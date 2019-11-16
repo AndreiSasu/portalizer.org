@@ -11,6 +11,7 @@ export class InformationCardComponent implements OnInit {
   @Input() color: string;
   @Input() informationCard: InformationCardVM;
   @Output() saved = new EventEmitter<InformationCardVM>();
+  @Output() removed = new EventEmitter<InformationCardVM>();
 
   faTrash = faTrash;
   faEdit = faEdit;
@@ -25,5 +26,9 @@ export class InformationCardComponent implements OnInit {
   onSave() {
     this.saved.emit(this.informationCard);
     this.editMode = false;
+  }
+
+  onRemove() {
+    this.removed.emit(this.informationCard);
   }
 }
