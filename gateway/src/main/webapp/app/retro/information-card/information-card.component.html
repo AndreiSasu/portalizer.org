@@ -1,15 +1,16 @@
 <div [ngClass]="['card', 'text-white', 'bg-'+color, 'mb-2']">
     <div class="card-body">
-        <a style="float: right;">
-            <fa-icon [icon]="faTrash" (click)="onRemove()"></fa-icon>
-        </a>
+
         <br>
         <p *ngIf="!this.editMode" class="card-text"> {{informationCard.text}} </p>
         <div class="form-group" *ngIf="this.editMode">
-            <textarea class="form-control" id="boardDescription" name="boardDescription"
-                [(ngModel)]="text" rows="5"></textarea>
+            <textarea class="form-control" id="boardDescription" name="boardDescription" [(ngModel)]="text"
+                rows="5"></textarea>
             <button type="button" [disabled]="!text" (click)="onSave()" class="btn btn-success">Save</button>
         </div>
+        <a style="float: right; padding-left: 5%;">
+            <fa-icon [icon]="faTrash" (click)="onRemove()"></fa-icon>
+        </a>
         <a style="float: right;">
             <fa-icon [icon]="faEdit" (click)="this.editMode=true"></fa-icon>
         </a>

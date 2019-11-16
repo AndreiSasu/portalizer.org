@@ -6,7 +6,7 @@ import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardReques
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
 import { InformationCardService } from '../information-card.service';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faSync } from '@fortawesome/free-solid-svg-icons';
 import * as uuid from 'uuid';
 
 @Component({
@@ -19,6 +19,7 @@ export class BoardDetailsComponent implements OnInit {
   board: Board;
   error: string;
   faPlusCircle = faPlusCircle;
+  faSync = faSync;
 
   editMode: boolean;
 
@@ -38,6 +39,10 @@ export class BoardDetailsComponent implements OnInit {
   /* eslint-disable */
   ngOnInit() {
     this.boardId = this.route.snapshot.paramMap.get('id');
+    this.refreshBoard();
+  }
+
+  refreshBoard() {
     this.boardService.getBoardById(this.boardId).subscribe(
       board => {
         this.board = board;
@@ -54,6 +59,7 @@ export class BoardDetailsComponent implements OnInit {
 
   /* eslint-disable */
   buildBoardColumnVMs(boardColumns: Array<BoardColumn>, informationCards: Array<InformationCard>) {
+    this.boardColumnVMs = [...[]];
     boardColumns.forEach(element => {
       this.columnAndCards.set(element.columnType, BoardColumnVM.of(element));
     });
