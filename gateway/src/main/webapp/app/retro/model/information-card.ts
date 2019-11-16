@@ -32,4 +32,9 @@ export class CreateCardRequest {
   text: string;
 }
 
-export class UpdateCardRequest {}
+export class UpdateCardRequest {
+  id: string;
+  boardId: string;
+  columnType: string;
+  text: string;
+}

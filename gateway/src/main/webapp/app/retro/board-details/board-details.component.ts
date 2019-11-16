@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board, BoardColumn, BoardColumnVM } from '../model/boards';
-import { InformationCard, CreateCardRequest, InformationCardVM } from '../model/information-card';
+import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
@@ -141,5 +141,30 @@ export class BoardDetailsComponent implements OnInit {
     );
   }
 
-  updateCard(informationCardVM: InformationCardVM) {}
+  updateCard(informationCardVM: InformationCardVM) {
+    const keyToRemove = informationCardVM.key;
+    const updateCardRequest = new UpdateCardRequest();
+    updateCardRequest.id = informationCardVM.id;
+    updateCardRequest.boardId = informationCardVM.boardId;
+    updateCardRequest.text = informationCardVM.text;
+    updateCardRequest.columnType = informationCardVM.columnType;
+
+    this.informationCardService.updateCard(updateCardRequest).subscribe(
+      updatedCard => {
+        console.log(updatedCard);
+        const boardColumnVM = this.columnAndCards.get(updatedCard.columnType);
+
+        // remove previous unsaved card
+        boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
+          return informationCardVM.key !== keyToRemove;
+        });
+
+        boardColumnVM.informationCards.push(InformationCardVM.of(updatedCard));
+      },
+      error => {
+        console.log(error);
+        this.error = error;
+      }
+    );
+  }
 }

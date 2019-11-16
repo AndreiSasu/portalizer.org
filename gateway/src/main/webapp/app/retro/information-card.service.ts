@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 
 import { SERVER_API_URL } from '../app.constants';
 
-import { CreateCardRequest, InformationCard } from './model/information-card';
+import { CreateCardRequest, InformationCard, UpdateCardRequest } from './model/information-card';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +29,9 @@ export class InformationCardService {
   removeCard(id: string): Observable<any> {
     return this.http.delete(this.CARDS_URL + id).pipe(tap(response => console.log(response)));
   }
-  updateCard() {}
+  updateCard(updateCardRequest: UpdateCardRequest): Observable<InformationCard> {
+    return this.http
+      .put<InformationCard>(this.CARDS_URL, updateCardRequest, this.httpOptions)
+      .pipe(tap((updateCard: InformationCard) => console.log(`updated card w/ id=${updateCard.id}`)));
+  }
 }

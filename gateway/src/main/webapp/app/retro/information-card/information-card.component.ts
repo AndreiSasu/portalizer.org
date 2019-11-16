@@ -16,14 +16,17 @@ export class InformationCardComponent implements OnInit {
   faTrash = faTrash;
   faEdit = faEdit;
   editMode: boolean;
+  text: string;
 
   constructor() {}
 
   ngOnInit() {
+    this.text = this.informationCard.text;
     this.editMode = this.informationCard.editMode;
   }
 
   onSave() {
+    this.informationCard.text = this.text;
     this.saved.emit(this.informationCard);
     this.editMode = false;
   }
