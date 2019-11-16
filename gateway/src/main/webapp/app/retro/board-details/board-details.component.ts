@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Board, BoardColumn, InformationCard, BoardColumnVM } from '../model/boards';
+import { Board, BoardColumn, BoardColumnVM } from '../model/boards';
+import { InformationCard } from '../model/information-card';
+
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
+import { InformationCardService } from '../information-card.service';
 
-import { faPlusCircle, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'jhi-board-details',
@@ -16,14 +19,19 @@ export class BoardDetailsComponent implements OnInit {
   board: Board;
   error: string;
   faPlusCircle = faPlusCircle;
-  faTrash = faTrash;
-  faEdit = faEdit;
+
+  editMode: boolean;
 
   columnAndCards: Map<String, BoardColumnVM> = new Map();
   boardColumnVMs: Array<BoardColumnVM> = [];
   colorService: ColorsService;
 
-  constructor(private route: ActivatedRoute, private boardService: BoardService, colorService: ColorsService) {
+  constructor(
+    private route: ActivatedRoute,
+    private boardService: BoardService,
+    private informationCardService: InformationCardService,
+    colorService: ColorsService
+  ) {
     this.colorService = colorService;
   }
 
@@ -74,5 +82,9 @@ export class BoardDetailsComponent implements OnInit {
   removeCard(boardColumnVM: BoardColumnVM, index: number) {
     console.log('removing card with index ' + index + ' from ' + JSON.stringify(boardColumnVM));
     boardColumnVM.informationCards.splice(index, 1);
+  }
+
+  onSaveCard(informationCard: InformationCard) {
+    console.log(informationCard);
   }
 }

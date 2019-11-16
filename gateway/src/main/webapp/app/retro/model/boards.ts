@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { InformationCard } from './information-card';
 
 export class BoardSummary {
   id: string;
@@ -11,15 +12,6 @@ export class BoardColumn {
   columnType: string;
   title: string;
   color?: string;
-}
-
-export class InformationCard {
-  id: string;
-  boardId: string;
-  columnType: string;
-  createdAt: Date;
-  text: string;
-  updatedAt: Date;
 }
 
 export class Board extends BoardSummary {

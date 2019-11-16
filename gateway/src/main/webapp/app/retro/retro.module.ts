@@ -8,8 +8,10 @@ import { BoardDetailsComponent } from './board-details/board-details.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { SortByPipe } from './sort-by.pipe';
+import { InformationCardComponent } from './information-card/information-card.component';
+
 @NgModule({
-  declarations: [SortByPipe, BoardSummaryComponent, BoardDetailsComponent],
+  declarations: [SortByPipe, BoardSummaryComponent, BoardDetailsComponent, InformationCardComponent],
   imports: [FontAwesomeModule, MatGridListModule, CommonModule, FormsModule, RetroRoutingModule]
 })
 export class RetroModule {}
