@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { InformationCard } from './information-card';
+import { InformationCard, InformationCardVM } from './information-card';
 
 export class BoardSummary {
   id: string;
@@ -19,7 +19,7 @@ export class Board extends BoardSummary {
 }
 
 export class BoardColumnVM extends BoardColumn {
-  informationCards: Array<InformationCard>;
+  informationCards: Array<InformationCardVM>;
 
   static of(boardColumn: BoardColumn): BoardColumnVM {
     const boardColumnVM = new BoardColumnVM();

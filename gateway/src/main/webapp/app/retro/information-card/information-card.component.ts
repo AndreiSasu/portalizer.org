@@ -1,5 +1,5 @@
 import { EventEmitter, Input, Output, Component, OnInit } from '@angular/core';
-import { InformationCard } from '../model/information-card';
+import { InformationCard, InformationCardVM } from '../model/information-card';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -9,8 +9,8 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 })
 export class InformationCardComponent implements OnInit {
   @Input() color: string;
-  @Input() informationCard: InformationCard;
-  @Output() saved = new EventEmitter<InformationCard>();
+  @Input() informationCard: InformationCardVM;
+  @Output() saved = new EventEmitter<InformationCardVM>();
 
   faTrash = faTrash;
   faEdit = faEdit;
@@ -18,7 +18,9 @@ export class InformationCardComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.editMode = this.informationCard.editMode;
+  }
 
   onSave() {
     this.saved.emit(this.informationCard);

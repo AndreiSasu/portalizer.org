@@ -1,3 +1,5 @@
+<p *ngIf="error">{{ error }} </p>
+
 <h1>
     {{board?.name}}
     <small class="text-muted">Created at: {{board?.createdAt}}</small>
@@ -27,7 +29,3 @@
     </div>
 </div>
 
-<p *ngIf="error">{{ error }} </p>
-<!-- <pre>
-    {{ board | json }}
-</pre> -->

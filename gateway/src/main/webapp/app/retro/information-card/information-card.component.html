@@ -4,7 +4,7 @@
             <fa-icon [icon]="faTrash" (click)="removeCard(boardColumnVM, i)"></fa-icon>
         </a>
         <br>
-        <p *ngIf="!editMode" class="card-text"> {{informationCard.text}} </p>
+        <p *ngIf="!this.editMode" class="card-text"> {{informationCard.text}} </p>
         <div class="form-group" *ngIf="this.editMode">
             <textarea class="form-control" id="boardDescription" name="boardDescription"
                 [(ngModel)]="informationCard.text" rows="5"></textarea>
