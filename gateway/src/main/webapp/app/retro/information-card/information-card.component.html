@@ -8,7 +8,7 @@
         <div class="form-group" *ngIf="this.editMode">
             <textarea class="form-control" id="boardDescription" name="boardDescription"
                 [(ngModel)]="informationCard.text" rows="5"></textarea>
-            <button type="button" (click)="onSave()" class="btn btn-success">Save</button>
+            <button type="button" (click)="onSave()" class="btn btn-secondary">Save</button>
         </div>
         <a style="float: right;">
             <fa-icon [icon]="faEdit" (click)="this.editMode=true"></fa-icon>

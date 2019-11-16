@@ -1,5 +1,5 @@
 import { EventEmitter, Input, Output, Component, OnInit } from '@angular/core';
-import { InformationCard, InformationCardVM } from '../model/information-card';
+import { InformationCardVM } from '../model/information-card';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({

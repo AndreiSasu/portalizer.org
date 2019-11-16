@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { SERVER_API_URL } from '../app.constants';
 
@@ -26,6 +26,8 @@ export class InformationCardService {
       .post<InformationCard>(this.CARDS_URL, createCardRequest, this.httpOptions)
       .pipe(tap((newCard: InformationCard) => console.log(`added card w/ id=${newCard.id}`)));
   }
-  removeCard(id: string) {}
+  removeCard(id: string): Observable<any> {
+    return this.http.delete(this.CARDS_URL + id).pipe(tap(response => console.log(response)));
+  }
   updateCard() {}
 }

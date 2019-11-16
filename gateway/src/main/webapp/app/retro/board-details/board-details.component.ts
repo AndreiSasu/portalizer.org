@@ -80,13 +80,28 @@ export class BoardDetailsComponent implements OnInit {
 
   removeCard(informationCardVM: InformationCardVM) {
     const keyToRemove = informationCardVM.key;
-    console.log('removing card with key ' + informationCardVM.key + ' from ' + informationCardVM.columnType);
+    const idToRemove = informationCardVM.id;
     const boardColumnVM = this.columnAndCards.get(informationCardVM.columnType);
+    if (null == idToRemove) {
+      // remove previous unsaved card
+      boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
+        return informationCardVM.key !== keyToRemove;
+      });
+      return;
+    }
+    console.log('removing card with key ' + informationCardVM.key + ' from ' + informationCardVM.columnType);
 
-    // remove previous unsaved card
-    boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
-      return informationCardVM.key !== keyToRemove;
-    });
+    this.informationCardService.removeCard(idToRemove).subscribe(
+      response => {
+        // remove previous unsaved card
+        boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
+          return informationCardVM.key !== keyToRemove;
+        });
+      },
+      error => {
+        this.error = error;
+      }
+    );
   }
 
   onSaveCard(informationCardVM: InformationCardVM) {
