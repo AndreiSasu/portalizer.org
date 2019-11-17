@@ -10,6 +10,10 @@ export class ColorsService {
     this.colorMap.set('MAD', 'danger');
     this.colorMap.set('SAD', 'info');
     this.colorMap.set('GLAD', 'success');
+
+    this.colorMap.set('WENT_WELL', 'danger');
+    this.colorMap.set('TO_IMPROVE', 'info');
+    this.colorMap.set('ACTION_ITEMS', 'success');
   }
 
   getColor(key: string): string {

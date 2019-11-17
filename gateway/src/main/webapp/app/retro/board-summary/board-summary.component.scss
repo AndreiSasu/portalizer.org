@@ -18,3 +18,18 @@
 .cardListItem {
   flex: 0 1 calc(33.3% - 32px);
 }
+
+.dark-modal .modal-content {
+  background-color: #292b2c;
+  color: white;
+}
+.dark-modal .close {
+  color: white;
+}
+.light-blue-backdrop {
+  background-color: #7ea9cf;
+}
+
+.summary-toolbar {
+  background-color: rgb(125, 140, 146);
+}

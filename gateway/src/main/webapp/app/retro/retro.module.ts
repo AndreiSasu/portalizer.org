@@ -6,9 +6,12 @@ import { BoardSummaryComponent } from './board-summary/board-summary.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { BoardDetailsComponent } from './board-details/board-details.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FormsModule } from '@angular/forms';
+import { SortByPipe } from './sort-by.pipe';
+import { InformationCardComponent } from './information-card/information-card.component';
 
 @NgModule({
-  declarations: [BoardSummaryComponent, BoardDetailsComponent],
-  imports: [FontAwesomeModule, MatGridListModule, CommonModule, RetroRoutingModule]
+  declarations: [SortByPipe, BoardSummaryComponent, BoardDetailsComponent, InformationCardComponent],
+  imports: [FontAwesomeModule, MatGridListModule, CommonModule, FormsModule, RetroRoutingModule]
 })
 export class RetroModule {}

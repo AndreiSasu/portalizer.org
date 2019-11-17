@@ -1,5 +1,58 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Create Board</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        {{diagnostic}}
+
+        <form (ngSubmit)="onSubmit(); modal.dismiss('Submitted')" #newBoardForm="ngForm">
+            <fieldset>
+                <div class="form-group">
+                    <label class="col-form-label col-form-label-lg" for="boardName">Board Name</label>
+                    <input class="form-control form-control-lg" type="text" placeholder="Enter board name"
+                        id="boardName" name="boardName" required [(ngModel)]="formModel.boardName" #reference="ngModel">
+
+                    <div [hidden]="reference.valid || reference.pristine" class="alert alert-danger">
+                        Board Name is required
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <select class="custom-select" [(ngModel)]="formModel.templateKey" name="templateKey" required>
+                        <option *ngFor="let boardTemplate of boards.getTemplates()" selected="">
+                            {{boardTemplate.key}} </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="boardDescription">Board description</label>
+                    <textarea class="form-control" id="boardDescription" name="boardDescription"
+                        [(ngModel)]="formModel.description" rows="3"></textarea>
+                </div>
+            </fieldset>
+            <button type="submit" class="btn btn-success" [disabled]="!newBoardForm.form.valid">Submit</button>
+            <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        </form>
+    </div>
+</ng-template>
+
+<div id="toolbar" class="summary-toolbar">
+    <input type="text" class="form-control" placeholder="Default input" id="inputDefault"
+        placeholder="Search Board Name">
+</div>
+<br>
+
 <div class="cardList">
-    <div *ngFor="let boardsummary of boardSummaries">
+
+    <button class="btn btn-outline-primary mb-3" style="max-width: 20rem; vertical-align:middle;" (click)="openVerticallyCentered(content)">
+        <fa-icon [icon]="faPlusSquare" style="size: 9x;" class="fa-10x"></fa-icon>
+        <br>Add New Board
+    </button>
+
+    <div *ngFor="let boardsummary of boardSummaries | sortBy:'desc':'createdAt'">
         <div class="card border-primary mb-3" style="max-width: 20rem;">
             <div class="card-header"> Sprint 21 - {{ boardsummary.createdAt }} </div>
             <div class="card-body">
@@ -10,7 +63,7 @@
 
                 <p>
                     <span *ngFor="let columnDefinition of boardsummary.columnDefinitions"
-                        [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.columnType)]">{{columnDefinition.columnType}}</span>
+                        [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.columnType)]">{{columnDefinition.title}}</span>
                 </p>
 
                 <div class="btn-group">

@@ -1,5 +1,7 @@
 package org.portalizer.retro.domain;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 public enum ColumnType {
     MAD("Mad"),
     SAD("Sad"),
@@ -12,5 +14,11 @@ public enum ColumnType {
 
     ColumnType(final String name) {
         this.name = name;
+    }
+
+    @JsonCreator
+    public static ColumnType ofValue(String value) {
+        final String sanitized = value.trim().replaceAll(" ", "_");
+        return ColumnType.valueOf(sanitized.toUpperCase());
     }
 }
