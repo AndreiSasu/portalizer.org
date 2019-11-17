@@ -1,6 +1,7 @@
 import { EventEmitter, Input, Output, Component, OnInit } from '@angular/core';
 import { InformationCardVM } from '../model/information-card';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { CardStorageService } from '../card-storage.service';
 
 @Component({
   selector: 'jhi-information-card',
@@ -16,22 +17,23 @@ export class InformationCardComponent implements OnInit {
   faTrash = faTrash;
   faEdit = faEdit;
   editMode: boolean;
-  text: string;
 
-  constructor() {}
+  constructor(private cardStorageService: CardStorageService) {}
 
   ngOnInit() {
-    this.text = this.informationCard.text;
     this.editMode = this.informationCard.editMode;
   }
 
   onSave() {
-    this.informationCard.text = this.text;
     this.saved.emit(this.informationCard);
     this.editMode = false;
   }
 
   onRemove() {
     this.removed.emit(this.informationCard);
+  }
+  /*eslint-disable*/
+  updateLocalStorage() {
+    this.cardStorageService.addCard(this.informationCard.boardId, this.informationCard);
   }
 }

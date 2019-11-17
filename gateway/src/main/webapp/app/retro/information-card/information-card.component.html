@@ -4,9 +4,9 @@
         <br>
         <p *ngIf="!this.editMode" class="card-text"> {{informationCard.text}} </p>
         <div class="form-group" *ngIf="this.editMode">
-            <textarea class="form-control" id="boardDescription" name="boardDescription" [(ngModel)]="text"
+            <textarea class="form-control" id="boardDescription" name="boardDescription" (ngModelChange)="updateLocalStorage()" [(ngModel)]="informationCard.text"
                 rows="5"></textarea>
-            <button type="button" [disabled]="!text" (click)="onSave()" class="btn btn-success">Save</button>
+            <button type="button" [disabled]="!informationCard.text" (click)="onSave()" class="btn btn-success">Save</button>
         </div>
         <a style="float: right; padding-left: 5%;">
             <fa-icon [icon]="faTrash" (click)="onRemove()"></fa-icon>

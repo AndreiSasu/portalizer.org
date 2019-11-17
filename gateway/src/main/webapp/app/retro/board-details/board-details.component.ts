@@ -8,6 +8,7 @@ import { ColorsService } from '../colors.service';
 import { InformationCardService } from '../information-card.service';
 import { faPlusCircle, faSync } from '@fortawesome/free-solid-svg-icons';
 import * as uuid from 'uuid';
+import { CardStorageService } from '../card-storage.service';
 
 @Component({
   selector: 'jhi-board-details',
@@ -31,6 +32,7 @@ export class BoardDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private boardService: BoardService,
     private informationCardService: InformationCardService,
+    private cardStorageService: CardStorageService,
     colorService: ColorsService
   ) {
     this.colorService = colorService;
@@ -39,6 +41,7 @@ export class BoardDetailsComponent implements OnInit {
   /* eslint-disable */
   ngOnInit() {
     this.boardId = this.route.snapshot.paramMap.get('id');
+    this.cardStorageService.initBoardStorageIfNecessary(this.boardId);
     this.refreshBoard();
   }
 
@@ -47,6 +50,12 @@ export class BoardDetailsComponent implements OnInit {
       board => {
         this.board = board;
         this.buildBoardColumnVMs(board.columnDefinitions, board.informationCards);
+
+        this.cardStorageService.getCards(this.boardId).forEach(informationCardVM => {
+          const boardColumnVM: BoardColumnVM = this.columnAndCards.get(informationCardVM.columnType);
+          boardColumnVM.informationCards.push(informationCardVM);
+        });
+
         console.log(board);
         console.log(this.columnAndCards);
       },
@@ -88,7 +97,10 @@ export class BoardDetailsComponent implements OnInit {
     const keyToRemove = informationCardVM.key;
     const idToRemove = informationCardVM.id;
     const boardColumnVM = this.columnAndCards.get(informationCardVM.columnType);
-    if (null == idToRemove) {
+
+    this.cardStorageService.removeCard(this.boardId, informationCardVM.key);
+
+    if (undefined === idToRemove) {
       // remove previous unsaved card
       boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
         return informationCardVM.key !== keyToRemove;
@@ -113,7 +125,7 @@ export class BoardDetailsComponent implements OnInit {
   onSaveCard(informationCardVM: InformationCardVM) {
     console.log(informationCardVM);
     //card was not saved before
-    if (null == informationCardVM.id) {
+    if (undefined === informationCardVM.id) {
       this.createCard(informationCardVM);
     } else {
       console.log('Card was saved before');
@@ -139,6 +151,8 @@ export class BoardDetailsComponent implements OnInit {
         });
 
         boardColumnVM.informationCards.push(InformationCardVM.of(informationCard));
+
+        this.cardStorageService.removeCard(this.boardId, keyToRemove);
       },
       error => {
         console.log(error);
@@ -166,6 +180,8 @@ export class BoardDetailsComponent implements OnInit {
         });
 
         boardColumnVM.informationCards.push(InformationCardVM.of(updatedCard));
+
+        this.cardStorageService.removeCard(this.boardId, keyToRemove);
       },
       error => {
         console.log(error);
