@@ -9,9 +9,10 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { SortByPipe } from './sort-by.pipe';
 import { InformationCardComponent } from './information-card/information-card.component';
+import { GatewaySharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [SortByPipe, BoardSummaryComponent, BoardDetailsComponent, InformationCardComponent],
-  imports: [FontAwesomeModule, MatGridListModule, CommonModule, FormsModule, RetroRoutingModule]
+  imports: [FontAwesomeModule, GatewaySharedModule, MatGridListModule, CommonModule, FormsModule, RetroRoutingModule]
 })
 export class RetroModule {}
