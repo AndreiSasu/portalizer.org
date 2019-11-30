@@ -2,7 +2,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule } from 'ngx-ui-loader';
 
 import './vendor';
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
@@ -32,7 +32,8 @@ import { ErrorComponent } from './layouts/error/error.component';
     GatewayAppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MatSliderModule
+    NgxUiLoaderModule, // import NgxUiLoaderModule
+    NgxUiLoaderHttpModule // import NgxUiLoaderRouterModule. By default, it will show foreground loader.
   ],
   declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, FooterComponent],
   providers: [
