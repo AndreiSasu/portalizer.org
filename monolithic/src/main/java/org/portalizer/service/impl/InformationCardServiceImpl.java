@@ -19,12 +19,17 @@ import java.util.UUID;
 @Service
 @Slf4j
 @Validated
-@AllArgsConstructor
 public class InformationCardServiceImpl implements InformationCardService {
 
     private InformationCardMapper informationCardMapper;
     private BoardRepository boardRepository;
     private InformationCardRepository informationCardRepository;
+
+    public InformationCardServiceImpl(InformationCardMapper informationCardMapper, BoardRepository boardRepository, InformationCardRepository informationCardRepository) {
+        this.informationCardMapper = informationCardMapper;
+        this.boardRepository = boardRepository;
+        this.informationCardRepository = informationCardRepository;
+    }
 
     @Override
     public InformationCardDTO add(@Valid InformationCardDTO informationCardDTO) {
