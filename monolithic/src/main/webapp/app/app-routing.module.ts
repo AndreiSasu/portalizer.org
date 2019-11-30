@@ -18,6 +18,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           path: 'account',
           loadChildren: () => import('./account/account.module').then(m => m.PortalizerAccountModule)
         },
+        {
+          path: 'retro',
+          loadChildren: () => import('./retro/retro.module').then(m => m.RetroModule)
+        },
         ...LAYOUT_ROUTES
       ],
       { enableTracing: DEBUG_INFO_ENABLED }
