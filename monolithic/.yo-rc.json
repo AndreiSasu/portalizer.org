@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "org.portalizer"
+    },
+    "jhipsterVersion": "6.3.0",
+    "applicationType": "monolith",
+    "baseName": "portalizer",
+    "packageName": "org.portalizer",
+    "packageFolder": "org/portalizer",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "no",
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": false,
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "NTFiM2FiZTU3ZTFlYTZjZTkxYTVhNmUxZTA4Mjc0NDhjZmZmMjZlMDJlZmZhYjZhYjM3NDI4Mjg3MzNiYjhiMTFiYTA5YTc4ZDg5Zjg1MTU1NDczMzNiMjBkM2E0ZjgwZjNiZWEzZTc0Y2RkMmI5ZmM1MGRhNjU2ZTMxYzVjOTA=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
+  }
+}
