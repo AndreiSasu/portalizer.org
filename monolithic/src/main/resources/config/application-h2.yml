@@ -2,7 +2,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:h2:file:./target/h2db/db/portalizer;DB_CLOSE_DELAY=-1
-    username: gateway
+    username: portalizer
     password:
     hikari:
       poolName: Hikari
