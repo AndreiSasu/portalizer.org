@@ -19,9 +19,21 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
+    HttpClientModule,
+    NgProgressModule.withConfig({
+      spinnerPosition: 'right',
+      color: '#00cc00',
+      trickleSpeed: 200,
+      min: 20,
+      thick: true
+    }),
+    NgProgressHttpModule,
     BrowserModule,
     PortalizerSharedModule,
     PortalizerCoreModule,
