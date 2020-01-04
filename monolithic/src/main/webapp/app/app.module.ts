@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import './vendor';
+import { LoaderInterceptor } from './blocks/interceptor/loader.interceptor';
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
@@ -18,9 +19,21 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ErrorComponent } from './layouts/error/error.component';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
+    HttpClientModule,
+    NgProgressModule.withConfig({
+      spinnerPosition: 'right',
+      color: '#00cc00',
+      trickleSpeed: 200,
+      min: 20,
+      thick: true
+    }),
+    NgProgressHttpModule,
     BrowserModule,
     PortalizerSharedModule,
     PortalizerCoreModule,
@@ -49,6 +62,11 @@ import { ErrorComponent } from './layouts/error/error.component';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: NotificationInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
       multi: true
     }
   ],
