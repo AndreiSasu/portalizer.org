@@ -8,6 +8,14 @@ public class ColumnDefinitionDTO implements Serializable, Comparable<ColumnDefin
     private ColumnType columnType;
     private String title;
 
+    public ColumnDefinitionDTO() {
+    }
+
+    public ColumnDefinitionDTO(ColumnType columnType, String title) {
+        this.columnType = columnType;
+        this.title = title;
+    }
+
     public ColumnType getColumnType() {
         return columnType;
     }

@@ -6,9 +6,32 @@ public enum ColumnType {
     MAD("Mad"),
     SAD("Sad"),
     GLAD("Glad"),
+
     WENT_WELL("Went Well"),
     TO_IMPROVE("To Improve"),
-    ACTION_ITEMS("Action Items");
+    ACTION_ITEMS("Action Items"),
+
+    START("Start"),
+    STOP("Stop"),
+    CONTINUE("Continue"),
+
+    LIKED("Liked"),
+    LEARNED("Learned"),
+    LACKED("Lacked"),
+    LONGED_FOR("Longed For"),
+
+    TO_DISCUSS("To Discuss"),
+    DISCUSSING("Discussing"),
+    DISCUSSED("Discussed"),
+
+    KEEP("Keep"),
+    ADD("Add"),
+    LESS("Less"),
+    MORE("More"),
+
+    DROP("Drop"),
+    IMPROVE("Improve");
+
 
     private final String name;
 
