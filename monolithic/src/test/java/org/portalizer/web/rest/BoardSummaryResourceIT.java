@@ -133,7 +133,7 @@ public class BoardSummaryResourceIT {
         boardSummaryRepository.saveAndFlush(boardSummary);
 
         // Get all the boardSummaryList
-        restBoardSummaryMockMvc.perform(get("/api/board-summaries?sort=id,desc"))
+        restBoardSummaryMockMvc.perform(get("/api/retro/board-summaries?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].archived").value(hasItem(DEFAULT_ARCHIVED.booleanValue())))
@@ -149,7 +149,7 @@ public class BoardSummaryResourceIT {
         boardSummaryRepository.saveAndFlush(boardSummary);
 
         // Get the boardSummary
-        restBoardSummaryMockMvc.perform(get("/api/board-summaries/{boardId}", boardSummary.getBoardId()))
+        restBoardSummaryMockMvc.perform(get("/api/retro/board-summaries/{boardId}", boardSummary.getBoardId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.archived").value(DEFAULT_ARCHIVED.booleanValue()))
@@ -162,7 +162,7 @@ public class BoardSummaryResourceIT {
     @Transactional
     public void getNonExistingBoardSummary() throws Exception {
         // Get the boardSummary
-        restBoardSummaryMockMvc.perform(get("/api/board-summaries/{boardId}", UUID.randomUUID()))
+        restBoardSummaryMockMvc.perform(get("/api/retro/board-summaries/{boardId}", UUID.randomUUID()))
             .andExpect(status().isNotFound());
     }
 
@@ -170,7 +170,7 @@ public class BoardSummaryResourceIT {
     @Transactional
     public void getInvalidBoardId() throws Exception {
         // Get the boardSummary
-        restBoardSummaryMockMvc.perform(get("/api/board-summaries/{boardId}", Long.MAX_VALUE))
+        restBoardSummaryMockMvc.perform(get("/api/retro/board-summaries/{boardId}", Long.MAX_VALUE))
             .andExpect(status().isBadRequest());
     }
 

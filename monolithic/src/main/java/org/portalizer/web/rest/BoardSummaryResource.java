@@ -26,7 +26,7 @@ import java.util.UUID;
  * REST controller for managing {@link BoardSummary}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/retro")
 public class BoardSummaryResource {
 
     private final Logger log = LoggerFactory.getLogger(BoardSummaryResource.class);

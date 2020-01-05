@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/retro")
 public class BoardResource {
     private final Logger log = LoggerFactory.getLogger(BoardResource.class);
 

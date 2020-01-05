@@ -85,7 +85,7 @@ public class BoardResourceIT {
         boardRepository.save(board);
 
 
-        boardResourceMockMVC.perform(get("/api/boards"))
+        boardResourceMockMVC.perform(get("/api/retro/boards"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").isNotEmpty())
@@ -105,7 +105,7 @@ public class BoardResourceIT {
         board.setName("Test");
         final Board savedBoard = boardRepository.save(board);
 
-        boardResourceMockMVC.perform(get("/api/boards/{id}", savedBoard.getId()))
+        boardResourceMockMVC.perform(get("/api/retro/boards/{id}", savedBoard.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(savedBoard.getId().toString()))
@@ -124,7 +124,7 @@ public class BoardResourceIT {
 
         BoardDTO boardDTO = boardMapper.toDto(board);
 
-        boardResourceMockMVC.perform(post("/api/boards")
+        boardResourceMockMVC.perform(post("/api/retro/boards")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(boardDTO)))
             .andExpect(status().isCreated());
@@ -152,7 +152,7 @@ public class BoardResourceIT {
         board.setName("Test");
 
         final Board savedBoard = boardRepository.save(board);
-        boardResourceMockMVC.perform(delete("/api/boards/{id}", savedBoard.getId())
+        boardResourceMockMVC.perform(delete("/api/retro/boards/{id}", savedBoard.getId())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
         final List<Board> boards = boardRepository.findAll();

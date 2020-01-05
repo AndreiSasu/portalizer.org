@@ -17,7 +17,7 @@ export class InformationCardService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  CARDS_URL = SERVER_API_URL + '/api/information-card/';
+  CARDS_URL = SERVER_API_URL + '/api/retro/information-card/';
 
   constructor(private http: HttpClient) {}
 
