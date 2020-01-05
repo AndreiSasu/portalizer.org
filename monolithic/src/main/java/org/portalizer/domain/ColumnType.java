@@ -24,12 +24,13 @@ public enum ColumnType {
     DISCUSSING("Discussing"),
     DISCUSSED("Discussed"),
 
-    KEEP("Keep"),
+    DROP("Drop"),
     ADD("Add"),
+    KEEP("Keep"),
+
     LESS("Less"),
     MORE("More"),
 
-    DROP("Drop"),
     IMPROVE("Improve");
 
 

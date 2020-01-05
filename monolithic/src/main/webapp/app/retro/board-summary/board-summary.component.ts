@@ -62,7 +62,9 @@ export class BoardSummaryComponent implements OnInit {
       });
     });
 
-    this.boardTemplates = this.boards.getTemplates();
+    this.boardService.getBoardTemplates().subscribe(boardTemplates => {
+      this.boardTemplates = [...boardTemplates];
+    });
   }
 
   openVerticallyCentered(content) {
