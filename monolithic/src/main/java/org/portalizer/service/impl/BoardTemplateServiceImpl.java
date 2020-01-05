@@ -29,6 +29,7 @@ public class BoardTemplateServiceImpl implements BoardTemplateService {
         BoardTemplateDTO wentWellToImproveActionItems = new BoardTemplateDTO("Went Well - To Improve - Action Items", wentWellToImproveActionItemsColumns, "(Most simple 3 column board)");
 
         boardTemplateDTOS.add(madSadGlad);
+        boardTemplateDTOS.add(wentWellToImproveActionItems);
     }
 
     @Override
