@@ -16,8 +16,8 @@ export class BoardService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  BOARDS_URL = SERVER_API_URL + '/api/boards/';
-  BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/boardtemplates/';
+  BOARDS_URL = SERVER_API_URL + '/api/retro/boards/';
+  BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/retro/boardtemplates/';
 
   constructor(private http: HttpClient) {}
 

@@ -125,7 +125,7 @@ public class BoardColumnResourceIT {
 
         // Create the BoardColumn
         BoardColumnDTO boardColumnDTO = boardColumnMapper.toDto(boardColumn);
-        restBoardColumnMockMvc.perform(post("/api/board-columns")
+        restBoardColumnMockMvc.perform(post("/api/retro/board-columns")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(boardColumnDTO)))
             .andExpect(status().isCreated());
@@ -149,7 +149,7 @@ public class BoardColumnResourceIT {
         BoardColumnDTO boardColumnDTO = boardColumnMapper.toDto(boardColumn);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restBoardColumnMockMvc.perform(post("/api/board-columns")
+        restBoardColumnMockMvc.perform(post("/api/retro/board-columns")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(boardColumnDTO)))
             .andExpect(status().isBadRequest());
@@ -170,7 +170,7 @@ public class BoardColumnResourceIT {
         // Create the BoardColumn, which fails.
         BoardColumnDTO boardColumnDTO = boardColumnMapper.toDto(boardColumn);
 
-        restBoardColumnMockMvc.perform(post("/api/board-columns")
+        restBoardColumnMockMvc.perform(post("/api/retro/board-columns")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(boardColumnDTO)))
             .andExpect(status().isBadRequest());
@@ -189,7 +189,7 @@ public class BoardColumnResourceIT {
         // Create the BoardColumn, which fails.
         BoardColumnDTO boardColumnDTO = boardColumnMapper.toDto(boardColumn);
 
-        restBoardColumnMockMvc.perform(post("/api/board-columns")
+        restBoardColumnMockMvc.perform(post("/api/retro/board-columns")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(boardColumnDTO)))
             .andExpect(status().isBadRequest());
@@ -205,7 +205,7 @@ public class BoardColumnResourceIT {
         boardColumnRepository.saveAndFlush(boardColumn);
 
         // Get all the boardColumnList
-        restBoardColumnMockMvc.perform(get("/api/board-columns?sort=id,desc"))
+        restBoardColumnMockMvc.perform(get("/api/retro/board-columns?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].color").value(hasItem(DEFAULT_COLOR)))
@@ -220,7 +220,7 @@ public class BoardColumnResourceIT {
         boardColumnRepository.saveAndFlush(boardColumn);
 
         // Get the boardColumn
-        restBoardColumnMockMvc.perform(get("/api/board-columns/{id}", boardColumn.getId()))
+        restBoardColumnMockMvc.perform(get("/api/retro/board-columns/{id}", boardColumn.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(boardColumn.getId().intValue()))
@@ -233,7 +233,7 @@ public class BoardColumnResourceIT {
     @Transactional
     public void getNonExistingBoardColumn() throws Exception {
         // Get the boardColumn
-        restBoardColumnMockMvc.perform(get("/api/board-columns/{id}", Long.MAX_VALUE))
+        restBoardColumnMockMvc.perform(get("/api/retro/board-columns/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
@@ -255,7 +255,7 @@ public class BoardColumnResourceIT {
             .value(UPDATED_VALUE);
         BoardColumnDTO boardColumnDTO = boardColumnMapper.toDto(updatedBoardColumn);
 
-        restBoardColumnMockMvc.perform(put("/api/board-columns")
+        restBoardColumnMockMvc.perform(put("/api/retro/board-columns")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(boardColumnDTO)))
             .andExpect(status().isOk());
@@ -278,7 +278,7 @@ public class BoardColumnResourceIT {
         BoardColumnDTO boardColumnDTO = boardColumnMapper.toDto(boardColumn);
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
-        restBoardColumnMockMvc.perform(put("/api/board-columns")
+        restBoardColumnMockMvc.perform(put("/api/retro/board-columns")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(boardColumnDTO)))
             .andExpect(status().isBadRequest());
@@ -297,7 +297,7 @@ public class BoardColumnResourceIT {
         int databaseSizeBeforeDelete = boardColumnRepository.findAll().size();
 
         // Delete the boardColumn
-        restBoardColumnMockMvc.perform(delete("/api/board-columns/{id}", boardColumn.getId())
+        restBoardColumnMockMvc.perform(delete("/api/retro/board-columns/{id}", boardColumn.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 

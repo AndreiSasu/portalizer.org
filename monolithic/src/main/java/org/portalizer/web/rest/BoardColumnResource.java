@@ -22,7 +22,7 @@ import java.util.Optional;
  * REST controller for managing {@link BoardColumn}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/retro")
 public class BoardColumnResource {
 
     private final Logger log = LoggerFactory.getLogger(BoardColumnResource.class);
