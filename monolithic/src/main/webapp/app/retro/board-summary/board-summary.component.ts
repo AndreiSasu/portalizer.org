@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, Boards, CreateBoardRequest, BoardColumn } from '../model/boards';
+import { BoardSummary, Boards, CreateBoardRequest, BoardColumn, BoardTemplate } from '../model/boards';
 import { faEye, faTrash, faArchive, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -30,6 +30,7 @@ export class BoardSummaryComponent implements OnInit {
   colorService: ColorsService;
   closeResult: string;
   boards: Boards;
+  boardTemplates: Array<BoardTemplate>;
 
   formModel = {
     boardName: '',
@@ -60,6 +61,10 @@ export class BoardSummaryComponent implements OnInit {
         this.tiles.push(tile);
       });
     });
+
+    this.boardService.getBoardTemplates().subscribe(boardTemplates => {
+      this.boardTemplates = [...boardTemplates];
+    });
   }
 
   openVerticallyCentered(content) {
@@ -84,7 +89,7 @@ export class BoardSummaryComponent implements OnInit {
 
   formModelToRequest(formModel): CreateBoardRequest {
     const key = formModel.templateKey;
-    const columnDefinitions: BoardColumn[] = this.boards.getTemplates().filter(boardTemplate => {
+    const columnDefinitions: BoardColumn[] = this.boardTemplates.filter(boardTemplate => {
       return boardTemplate.key === key;
     })[0].boardColumns;
     return new CreateBoardRequest(formModel.boardName, columnDefinitions);

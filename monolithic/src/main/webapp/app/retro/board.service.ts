@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { BoardSummary, Board, CreateBoardRequest } from './model/boards';
+import { BoardSummary, Board, CreateBoardRequest, BoardTemplate } from './model/boards';
 
 import { SERVER_API_URL } from '../app.constants';
 
@@ -17,6 +17,7 @@ export class BoardService {
   };
 
   BOARDS_URL = SERVER_API_URL + '/api/boards/';
+  BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/boardtemplates/';
 
   constructor(private http: HttpClient) {}
 
@@ -26,6 +27,13 @@ export class BoardService {
     return this.http.get<BoardSummary[]>(this.BOARDS_URL).pipe(
       tap(_ => console.log(`fetched boardsummaries ${this.BOARDS_URL}`)),
       catchError(this.handleError<BoardSummary[]>('getBoardSummaries', []))
+    );
+  }
+
+  getBoardTemplates(): Observable<Array<BoardTemplate>> {
+    return this.http.get<Array<BoardTemplate>>(this.BOARD_TEMPLATES_URL).pipe(
+      tap(_ => console.log(`fetched boardtemplates ${this.BOARD_TEMPLATES_URL}`)),
+      catchError(this.handleError<Array<BoardTemplate>>('getBoardTemplates', []))
     );
   }
 
