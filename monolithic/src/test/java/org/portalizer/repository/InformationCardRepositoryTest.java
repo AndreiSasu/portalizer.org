@@ -30,7 +30,7 @@ public class InformationCardRepositoryTest {
 
     @BeforeAll
     public void setup() {
-        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
         List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setColumnDefinitions(columnDefinitions);

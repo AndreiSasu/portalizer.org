@@ -76,7 +76,7 @@ public class BoardResourceIT {
     public void testAllBoardsAreReturned() throws Exception {
 
 
-        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
         List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setInformationCards(informationCard);
@@ -97,7 +97,7 @@ public class BoardResourceIT {
 
     @Test
     public void testFullBoardReturnedById() throws Exception {
-        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
         List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setInformationCards(informationCard);
@@ -117,7 +117,7 @@ public class BoardResourceIT {
 
     @Test
     public void testCreateBoard() throws Exception {
-        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
         board.setColumnDefinitions(columnDefinitions);
         board.setName("Test");
@@ -137,14 +137,16 @@ public class BoardResourceIT {
         Assertions.assertThat(savedBoard.getId()).isNotNull();
         Assertions.assertThat(savedBoard.getName()).isEqualTo("Test");
         Assertions.assertThat(savedBoard.getCreatedAt()).isNotNull();
-        Assertions.assertThat(savedBoard.getColumnDefinitions()).isEqualTo(columnDefinitions);
-
+        final List<ColumnDefinition> savedBoardColumnDefinitions = savedBoard.getColumnDefinitions();
+        for(int i = 0; i < savedBoard.getColumnDefinitions().size(); i++) {
+            Assertions.assertThat(savedBoardColumnDefinitions.get(i)).isEqualToIgnoringNullFields(columnDefinitions.get(i));
+        }
     }
 
     @Test
     public void testDeleteBoard() throws Exception {
 
-        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
         List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setInformationCards(informationCard);
