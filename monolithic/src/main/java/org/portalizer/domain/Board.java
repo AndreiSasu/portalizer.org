@@ -37,8 +37,8 @@ public class Board implements Serializable {
 
     @NotNull
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderBy("columnType ASC")
-    private SortedSet<ColumnDefinition> columnDefinitions;
+    @OrderColumn
+    private List<ColumnDefinition> columnDefinitions;
 
     @OneToMany(targetEntity = InformationCard.class, mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<InformationCard> informationCards;
@@ -59,11 +59,11 @@ public class Board implements Serializable {
         this.informationCards = informationCards;
     }
 
-    public SortedSet<ColumnDefinition> getColumnDefinitions() {
+    public List<ColumnDefinition> getColumnDefinitions() {
         return columnDefinitions;
     }
 
-    public void setColumnDefinitions(SortedSet<ColumnDefinition> columnDefinitions) {
+    public void setColumnDefinitions(List<ColumnDefinition> columnDefinitions) {
         this.columnDefinitions = columnDefinitions;
     }
 

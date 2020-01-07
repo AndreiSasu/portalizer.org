@@ -7,14 +7,12 @@ import org.portalizer.domain.InformationCard;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class EntityUtils {
 
 
     public static Board validBoard() {
-        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
         List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setColumnDefinitions(columnDefinitions);
@@ -23,7 +21,7 @@ public class EntityUtils {
         return board;
     }
 
-    public static List<InformationCard> cardForEachColumn(final Board board, final SortedSet<ColumnDefinition> columnDefinitions) {
+    public static List<InformationCard> cardForEachColumn(final Board board, final List<ColumnDefinition> columnDefinitions) {
         final List<InformationCard> informationCards = new ArrayList<>();
         columnDefinitions.forEach(columnDefinition -> {
             final InformationCard informationCard = new InformationCard();
@@ -35,20 +33,20 @@ public class EntityUtils {
         return informationCards;
     }
 
-    public static SortedSet<ColumnDefinition> buildColumnDefinitions() {
+    public static List<ColumnDefinition> buildColumnDefinitions() {
         ColumnDefinition mad = new ColumnDefinition();
         mad.setColumnType(ColumnType.MAD);
-        mad.setTitle("What Makes me Mad");
+        mad.setTitle("Mad");
 
         ColumnDefinition sad = new ColumnDefinition();
         sad.setColumnType(ColumnType.SAD);
-        sad.setTitle("What Makes me Sad");
+        sad.setTitle("Sad");
 
         ColumnDefinition glad = new ColumnDefinition();
         glad.setColumnType(ColumnType.GLAD);
-        glad.setTitle("What Makes me Glad");
+        glad.setTitle("Glad");
 
-        SortedSet<ColumnDefinition> columnDefinitions = new TreeSet<>();
+        List<ColumnDefinition> columnDefinitions = new ArrayList<>();
         columnDefinitions.add(mad);
         columnDefinitions.add(sad);
         columnDefinitions.add(glad);

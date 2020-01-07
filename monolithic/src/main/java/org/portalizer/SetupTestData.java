@@ -27,7 +27,7 @@ public class SetupTestData implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         for (int i = 0; i < 10; i++) {
-            SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+            List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
             Board board = new Board();
             board.setName("Generated Board Name: " + i + " for Sprint " + i);
             final List<InformationCard> informationCards = new ArrayList<>();

@@ -10,7 +10,7 @@ public class BoardDTO implements Serializable {
     private UUID id;
     private String name;
     private LocalDateTime createdAt;
-    private SortedSet<ColumnDefinitionDTO> columnDefinitions;
+    private List<ColumnDefinitionDTO> columnDefinitions;
     private List<InformationCardDTO> informationCards;
 
     public LocalDateTime getCreatedAt() {
@@ -37,11 +37,11 @@ public class BoardDTO implements Serializable {
         this.id = id;
     }
 
-    public SortedSet<ColumnDefinitionDTO> getColumnDefinitions() {
+    public List<ColumnDefinitionDTO> getColumnDefinitions() {
         return columnDefinitions;
     }
 
-    public void setColumnDefinitions(SortedSet<ColumnDefinitionDTO> columnDefinitions) {
+    public void setColumnDefinitions(List<ColumnDefinitionDTO> columnDefinitions) {
         this.columnDefinitions = columnDefinitions;
     }
 

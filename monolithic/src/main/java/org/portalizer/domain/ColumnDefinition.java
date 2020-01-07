@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "column_definition")
-public class ColumnDefinition implements Comparable<ColumnDefinition> {
+public class ColumnDefinition {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,16 +66,4 @@ public class ColumnDefinition implements Comparable<ColumnDefinition> {
         return 31;
     }
 
-    @Override
-    public int compareTo(ColumnDefinition columnDefinition) {
-        int thisOrdinal = this.getColumnType().ordinal();
-        int otherOrdinal = columnDefinition.getColumnType().ordinal();
-        if(thisOrdinal == otherOrdinal) {
-            return 0;
-        }
-        if(thisOrdinal > otherOrdinal){
-            return 1;
-        }
-        return -1;
-    }
 }

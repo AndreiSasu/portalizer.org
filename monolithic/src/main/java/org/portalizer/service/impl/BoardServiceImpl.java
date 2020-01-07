@@ -9,10 +9,7 @@ import org.portalizer.service.mapper.BoardMapper;
 import org.portalizer.service.mapper.ColumnDefinitionMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +32,7 @@ public class BoardServiceImpl implements BoardService {
             boardDTO.setId(board.getId());
             boardDTO.setName(board.getName());
             boardDTO.setCreatedAt(board.getCreatedAt());
-            SortedSet<ColumnDefinitionDTO> columnDefinitionDTOS = new TreeSet<>();
+            List<ColumnDefinitionDTO> columnDefinitionDTOS = new ArrayList<>();
             board.getColumnDefinitions().forEach(columnDefinition -> {
                 columnDefinitionDTOS.add(columnDefinitionMapper.toDto(columnDefinition));
             });

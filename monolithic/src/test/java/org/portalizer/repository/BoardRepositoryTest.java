@@ -11,9 +11,7 @@ import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-import java.util.SortedSet;
-import java.util.UUID;
+import java.util.*;
 
 
 @SpringBootTest(classes = PortalizerApp.class)
@@ -27,10 +25,41 @@ public class BoardRepositoryTest {
 
 
     @Test
+    public void testColumnOrderingPreserved() {
+        Board board = new Board();
+        board.setName("Test");
+        List<ColumnDefinition> columnDefinitions = new ArrayList<>();
+        ColumnDefinition keep = new ColumnDefinition();
+        keep.setColumnType(ColumnType.KEEP);
+        keep.setTitle("Keep");
+
+        ColumnDefinition add = new ColumnDefinition();
+        add.setColumnType(ColumnType.ADD);
+        add.setTitle("Add");
+
+        ColumnDefinition less = new ColumnDefinition();
+        less.setColumnType(ColumnType.LESS);
+        less.setTitle("Less");
+
+        ColumnDefinition more = new ColumnDefinition();
+        more.setColumnType(ColumnType.MORE);
+        more.setTitle("More");
+        columnDefinitions.addAll(Arrays.asList(keep, add, less, more));
+        board.setColumnDefinitions(columnDefinitions);
+
+        Board savedBoard = boardRepository.save(board);
+        Board lazyBoard = boardRepository.findById(savedBoard.getId()).get();
+
+        final List<ColumnDefinition> savedColumnDefinitions = lazyBoard.getColumnDefinitions();
+
+        Assertions.assertThat(savedColumnDefinitions).isEqualTo(columnDefinitions);
+    }
+
+    @Test
     public void testBoardIdLazyLoading() {
         Board board = new Board();
         board.setName("Test");
-        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         board.setColumnDefinitions(columnDefinitions);
 
         Board savedBoard = boardRepository.save(board);
@@ -47,7 +76,7 @@ public class BoardRepositoryTest {
     public void testFindFullBoardByIdNullInformationCardsReturnsEmptyList() {
         Board board = new Board();
         board.setName("Test");
-        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         board.setColumnDefinitions(columnDefinitions);
 
         Board savedBoard = boardRepository.save(board);
@@ -57,7 +86,7 @@ public class BoardRepositoryTest {
 
     @Test
     public void testCanAddInformationCardToExistingBoard() {
-        SortedSet<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
         List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setColumnDefinitions(columnDefinitions);
