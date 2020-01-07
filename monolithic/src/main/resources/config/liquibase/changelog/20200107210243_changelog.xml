@@ -1,0 +1,20 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="andrei (generated)" id="1578430970066-1">
+        <addColumn tableName="board_column_definitions">
+            <column name="column_definitions_order" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1578430970066-2">
+        <createIndex indexName="IX_null" tableName="board_column_definitions" unique="true">
+            <column name="board_id"/>
+            <column name="column_definitions_order"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1578430970066-3">
+        <dropPrimaryKey tableName="board_column_definitions"/>
+        <addPrimaryKey columnNames="board_id, column_definitions_order" tableName="board_column_definitions"/>
+    </changeSet>
+</databaseChangeLog>

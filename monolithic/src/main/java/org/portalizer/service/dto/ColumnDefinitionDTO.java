@@ -4,7 +4,7 @@ import org.portalizer.domain.ColumnType;
 
 import java.io.Serializable;
 
-public class ColumnDefinitionDTO implements Serializable, Comparable<ColumnDefinitionDTO> {
+public class ColumnDefinitionDTO implements Serializable {
     private ColumnType columnType;
     private String title;
 
@@ -40,16 +40,4 @@ public class ColumnDefinitionDTO implements Serializable, Comparable<ColumnDefin
             '}';
     }
 
-    @Override
-    public int compareTo(ColumnDefinitionDTO columnDefinitionDTO) {
-        int thisOrdinal = this.getColumnType().ordinal();
-        int otherOrdinal = columnDefinitionDTO.getColumnType().ordinal();
-        if(thisOrdinal == otherOrdinal) {
-            return 0;
-        }
-        if(thisOrdinal > otherOrdinal){
-            return 1;
-        }
-        return -1;
-    }
 }

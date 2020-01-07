@@ -36,15 +36,15 @@ public class EntityUtils {
     public static List<ColumnDefinition> buildColumnDefinitions() {
         ColumnDefinition mad = new ColumnDefinition();
         mad.setColumnType(ColumnType.MAD);
-        mad.setTitle("What Makes me Mad");
+        mad.setTitle("Mad");
 
         ColumnDefinition sad = new ColumnDefinition();
         sad.setColumnType(ColumnType.SAD);
-        sad.setTitle("What Makes me Sad");
+        sad.setTitle("Sad");
 
         ColumnDefinition glad = new ColumnDefinition();
         glad.setColumnType(ColumnType.GLAD);
-        glad.setTitle("What Makes me Glad");
+        glad.setTitle("Glad");
 
         List<ColumnDefinition> columnDefinitions = new ArrayList<>();
         columnDefinitions.add(mad);
