@@ -3,8 +3,9 @@
 <h1>
     {{board?.name}}
     <small class="text-muted">Created at: {{board?.createdAt}}</small>
-    <a style="float: right;">
-        <fa-icon [icon]="faSync" (click)="refreshBoard()"></fa-icon>
+    <button type="button" class="btn btn-outline-primary" (click)="refreshBoard()" style="float: right;">
+        <fa-icon [icon]="faSync"></fa-icon> Refresh Cards
+    </button>
     </a>
 </h1>
 
