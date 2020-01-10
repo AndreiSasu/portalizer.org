@@ -4,6 +4,7 @@ import { InformationCard, InformationCardVM } from './information-card';
 export class BoardSummary {
   id: string;
   name: string;
+  description: string;
   columnDefinitions: Array<BoardColumn>;
   createdAt: Date;
 }
@@ -36,7 +37,7 @@ export class BoardTemplate {
 }
 
 export class CreateBoardRequest {
-  constructor(public name: string, public columnDefinitions: Array<BoardColumn>) {}
+  constructor(public name: string, public description: string, public columnDefinitions: Array<BoardColumn>) {}
 }
 
 // todo: get this from backend

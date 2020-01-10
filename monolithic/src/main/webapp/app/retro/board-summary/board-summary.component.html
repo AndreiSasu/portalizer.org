@@ -57,9 +57,7 @@
             <div class="card-header"> Sprint 21 - {{ boardsummary.createdAt }} </div>
             <div class="card-body">
                 <h4 class="card-title">{{ boardsummary.name }}</h4>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                    card's
-                    content.</p>
+                <p class="card-text">{{ boardsummary.description }} </p>
 
                 <p>
                     <span *ngFor="let columnDefinition of boardsummary.columnDefinitions"

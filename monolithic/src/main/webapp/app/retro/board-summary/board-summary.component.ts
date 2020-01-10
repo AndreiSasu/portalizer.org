@@ -92,7 +92,7 @@ export class BoardSummaryComponent implements OnInit {
     const columnDefinitions: BoardColumn[] = this.boardTemplates.filter(boardTemplate => {
       return boardTemplate.key === key;
     })[0].boardColumns;
-    return new CreateBoardRequest(formModel.boardName, columnDefinitions);
+    return new CreateBoardRequest(formModel.boardName, formModel.description, columnDefinitions);
   }
 
   // TODO: Remove this when we're done

@@ -28,9 +28,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardDTO> findAll() {
         return boardRepository.findAll().stream().map(board -> {
-            BoardDTO boardDTO = new BoardDTO();
+            final BoardDTO boardDTO = new BoardDTO();
             boardDTO.setId(board.getId());
             boardDTO.setName(board.getName());
+            boardDTO.setDescription(board.getDescription());
             boardDTO.setCreatedAt(board.getCreatedAt());
             List<ColumnDefinitionDTO> columnDefinitionDTOS = new ArrayList<>();
             board.getColumnDefinitions().forEach(columnDefinition -> {

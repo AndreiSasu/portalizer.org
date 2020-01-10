@@ -9,9 +9,18 @@ import java.util.UUID;
 public class BoardDTO implements Serializable {
     private UUID id;
     private String name;
+    private String description;
     private LocalDateTime createdAt;
     private List<ColumnDefinitionDTO> columnDefinitions;
     private List<InformationCardDTO> informationCards;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

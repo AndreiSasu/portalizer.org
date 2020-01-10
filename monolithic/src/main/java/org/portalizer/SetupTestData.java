@@ -28,10 +28,11 @@ public class SetupTestData implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             List<ColumnDefinition> columnDefinitions = EntityUtils.buildRandomColumnDefinitions();
             Board board = new Board();
             board.setName(faker.company().bs());
+            board.setDescription(faker.shakespeare().asYouLikeItQuote());
             final List<InformationCard> informationCards = new ArrayList<>();
             for(int x = 0; x < 10; x++) {
                 informationCards.addAll(EntityUtils.cardForEachColumn(board, columnDefinitions));
