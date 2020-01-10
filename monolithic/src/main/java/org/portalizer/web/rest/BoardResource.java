@@ -43,7 +43,7 @@ public class BoardResource {
     }
 
     @DeleteMapping("/boards/{id}")
-    public ResponseEntity<Void> createBoard(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteBoard(@PathVariable UUID id) {
         boardService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert("",
             false,

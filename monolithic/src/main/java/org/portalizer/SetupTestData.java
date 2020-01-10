@@ -1,5 +1,6 @@
 package org.portalizer;
 
+import com.github.javafaker.Faker;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
 import org.portalizer.domain.InformationCard;
@@ -15,10 +16,11 @@ import java.util.List;
 import java.util.SortedSet;
 
 @Component
-@Profile("prod")
+@Profile("testdata")
 public class SetupTestData implements ApplicationRunner {
 
     private BoardRepository boardRepository;
+    private Faker faker = new Faker();
 
     public SetupTestData(BoardRepository boardRepository) {
         this.boardRepository = boardRepository;
@@ -26,10 +28,10 @@ public class SetupTestData implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        for (int i = 0; i < 10; i++) {
-            List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        for (int i = 0; i < 100; i++) {
+            List<ColumnDefinition> columnDefinitions = EntityUtils.buildRandomColumnDefinitions();
             Board board = new Board();
-            board.setName("Generated Board Name: " + i + " for Sprint " + i);
+            board.setName(faker.company().bs());
             final List<InformationCard> informationCards = new ArrayList<>();
             for(int x = 0; x < 10; x++) {
                 informationCards.addAll(EntityUtils.cardForEachColumn(board, columnDefinitions));
