@@ -6,14 +6,6 @@ import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
-export class Tile {
-  color: string;
-  cols: number;
-  rows: number;
-  text: string;
-  boardSummary: BoardSummary;
-}
-
 @Component({
   selector: 'jhi-board-summary',
   templateUrl: './board-summary.component.html',
@@ -21,8 +13,7 @@ export class Tile {
 })
 export class BoardSummaryComponent implements OnInit {
   boardSummaries: BoardSummary[];
-  tiles: Tile[] = [];
-
+  page = 1;
   faEye = faEye;
   faTrash = faTrash;
   faArchive = faArchive;
@@ -52,14 +43,6 @@ export class BoardSummaryComponent implements OnInit {
   ngOnInit() {
     this.boardService.getBoardSummaries().subscribe(boardSummaries => {
       this.boardSummaries = boardSummaries;
-      this.boardSummaries.forEach(boardSummarry => {
-        const tile = new Tile();
-        tile.boardSummary = boardSummarry;
-        tile.color = 'lightblue';
-        tile.cols = 1;
-        tile.rows = 1;
-        this.tiles.push(tile);
-      });
     });
 
     this.boardService.getBoardTemplates().subscribe(boardTemplates => {

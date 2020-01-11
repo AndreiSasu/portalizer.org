@@ -45,9 +45,15 @@
 </div>
 <br>
 
+<div class="container">
+    <ngb-pagination [collectionSize]="1200" [(page)]="page" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+        size="lg"></ngb-pagination>
+</div>
+
 <div class="cardList">
 
-    <button class="btn btn-outline-primary mb-3" style="max-width: 20rem; vertical-align:middle;" (click)="openVerticallyCentered(content)">
+    <button class="btn btn-outline-primary mb-3" style="max-width: 20rem; vertical-align:middle;"
+        (click)="openVerticallyCentered(content)">
         <fa-icon [icon]="faPlusSquare" style="size: 9x;" class="fa-10x"></fa-icon>
         <br>Add New Board
     </button>
@@ -79,4 +85,9 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="container">
+    <ngb-pagination [collectionSize]="1200" [(page)]="page" [maxSize]="10" [rotate]="true" [boundaryLinks]="true"
+        size="lg"></ngb-pagination>
 </div>
