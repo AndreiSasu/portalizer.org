@@ -32,7 +32,6 @@ public class SetupTestData implements ApplicationRunner {
             List<ColumnDefinition> columnDefinitions = EntityUtils.buildRandomColumnDefinitions();
             Board board = new Board();
             board.setName(faker.company().bs());
-            board.setName(faker.funnyName().name());
             board.setDescription(faker.shakespeare().asYouLikeItQuote());
             final List<InformationCard> informationCards = new ArrayList<>();
             for(int x = 0; x < 10; x++) {
