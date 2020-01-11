@@ -87,3 +87,9 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <ngb-pagination [collectionSize]="pageObject?.totalElements" (pageChange)="onPageChange($event)"
+        [(pageSize)]="pageSize" [(page)]="currentPage" [maxSize]="10" [rotate]="true" [ellipses]="true"
+        [boundaryLinks]="true" size="lg"></ngb-pagination>
+</div>
