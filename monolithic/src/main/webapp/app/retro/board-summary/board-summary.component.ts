@@ -5,12 +5,14 @@ import { faEye, faTrash, faArchive, faPlusSquare } from '@fortawesome/free-solid
 import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { PaginationPage } from '../model/pagination';
 
 @Component({
   selector: 'jhi-board-summary',
   templateUrl: './board-summary.component.html',
   styleUrls: ['./board-summary.component.scss']
 })
+/* eslint-disable */
 export class BoardSummaryComponent implements OnInit {
   boardSummaries: BoardSummary[];
   page = 1;
@@ -29,6 +31,11 @@ export class BoardSummaryComponent implements OnInit {
     description: ''
   };
 
+  pageObject: PaginationPage<BoardSummary>;
+  currentPage = 1;
+  paginationSize = 'lg';
+  pageSize = 25;
+
   constructor(
     private boardService: BoardService,
     private router: Router,
@@ -41,20 +48,30 @@ export class BoardSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.boardService.getBoardSummaries().subscribe(boardSummaries => {
-      this.boardSummaries = boardSummaries;
-    });
-
+    this.getBoardPages();
     this.boardService.getBoardTemplates().subscribe(boardTemplates => {
       this.boardTemplates = [...boardTemplates];
     });
+  }
+
+  getBoardPages() {
+    this.boardService.getBoardsPage(this.currentPage - 1).subscribe(data => {
+      this.pageObject = data;
+      console.log(this.pageObject);
+      this.boardSummaries = this.pageObject['content'];
+    });
+  }
+
+  onPageChange(event: number) {
+    console.log(event);
+    this.currentPage = event;
+    this.getBoardPages();
   }
 
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true });
   }
 
-  /* eslint-disable */
   onSubmit() {
     const request: CreateBoardRequest = this.formModelToRequest(this.formModel);
     console.log(request);

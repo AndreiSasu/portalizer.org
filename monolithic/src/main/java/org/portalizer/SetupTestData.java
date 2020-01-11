@@ -27,8 +27,8 @@ public class SetupTestData implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
-        for (int i = 0; i < 10; i++) {
+    public void run(ApplicationArguments args) {
+        for (int i = 0; i < 500; i++) {
             List<ColumnDefinition> columnDefinitions = EntityUtils.buildRandomColumnDefinitions();
             Board board = new Board();
             board.setName(faker.company().bs());
