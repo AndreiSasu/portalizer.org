@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { BoardSummary, Board, CreateBoardRequest, BoardTemplate } from './model/boards';
-
+import { PaginationPage } from './model/pagination';
 import { SERVER_API_URL } from '../app.constants';
 
 @Injectable({
@@ -17,9 +17,14 @@ export class BoardService {
   };
 
   BOARDS_URL = SERVER_API_URL + '/api/retro/boards/';
+  BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards-paged?page=';
   BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/retro/boardtemplates/';
 
   constructor(private http: HttpClient) {}
+
+  getBoardsPage(page: number): Observable<PaginationPage<BoardSummary>> {
+    return this.http.get<PaginationPage<BoardSummary>>(this.BOARDS_PAGING_URL + page);
+  }
 
   /** GET heroes from the server */
   /* eslint-disable */

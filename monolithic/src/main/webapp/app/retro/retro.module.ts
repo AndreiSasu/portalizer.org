@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { RetroRoutingModule } from './retro-routing.module';
 import { BoardSummaryComponent } from './board-summary/board-summary.component';
@@ -12,6 +13,6 @@ import { PortalizerSharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [SortByPipe, BoardSummaryComponent, BoardDetailsComponent, InformationCardComponent],
-  imports: [FontAwesomeModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule]
+  imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule]
 })
 export class RetroModule {}

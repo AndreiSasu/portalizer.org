@@ -31,6 +31,7 @@ public class InformationCard {
     private Board board;
 
     @NotNull
+    @Column(columnDefinition = "VARCHAR(2048)")
     private String text;
 
     @NotNull

@@ -22,9 +22,11 @@ import { ErrorComponent } from './layouts/error/error.component';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
+    FontAwesomeModule,
     HttpClientModule,
     NgProgressModule.withConfig({
       spinnerPosition: 'right',

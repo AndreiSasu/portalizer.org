@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.SortedSet;
 import java.util.UUID;
 
 @Entity
@@ -31,6 +30,9 @@ public class Board implements Serializable {
 
     @NotEmpty
     private String name;
+
+    @Column(columnDefinition = "VARCHAR(2048)")
+    private String description;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -83,6 +85,13 @@ public class Board implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public boolean equals(Object o) {
