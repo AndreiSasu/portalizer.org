@@ -8,8 +8,6 @@ import org.portalizer.domain.InformationCard;
 import org.portalizer.service.BoardTemplateService;
 import org.portalizer.service.dto.BoardTemplateDTO;
 import org.portalizer.service.impl.BoardTemplateServiceImpl;
-import org.portalizer.service.mapper.BoardColumnMapper;
-import org.portalizer.service.mapper.BoardColumnMapperImpl;
 import org.portalizer.service.mapper.ColumnDefinitionMapper;
 import org.portalizer.service.mapper.ColumnDefinitionMapperImpl;
 
