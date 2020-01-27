@@ -1,5 +1,6 @@
 package org.portalizer.repository;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -13,6 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @SpringBootTest(classes = PortalizerApp.class)
 @Transactional
@@ -26,42 +32,43 @@ public class HibernateSearchIntegrationTest {
     @Autowired
     private BoardRepository boardRepository;
 
+    private List<Board> boards;
+
     @BeforeAll
     @Commit
     public void setup() {
         boardRepository.deleteAll();
-        for (int i = 0; i < 4; i++) {
-            final Board board = EntityUtils.validBoard();
-            if (i < 1) {
-                board.setName("Gigi");
-                board.setDescription("Steaua Bucuresti");
-            }
-            if (i == 2) {
-                board.setName("Gica");
-                board.setDescription("Football Captain");
-            }
-            if (i == 3) {
-                board.setName("Nicu");
-                board.setDescription("Paleru I believe comedian");
-            }
-            if (i == 4) {
-                board.setName("Dorel");
-                board.setDescription("jack of all trades");
-            }
-            boardRepository.save(board);
-        }
+        boards = new ArrayList<>();
 
+        boards.add(EntityUtils.validBoard("Apple iPhone X 256 GB", "The current high-end smartphone from Apple, with lots of memory and also Face ID"));
+        boards.add(EntityUtils.validBoard("Apple iPhone X 128 GB", "The current high-end smartphone from Apple, with Face ID"));
+        boards.add(EntityUtils.validBoard("Apple iPhone 8 128 GB", "The latest smartphone from Apple within the regular iPhone line, supporting wireless charging"));
+        boards.add(EntityUtils.validBoard("Samsung Galaxy S7 128 GB", "A great Android smartphone"));
+        boards.add(EntityUtils.validBoard("Microsoft Lumia 650 32 GB", "A cheaper smartphone, coming with Windows Mobile"));
+        boards.add(EntityUtils.validBoard("Microsoft Lumia 640 32 GB", "A cheaper smartphone, coming with Windows Mobile"));
+        boards.add(EntityUtils.validBoard("Microsoft Lumia 630 16 GB", "A cheaper smartphone, coming with Windows Mobile"));
+
+        boardRepository.saveAll(boards);
     }
 
 
     @Test
     public void testSearchBoardByDescription() {
+        final Board expected = boards.get(2);
+        final UUID expectedIds = expected.getId();
+        final List<UUID> actualIds = boardRepository.searchPhrase("description", "with wireless charging").stream().map(Board::getId).collect(Collectors.toList());
+        Assertions.assertThat(actualIds).hasSize(1)
+            .containsExactlyInAnyOrder(expectedIds);
 
     }
 
 
     @Test
     public void testSearchBoardByName() {
-
+        final List<Board> expected = boards.subList(0, 3);
+        final List<UUID> expectedIds = expected.stream().map(Board::getId).collect(Collectors.toList());
+        final List<UUID> actualIds = boardRepository.searchFuzzy("name", "iPhone").stream().map(Board::getId).collect(Collectors.toList());
+        Assertions.assertThat(actualIds).hasSize(3)
+            .containsExactlyInAnyOrder(expectedIds.get(0), expectedIds.get(1), expectedIds.get(2));
     }
 }

@@ -17,6 +17,16 @@ import java.util.Random;
 
 public class EntityUtils {
 
+    public static Board validBoard(final String name, final String description) {
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        Board board = new Board();
+        List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
+        board.setColumnDefinitions(columnDefinitions);
+        board.setInformationCards(informationCards);
+        board.setName(name);
+        board.setDescription(description);
+        return board;
+    }
 
     public static Board validBoard() {
         List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();

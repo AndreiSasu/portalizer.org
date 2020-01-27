@@ -1,5 +1,10 @@
 package org.portalizer.repository;
 
+import org.apache.lucene.search.Query;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.InformationCard;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,16 +54,61 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
     @Override
     public List<Board> searchFuzzy(final String fieldName, final String searchText) {
-        return null;
+        Query fuzzyQuery = getQueryBuilder()
+            .keyword()
+            .fuzzy()
+            .withEditDistanceUpTo(2)
+            .withPrefixLength(1)
+            .onField(fieldName)
+            .matching(searchText)
+            .createQuery();
+
+        List<Board> results = getJpaQuery(fuzzyQuery).getResultList();
+
+        return results;
     }
 
     @Override
     public List<Board> searchWildCard(final String fieldName, final String searchText) {
-        return null;
+        Query wildcardQuery = getQueryBuilder()
+            .keyword()
+            .wildcard()
+            .onField(fieldName)
+            .matching(searchText+"*")
+            .createQuery();
+
+        List<Board> results = getJpaQuery(wildcardQuery).getResultList();
+
+        return results;
     }
 
     @Override
     public List<Board> searchPhrase(final String fieldName, final String searchText) {
-        return null;
+        Query phraseQuery = getQueryBuilder()
+            .phrase()
+            .withSlop(1)
+            .onField(fieldName)
+            .sentence(searchText)
+            .createQuery();
+
+        List<Board> results = getJpaQuery(phraseQuery).getResultList();
+
+        return results;    }
+
+    private FullTextQuery getJpaQuery(org.apache.lucene.search.Query luceneQuery) {
+
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+
+        return fullTextEntityManager.createFullTextQuery(luceneQuery, Board.class);
+    }
+
+    private QueryBuilder getQueryBuilder() {
+
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+
+        return fullTextEntityManager.getSearchFactory()
+            .buildQueryBuilder()
+            .forEntity(Board.class)
+            .get();
     }
 }
