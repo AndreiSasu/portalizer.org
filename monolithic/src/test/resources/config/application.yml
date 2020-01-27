@@ -44,6 +44,8 @@ spring:
       hibernate.generate_statistics: false
       hibernate.hbm2ddl.auto: validate
       hibernate.jdbc.time_zone: UTC
+      hibernate.search.default.directory_provider: filesystem
+      hibernate.search.default.indexBase: /tmp/index/default
   liquibase:
     contexts: test
   mail:
@@ -115,8 +117,3 @@ jhipster:
 # ===================================================================
 
 # application:
-hibernate:
-  search:
-    default:
-      directory_provider: filesystem
-      indexBase: /tmp/default_index

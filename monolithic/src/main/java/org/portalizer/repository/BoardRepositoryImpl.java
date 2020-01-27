@@ -46,4 +46,19 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         board.setInformationCards(informationCards.orElse(new ArrayList<>()));
         return Optional.ofNullable(board);
     }
+
+    @Override
+    public List<Board> searchFuzzy(final String fieldName, final String searchText) {
+        return null;
+    }
+
+    @Override
+    public List<Board> searchWildCard(final String fieldName, final String searchText) {
+        return null;
+    }
+
+    @Override
+    public List<Board> searchPhrase(final String fieldName, final String searchText) {
+        return null;
+    }
 }
