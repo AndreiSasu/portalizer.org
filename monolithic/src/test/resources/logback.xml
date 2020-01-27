@@ -22,6 +22,7 @@
     <logger name="org.bson" level="WARN"/>
     <logger name="org.hibernate.validator" level="WARN"/>
     <logger name="org.hibernate" level="WARN"/>
+    <logger name="org.hibernate.search" level="DEBUG"/>
     <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.springframework.web" level="WARN"/>

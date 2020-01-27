@@ -115,3 +115,8 @@ jhipster:
 # ===================================================================
 
 # application:
+hibernate:
+  search:
+    default:
+      directory_provider: filesystem
+      indexBase: /tmp/default_index
