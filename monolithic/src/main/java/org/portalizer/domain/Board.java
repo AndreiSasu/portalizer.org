@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
@@ -33,10 +34,10 @@ public class Board implements Serializable {
     private UUID id;
 
     @NotEmpty
-    @Field(termVector = TermVector.YES)
+    @Field(termVector = TermVector.YES, store = Store.YES)
     private String name;
 
-    @Field(termVector = TermVector.YES)
+    @Field(termVector = TermVector.YES, store = Store.YES)
     @Column(columnDefinition = "VARCHAR(2048)")
     private String description;
 

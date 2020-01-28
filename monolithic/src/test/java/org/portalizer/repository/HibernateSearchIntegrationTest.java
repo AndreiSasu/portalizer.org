@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.portalizer.PortalizerApp;
 import org.portalizer.domain.Board;
+import org.portalizer.service.dto.BoardProjectionDTO;
 import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -56,10 +56,10 @@ public class HibernateSearchIntegrationTest {
     public void testSearchBoardByDescription() {
         final Board expected = boards.get(2);
         final UUID expectedIds = expected.getId();
-        final List<UUID> actualIds = boardRepository.searchPhrase("description", "with wireless charging").stream().map(Board::getId).collect(Collectors.toList());
+        final List<BoardProjectionDTO> actual = boardRepository.searchPhrase("description", "with wireless charging");
+        final List<UUID> actualIds = actual.stream().map(BoardProjectionDTO::getId).collect(Collectors.toList());
         Assertions.assertThat(actualIds).hasSize(1)
             .containsExactlyInAnyOrder(expectedIds);
-
     }
 
 
@@ -67,8 +67,10 @@ public class HibernateSearchIntegrationTest {
     public void testSearchBoardByName() {
         final List<Board> expected = boards.subList(0, 3);
         final List<UUID> expectedIds = expected.stream().map(Board::getId).collect(Collectors.toList());
-        final List<UUID> actualIds = boardRepository.searchFuzzy("name", "iPhone").stream().map(Board::getId).collect(Collectors.toList());
+        final List<BoardProjectionDTO> actual = boardRepository.searchFuzzy("name", "iPhone");
+        final List<UUID> actualIds = actual.stream().map(BoardProjectionDTO::getId).collect(Collectors.toList());
         Assertions.assertThat(actualIds).hasSize(3)
             .containsExactlyInAnyOrder(expectedIds.get(0), expectedIds.get(1), expectedIds.get(2));
+
     }
 }

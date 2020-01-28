@@ -7,12 +7,11 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.InformationCard;
+import org.portalizer.service.dto.BoardProjectionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -30,6 +29,9 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    EntityManagerFactory sessionFactory;
 
     @Override
     public Optional<Board> findFullBoardById(final UUID id) {
@@ -53,7 +55,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public List<Board> searchFuzzy(final String fieldName, final String searchText) {
+    public List<BoardProjectionDTO> searchFuzzy(final String fieldName, final String searchText) {
         Query fuzzyQuery = getQueryBuilder()
             .keyword()
             .fuzzy()
@@ -63,13 +65,13 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .matching(searchText)
             .createQuery();
 
-        List<Board> results = getJpaQuery(fuzzyQuery).getResultList();
+        List<BoardProjectionDTO> results = getJpaQuery(fuzzyQuery, true).getResultList();
 
         return results;
     }
 
     @Override
-    public List<Board> searchWildCard(final String fieldName, final String searchText) {
+    public List<BoardProjectionDTO> searchWildCard(final String fieldName, final String searchText) {
         Query wildcardQuery = getQueryBuilder()
             .keyword()
             .wildcard()
@@ -77,13 +79,13 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .matching(searchText+"*")
             .createQuery();
 
-        List<Board> results = getJpaQuery(wildcardQuery).getResultList();
+        List<BoardProjectionDTO> results = getJpaQuery(wildcardQuery, true).getResultList();
 
         return results;
     }
 
     @Override
-    public List<Board> searchPhrase(final String fieldName, final String searchText) {
+    public List<BoardProjectionDTO> searchPhrase(final String fieldName, final String searchText) {
         Query phraseQuery = getQueryBuilder()
             .phrase()
             .withSlop(1)
@@ -91,15 +93,20 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .sentence(searchText)
             .createQuery();
 
-        List<Board> results = getJpaQuery(phraseQuery).getResultList();
+        List<BoardProjectionDTO> results = getJpaQuery(phraseQuery, true).getResultList();
 
-        return results;    }
+        return results;
+    }
 
-    private FullTextQuery getJpaQuery(org.apache.lucene.search.Query luceneQuery) {
+    private FullTextQuery getJpaQuery(org.apache.lucene.search.Query luceneQuery, boolean projection) {
 
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
-
-        return fullTextEntityManager.createFullTextQuery(luceneQuery, Board.class);
+        final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Board.class);
+        if(projection) {
+            fullTextQuery.setProjection("id", "name", "description")
+                .setResultTransformer(new BoardToBoardProjectionTransformer());
+        }
+        return fullTextQuery;
     }
 
     private QueryBuilder getQueryBuilder() {
