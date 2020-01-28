@@ -11,28 +11,20 @@ import { SERVER_API_URL } from '../app.constants';
 @Injectable({
   providedIn: 'root'
 })
+/* eslint-disable */
 export class BoardService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   BOARDS_URL = SERVER_API_URL + '/api/retro/boards/';
-  BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards-paged?page=';
+  BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards?page=';
   BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/retro/boardtemplates/';
 
   constructor(private http: HttpClient) {}
 
   getBoardsPage(page: number): Observable<PaginationPage<BoardSummary>> {
     return this.http.get<PaginationPage<BoardSummary>>(this.BOARDS_PAGING_URL + page);
-  }
-
-  /** GET heroes from the server */
-  /* eslint-disable */
-  getBoardSummaries(): Observable<BoardSummary[]> {
-    return this.http.get<BoardSummary[]>(this.BOARDS_URL).pipe(
-      tap(_ => console.log(`fetched boardsummaries ${this.BOARDS_URL}`)),
-      catchError(this.handleError<BoardSummary[]>('getBoardSummaries', []))
-    );
   }
 
   getBoardTemplates(): Observable<Array<BoardTemplate>> {
