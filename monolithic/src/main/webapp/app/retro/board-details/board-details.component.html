@@ -2,7 +2,7 @@
 <jhi-alert-error></jhi-alert-error>
 <h1>
     {{board?.name}}
-    <small class="text-muted">Created at: {{board?.createdAt}}</small>
+    <small class="text-muted">Created at: {{board?.createdAt | date: 'dd/MM/yyyy' }}</small>
     <button type="button" class="btn btn-outline-primary btn-lg" (click)="refreshBoard()" style="float: right;">
         <fa-icon [icon]="faSync"></fa-icon> Refresh board
     </button>
