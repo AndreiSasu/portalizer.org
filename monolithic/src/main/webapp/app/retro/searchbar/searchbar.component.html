@@ -1,3 +1,16 @@
+<ng-template #rt let-r="result" let-t="term">
+
+    <span *ngFor="let columnDefinition of r.columnDefinitions"
+        [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.columnType)]">{{columnDefinition.title}}</span>
+
+    <label for="name">Name: </label>
+    <ngb-highlight id="name" [result]="r.name" [term]="t"></ngb-highlight>
+    <label for="description">Description: </label>
+    <ngb-highlight id="description" [result]="r.description" [term]="t" [highlightClass]="highlight-font">
+    </ngb-highlight>
+</ng-template>
+
+
 <div class="container">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -11,7 +24,9 @@
             </div>
         </div>
         <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
-            aria-describedby="button-addon2" [(ngModel)]="searchValue" (selectItem)="onItemSelect($event)" focusFirst="true" [ngbTypeahead]="search">
+            aria-describedby="button-addon2" [(ngModel)]="searchValue" (selectItem)="onItemSelect($event)"
+            focusFirst="true" [ngbTypeahead]="searchBoards" [resultTemplate]="rt" [inputFormatter]="inputFormatter"
+            [resultFormatter]="formatter">
         <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button" id="button-addon2">
                 <fa-icon [icon]="faSearch"></fa-icon>

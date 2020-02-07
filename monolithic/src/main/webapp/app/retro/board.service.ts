@@ -20,8 +20,14 @@ export class BoardService {
   BOARDS_URL = SERVER_API_URL + '/api/retro/boards/';
   BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards?page=';
   BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/retro/boardtemplates/';
+  BOARDS_SEARCH_LIGHT_URL = SERVER_API_URL + '/api/retro/boards/search/light';
+  BOARDS_SEARCH_HEAVY_URL = SERVER_API_URL + '/api/retro/boards/search/heavy';
 
   constructor(private http: HttpClient) {}
+
+  searchLight(field: string, search: string): Observable<Array<BoardSummary>> {
+    return this.http.get<Array<BoardSummary>>(this.BOARDS_SEARCH_LIGHT_URL + '?fieldName=' + field + '&search=' + search);
+  }
 
   getBoardsPage(page: number): Observable<PaginationPage<BoardSummary>> {
     return this.http.get<PaginationPage<BoardSummary>>(this.BOARDS_PAGING_URL + page);
