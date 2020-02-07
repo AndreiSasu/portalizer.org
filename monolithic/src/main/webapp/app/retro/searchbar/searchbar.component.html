@@ -1,12 +1,12 @@
 <div class="container">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <button type="button" class="btn btn-outline-secondary">By Name: </button>
+            <button type="button" class="btn btn-outline-secondary">By {{selection}}: </button>
             <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                 <button class="btn btn-outline-secondary dropdown-toggle-split" ngbDropdownToggle></button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <button ngbDropdownItem>Name</button>
-                    <button ngbDropdownItem>Description</button>
+                    <button ngbDropdownItem (click)="changeSelection('Name')">Name</button>
+                    <button ngbDropdownItem (click)="changeSelection('Description')">Description</button>
                 </div>
             </div>
         </div>

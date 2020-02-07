@@ -9,7 +9,13 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 export class SearchbarComponent implements OnInit {
   faSearch = faSearch;
 
+  selection = 'Name';
+
   constructor() {}
 
   ngOnInit() {}
+
+  changeSelection(selection: string) {
+    this.selection = selection;
+  }
 }
