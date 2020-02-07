@@ -10,9 +10,10 @@ import { FormsModule } from '@angular/forms';
 import { SortByPipe } from './sort-by.pipe';
 import { InformationCardComponent } from './information-card/information-card.component';
 import { PortalizerSharedModule } from '../shared/shared.module';
+import { SearchbarComponent } from './searchbar/searchbar.component';
 
 @NgModule({
-  declarations: [SortByPipe, BoardSummaryComponent, BoardDetailsComponent, InformationCardComponent],
+  declarations: [SortByPipe, BoardSummaryComponent, BoardDetailsComponent, InformationCardComponent, SearchbarComponent],
   imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule]
 })
 export class RetroModule {}
