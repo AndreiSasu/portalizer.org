@@ -27,8 +27,7 @@
         <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
             aria-describedby="button-addon2" [(ngModel)]="searchValue" (selectItem)="onItemSelect($event)"
             [ngbTypeahead]="searchBoards" [resultTemplate]="rt" [inputFormatter]="inputFormatter"
-            [resultFormatter]="formatter"
-            (keyup.enter)="onKeyUp($event)">
+            [resultFormatter]="formatter" (keyup.enter)="onKeyUp($event)">
         <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="doEmit()">
                 <fa-icon [icon]="faSearch"></fa-icon>
