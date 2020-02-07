@@ -3,7 +3,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { BoardService } from '../board.service';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
-import { BoardSummary } from '../model/boards';
+import { BoardSummary, TextSearch } from '../model/boards';
 import { Router } from '@angular/router';
 import { ColorsService } from '../colors.service';
 
@@ -19,7 +19,7 @@ export class SearchbarComponent implements OnInit {
   searching = false;
   searchFailed = false;
 
-  @Output() searchEvent = new EventEmitter<any>();
+  @Output() searchEvent = new EventEmitter<TextSearch>();
 
   constructor(private boardService: BoardService, private colorService: ColorsService, private router: Router) {}
 
@@ -61,7 +61,7 @@ export class SearchbarComponent implements OnInit {
 
   doEmit() {
     if (this.searchValue) {
-      this.searchEvent.emit({ field: this.selection.toLowerCase(), search: this.searchValue });
+      this.searchEvent.emit(new TextSearch(this.selection.toLowerCase(), this.searchValue));
     }
   }
 }

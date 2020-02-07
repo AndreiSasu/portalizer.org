@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, Boards, CreateBoardRequest, BoardColumn, BoardTemplate } from '../model/boards';
+import { BoardSummary, CreateBoardRequest, BoardColumn, BoardTemplate, TextSearch } from '../model/boards';
 import { faEye, faTrash, faArchive, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +22,6 @@ export class BoardSummaryComponent implements OnInit {
   faPlusSquare = faPlusSquare;
   colorService: ColorsService;
   closeResult: string;
-  boards: Boards;
   boardTemplates: Array<BoardTemplate>;
 
   formModel = {
@@ -36,15 +35,8 @@ export class BoardSummaryComponent implements OnInit {
   paginationSize = 'lg';
   pageSize = 25;
 
-  constructor(
-    private boardService: BoardService,
-    private router: Router,
-    private modalService: NgbModal,
-    colorService: ColorsService,
-    boards: Boards
-  ) {
+  constructor(private boardService: BoardService, private router: Router, private modalService: NgbModal, colorService: ColorsService) {
     this.colorService = colorService;
-    this.boards = boards;
   }
 
   ngOnInit() {
@@ -68,9 +60,9 @@ export class BoardSummaryComponent implements OnInit {
     this.getBoardPages();
   }
 
-  onSearch(event: { field: string; search: string }) {
+  onSearch(event: TextSearch) {
     console.log(event);
-    this.boardService.searchHeavy(event.field, event.search).subscribe(data => {
+    this.boardService.searchHeavy(event.fieldName, event.search).subscribe(data => {
       this.pageObject = data;
       console.log(this.pageObject);
       this.boardSummaries = this.pageObject['content'];
