@@ -48,6 +48,10 @@ public class HibernateSearchIntegrationTest {
         boards.add(EntityUtils.validBoard("Microsoft Lumia 640 32 GB", "A cheaper smartphone, coming with Windows Mobile"));
         boards.add(EntityUtils.validBoard("Microsoft Lumia 630 16 GB", "A cheaper smartphone, coming with Windows Mobile"));
 
+        for(int i = 0; i < 11; i++) {
+            boards.add(EntityUtils.validBoard("Sprint retrospective February", "What happened in Februrary"));
+        }
+
         boardRepository.saveAll(boards);
     }
 
@@ -64,7 +68,7 @@ public class HibernateSearchIntegrationTest {
 
 
     @Test
-    public void testSearchBoardByName() {
+    public void testSearchFuzzyBoardByName() {
         final List<Board> expected = boards.subList(0, 3);
         final List<UUID> expectedIds = expected.stream().map(Board::getId).collect(Collectors.toList());
         final List<BoardProjectionDTO> actual = boardRepository.searchFuzzy("name", "iPhone");
@@ -73,4 +77,11 @@ public class HibernateSearchIntegrationTest {
             .containsExactlyInAnyOrder(expectedIds.get(0), expectedIds.get(1), expectedIds.get(2));
 
     }
+
+    @Test
+    public void testMax10ResultsReturned() {
+        final List<BoardProjectionDTO> actual = boardRepository.searchFuzzy("name", "February");
+        Assertions.assertThat(actual).hasSize(10);
+    }
+
 }

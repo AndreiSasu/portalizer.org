@@ -9,6 +9,9 @@ import org.portalizer.domain.Board;
 import org.portalizer.domain.InformationCard;
 import org.portalizer.service.dto.BoardProjectionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -27,11 +30,15 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     @Autowired
     InformationCardRepository informationCardRepository;
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
+
+    private final EntityManagerFactory sessionFactory;
 
     @Autowired
-    EntityManagerFactory sessionFactory;
+    public BoardRepositoryImpl(EntityManagerFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+        this.entityManager = this.sessionFactory.createEntityManager();
+    }
 
     @Override
     public Optional<Board> findFullBoardById(final UUID id) {
@@ -98,13 +105,38 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
         return results;
     }
 
+    @Override
+    public Page<Board> searchFuzzy(String fieldName, String searchText, Pageable pageable) {
+
+        Query fuzzyQuery = getQueryBuilder()
+            .keyword()
+            .fuzzy()
+            .withEditDistanceUpTo(2)
+            .withPrefixLength(1)
+            .onField(fieldName)
+            .matching(searchText)
+            .createQuery();
+
+        final int firstResult = pageable.getPageNumber() == 0 ? 0 : pageable.getPageNumber() * pageable.getPageSize();
+
+        final FullTextQuery jpaQuery = getJpaQuery(fuzzyQuery, false)
+            .setFirstResult(firstResult)
+            .setMaxResults(pageable.getPageSize());
+
+        final int totalResults = jpaQuery.getResultSize();
+        final List<Board> boards = jpaQuery.getResultList();
+
+        return new PageImpl<>(boards, pageable, totalResults);
+    }
+
     private FullTextQuery getJpaQuery(org.apache.lucene.search.Query luceneQuery, boolean projection) {
 
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
         final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Board.class);
         if(projection) {
             fullTextQuery.setProjection("id", "name", "description")
-                .setResultTransformer(new BoardToBoardProjectionTransformer());
+                .setResultTransformer(new BoardToBoardProjectionTransformer())
+                .setMaxResults(10); //projections should only be used for typeahead fields with autocomplete
         }
         return fullTextQuery;
     }
