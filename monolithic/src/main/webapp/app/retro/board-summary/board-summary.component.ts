@@ -35,6 +35,8 @@ export class BoardSummaryComponent implements OnInit {
   paginationSize = 'lg';
   pageSize = 25;
 
+  currentSearch: TextSearch;
+
   constructor(private boardService: BoardService, private router: Router, private modalService: NgbModal, colorService: ColorsService) {
     this.colorService = colorService;
   }
@@ -57,14 +59,17 @@ export class BoardSummaryComponent implements OnInit {
   onPageChange(event: number) {
     console.log(event);
     this.currentPage = event;
-    this.getBoardPages();
+    if (this.currentSearch === undefined) {
+      this.getBoardPages();
+    } else {
+      this.onSearch(this.currentSearch, this.currentPage - 1);
+    }
   }
 
-  onSearch(event: TextSearch) {
-    console.log(event);
-    this.boardService.searchHeavy(event.fieldName, event.search).subscribe(data => {
+  onSearch(event: TextSearch, currentPage?: number) {
+    this.currentSearch = event;
+    this.boardService.searchHeavy(event.fieldName, event.search, currentPage).subscribe(data => {
       this.pageObject = data;
-      console.log(this.pageObject);
       this.boardSummaries = this.pageObject['content'];
     });
   }

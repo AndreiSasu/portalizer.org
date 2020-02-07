@@ -29,8 +29,13 @@ export class BoardService {
     return this.http.get<Array<BoardSummary>>(this.BOARDS_SEARCH_LIGHT_URL + '?fieldName=' + field + '&search=' + search);
   }
 
-  searchHeavy(field: string, search: string): Observable<PaginationPage<BoardSummary>> {
-    return this.http.get<PaginationPage<BoardSummary>>(this.BOARDS_SEARCH_HEAVY_URL + '?fieldName=' + field + '&search=' + search);
+  searchHeavy(field: string, search: string, page?: number): Observable<PaginationPage<BoardSummary>> {
+    let url = this.BOARDS_SEARCH_HEAVY_URL + '?fieldName=' + field + '&search=' + search;
+    if (page !== undefined) {
+      url += '&page=' + page;
+    }
+    console.log(url);
+    return this.http.get<PaginationPage<BoardSummary>>(url);
   }
 
   getBoardsPage(page: number): Observable<PaginationPage<BoardSummary>> {
