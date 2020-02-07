@@ -3,9 +3,10 @@
     <span *ngFor="let columnDefinition of r.columnDefinitions"
         [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.columnType)]">{{columnDefinition.title}}</span>
 
-    <label for="name">Name: </label>
+    <label [ngClass]="['name-label']" for="name">Name: </label>
     <ngb-highlight id="name" [result]="r.name" [term]="t"></ngb-highlight>
-    <label for="description">Description: </label>
+    
+    <label [ngClass]="['description-label']" for="description">Description: </label>
     <ngb-highlight id="description" [result]="r.description" [term]="t" [highlightClass]="highlight-font">
     </ngb-highlight>
 </ng-template>
