@@ -5,7 +5,7 @@
 
     <label [ngClass]="['name-label']" for="name">Name: </label>
     <ngb-highlight id="name" [result]="r.name" [term]="t"></ngb-highlight>
-    
+
     <label [ngClass]="['description-label']" for="description">Description: </label>
     <ngb-highlight id="description" [result]="r.description" [term]="t" [highlightClass]="highlight-font">
     </ngb-highlight>
@@ -26,10 +26,11 @@
         </div>
         <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
             aria-describedby="button-addon2" [(ngModel)]="searchValue" (selectItem)="onItemSelect($event)"
-            focusFirst="true" [ngbTypeahead]="searchBoards" [resultTemplate]="rt" [inputFormatter]="inputFormatter"
-            [resultFormatter]="formatter">
+            [ngbTypeahead]="searchBoards" [resultTemplate]="rt" [inputFormatter]="inputFormatter"
+            [resultFormatter]="formatter"
+            (keyup.enter)="onKeyUp($event)">
         <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="doEmit()">
                 <fa-icon [icon]="faSearch"></fa-icon>
             </button>
         </div>

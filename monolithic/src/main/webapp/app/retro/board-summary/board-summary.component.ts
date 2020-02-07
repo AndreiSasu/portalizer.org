@@ -68,6 +68,15 @@ export class BoardSummaryComponent implements OnInit {
     this.getBoardPages();
   }
 
+  onSearch(event: { field: string; search: string }) {
+    console.log(event);
+    this.boardService.searchHeavy(event.field, event.search).subscribe(data => {
+      this.pageObject = data;
+      console.log(this.pageObject);
+      this.boardSummaries = this.pageObject['content'];
+    });
+  }
+
   openVerticallyCentered(content) {
     this.modalService.open(content, { centered: true });
   }

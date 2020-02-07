@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { EventEmitter, Output, Component, OnInit } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { BoardService } from '../board.service';
 import { Observable, of } from 'rxjs';
@@ -18,6 +18,8 @@ export class SearchbarComponent implements OnInit {
   searchValue: string;
   searching = false;
   searchFailed = false;
+
+  @Output() searchEvent = new EventEmitter<any>();
 
   constructor(private boardService: BoardService, private colorService: ColorsService, private router: Router) {}
 
@@ -49,5 +51,17 @@ export class SearchbarComponent implements OnInit {
 
   onItemSelect(event: any) {
     this.router.navigateByUrl('retro/boards/' + event.item.id);
+  }
+
+  onKeyUp(event: any) {
+    if ('Enter' === event.code) {
+      this.doEmit();
+    }
+  }
+
+  doEmit() {
+    if (this.searchValue) {
+      this.searchEvent.emit({ field: this.selection.toLowerCase(), search: this.searchValue });
+    }
   }
 }
