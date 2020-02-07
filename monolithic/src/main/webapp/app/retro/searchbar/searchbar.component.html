@@ -11,7 +11,7 @@
             </div>
         </div>
         <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
-            aria-describedby="button-addon2">
+            aria-describedby="button-addon2" [(ngModel)]="searchValue" (selectItem)="onItemSelect($event)" focusFirst="true" [ngbTypeahead]="search">
         <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button" id="button-addon2">
                 <fa-icon [icon]="faSearch"></fa-icon>
