@@ -1,22 +1,21 @@
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <div ngbDropdown class="d-inline-block">
-
-            <button type="button" class="btn btn-outline-primary">By Name: </button>
-            <button ngbDropdownToggle type="button" class="btn btn-outline-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                
-            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-              <button ngbDropdownItem>Action - 1</button>
-              <button ngbDropdownItem>Another Action</button>
-              <button ngbDropdownItem>Something else is here</button>
+<div class="container">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button type="button" class="btn btn-outline-secondary">By Name: </button>
+            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle-split" ngbDropdownToggle></button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button ngbDropdownItem>Name</button>
+                    <button ngbDropdownItem>Description</button>
+                </div>
             </div>
-          </div>
-    </div>
-    <input type="text" class="form-control" placeholder="Search Boards" aria-label="Search"
-        aria-describedby="button-addon2">
-    <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" id="button-addon2">
-            <fa-icon [icon]="faSearch"></fa-icon>
-        </button>
+        </div>
+        <input type="text" class="form-control" placeholder="Search..." aria-label="Search"
+            aria-describedby="button-addon2">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </button>
+        </div>
     </div>
 </div>
