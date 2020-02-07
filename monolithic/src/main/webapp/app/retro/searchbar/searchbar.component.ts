@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { WikipediaService } from './wikipediaservice';
 import { BoardService } from '../board.service';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
@@ -11,7 +10,6 @@ import { ColorsService } from '../colors.service';
 @Component({
   selector: 'jhi-searchbar',
   templateUrl: './searchbar.component.html',
-  providers: [WikipediaService],
   styleUrls: ['./searchbar.component.scss']
 })
 export class SearchbarComponent implements OnInit {
