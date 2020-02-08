@@ -70,8 +70,7 @@ export class SearchbarComponent implements OnInit {
   doEmit() {
     if (this.searchValue) {
       let event = new TextSearch(this.selection.toLowerCase(), this.searchValue);
-      console.log(event);
-      this.searchEvent.emit();
+      this.searchEvent.emit(event);
     }
   }
 }

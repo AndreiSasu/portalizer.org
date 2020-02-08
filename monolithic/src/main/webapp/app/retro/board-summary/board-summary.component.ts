@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, CreateBoardRequest, BoardColumn, BoardTemplate, TextSearch } from '../model/boards';
+import { BoardSummary, CreateBoardRequest, BoardColumn, BoardTemplate, TextSearch, ClearSearch } from '../model/boards';
 import { faEye, faTrash, faArchive, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -72,6 +72,11 @@ export class BoardSummaryComponent implements OnInit {
       this.pageObject = data;
       this.boardSummaries = this.pageObject['content'];
     });
+  }
+
+  onClear(event: ClearSearch) {
+    this.currentSearch = undefined;
+    this.getBoardPages();
   }
 
   openVerticallyCentered(content) {

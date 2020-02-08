@@ -39,7 +39,7 @@
     </div>
 </ng-template>
 
-<jhi-searchbar (searchEvent)="onSearch($event)"></jhi-searchbar>
+<jhi-searchbar (clearEvent)="onClear($event)" (searchEvent)="onSearch($event)"></jhi-searchbar>
 <br>
 
 <div class="container">
