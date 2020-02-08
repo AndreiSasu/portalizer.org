@@ -11,28 +11,35 @@ import { SERVER_API_URL } from '../app.constants';
 @Injectable({
   providedIn: 'root'
 })
+/* eslint-disable */
 export class BoardService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   BOARDS_URL = SERVER_API_URL + '/api/retro/boards/';
-  BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards-paged?page=';
+  BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards?page=';
   BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/retro/boardtemplates/';
+  BOARDS_SEARCH_LIGHT_URL = SERVER_API_URL + '/api/retro/boards/search/light';
+  BOARDS_SEARCH_HEAVY_URL = SERVER_API_URL + '/api/retro/boards/search/heavy';
 
   constructor(private http: HttpClient) {}
 
-  getBoardsPage(page: number): Observable<PaginationPage<BoardSummary>> {
-    return this.http.get<PaginationPage<BoardSummary>>(this.BOARDS_PAGING_URL + page);
+  searchLight(field: string, search: string): Observable<Array<BoardSummary>> {
+    return this.http.get<Array<BoardSummary>>(this.BOARDS_SEARCH_LIGHT_URL + '?fieldName=' + field + '&search=' + search);
   }
 
-  /** GET heroes from the server */
-  /* eslint-disable */
-  getBoardSummaries(): Observable<BoardSummary[]> {
-    return this.http.get<BoardSummary[]>(this.BOARDS_URL).pipe(
-      tap(_ => console.log(`fetched boardsummaries ${this.BOARDS_URL}`)),
-      catchError(this.handleError<BoardSummary[]>('getBoardSummaries', []))
-    );
+  searchHeavy(field: string, search: string, page?: number): Observable<PaginationPage<BoardSummary>> {
+    let url = this.BOARDS_SEARCH_HEAVY_URL + '?fieldName=' + field + '&search=' + search;
+    if (page !== undefined) {
+      url += '&page=' + page;
+    }
+    console.log(url);
+    return this.http.get<PaginationPage<BoardSummary>>(url);
+  }
+
+  getBoardsPage(page: number): Observable<PaginationPage<BoardSummary>> {
+    return this.http.get<PaginationPage<BoardSummary>>(this.BOARDS_PAGING_URL + page);
   }
 
   getBoardTemplates(): Observable<Array<BoardTemplate>> {

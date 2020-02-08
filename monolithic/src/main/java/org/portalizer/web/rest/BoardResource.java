@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 import java.util.UUID;
 
 @RestController
@@ -32,12 +32,7 @@ public class BoardResource {
     }
 
     @GetMapping("/boards")
-    public ResponseEntity<List<BoardDTO>> getAllBoards() {
-        return new ResponseEntity<>(boardService.findAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/boards-paged")
-    public ResponseEntity<Page<BoardDTO>> getAllBoardsPaged(@PageableDefault(size = 25, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<BoardDTO>> getAllBoards(@PageableDefault(size = 25, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return new ResponseEntity<>(boardService.findAll(pageable), HttpStatus.OK);
     }
 

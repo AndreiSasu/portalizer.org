@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, Boards, CreateBoardRequest, BoardColumn, BoardTemplate } from '../model/boards';
+import { BoardSummary, CreateBoardRequest, BoardColumn, BoardTemplate, TextSearch, ClearSearch } from '../model/boards';
 import { faEye, faTrash, faArchive, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +22,6 @@ export class BoardSummaryComponent implements OnInit {
   faPlusSquare = faPlusSquare;
   colorService: ColorsService;
   closeResult: string;
-  boards: Boards;
   boardTemplates: Array<BoardTemplate>;
 
   formModel = {
@@ -36,15 +35,10 @@ export class BoardSummaryComponent implements OnInit {
   paginationSize = 'lg';
   pageSize = 25;
 
-  constructor(
-    private boardService: BoardService,
-    private router: Router,
-    private modalService: NgbModal,
-    colorService: ColorsService,
-    boards: Boards
-  ) {
+  currentSearch: TextSearch;
+
+  constructor(private boardService: BoardService, private router: Router, private modalService: NgbModal, colorService: ColorsService) {
     this.colorService = colorService;
-    this.boards = boards;
   }
 
   ngOnInit() {
@@ -65,6 +59,23 @@ export class BoardSummaryComponent implements OnInit {
   onPageChange(event: number) {
     console.log(event);
     this.currentPage = event;
+    if (this.currentSearch === undefined) {
+      this.getBoardPages();
+    } else {
+      this.onSearch(this.currentSearch, this.currentPage - 1);
+    }
+  }
+
+  onSearch(event: TextSearch, currentPage?: number) {
+    this.currentSearch = event;
+    this.boardService.searchHeavy(event.fieldName, event.search, currentPage).subscribe(data => {
+      this.pageObject = data;
+      this.boardSummaries = this.pageObject['content'];
+    });
+  }
+
+  onClear(event: ClearSearch) {
+    this.currentSearch = undefined;
     this.getBoardPages();
   }
 

@@ -17,6 +17,7 @@ import org.portalizer.utils.EntityUtils;
 import org.portalizer.web.rest.errors.ExceptionTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
@@ -68,12 +69,13 @@ public class BoardResourceIT {
         this.boardResourceMockMVC = MockMvcBuilders.standaloneSetup(boardResource)
             .setControllerAdvice(exceptionTranslator)
             .setConversionService(createFormattingConversionService())
+            .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
             .setMessageConverters(jacksonMessageConverter)
             .setValidator(validator).build();
     }
 
     @Test
-    public void testAllBoardsAreReturned() throws Exception {
+    public void testBoardsAreReturnedPageableDefault() throws Exception {
 
 
         List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
@@ -88,11 +90,11 @@ public class BoardResourceIT {
         boardResourceMockMVC.perform(get("/api/retro/boards"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").isNotEmpty())
-            .andExpect(jsonPath("$.[*].name").value(hasItem("Test")))
-            .andExpect(jsonPath("$.[*].createdAt").isNotEmpty())
-            .andExpect(jsonPath("$.[*].columnDefinitions").isNotEmpty())
-            .andExpect(jsonPath("$.[*].informationCards").isEmpty());
+            .andExpect(jsonPath("$.content.[*].id").isNotEmpty())
+            .andExpect(jsonPath("$.content.[*].name").value(hasItem("Test")))
+            .andExpect(jsonPath("$.content.[*].createdAt").isNotEmpty())
+            .andExpect(jsonPath("$.content.[*].columnDefinitions").isNotEmpty())
+            .andExpect(jsonPath("$.content.[*].informationCards").isEmpty());
     }
 
     @Test

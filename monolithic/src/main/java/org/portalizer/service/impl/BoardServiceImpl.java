@@ -4,6 +4,7 @@ import org.portalizer.domain.Board;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.BoardDTO;
+import org.portalizer.service.dto.BoardProjectionDTO;
 import org.portalizer.service.dto.ColumnDefinitionDTO;
 import org.portalizer.service.mapper.BoardMapper;
 import org.portalizer.service.mapper.ColumnDefinitionMapper;
@@ -26,6 +27,20 @@ public class BoardServiceImpl implements BoardService {
         this.boardRepository = boardRepository;
         this.boardMapper = boardMapper;
         this.columnDefinitionMapper = columnDefinitionMapper;
+    }
+
+    @Override
+    public List<BoardProjectionDTO> search(String field, String search) {
+        return boardRepository.searchFuzzy(field, search);
+    }
+
+    @Override
+    public Page<BoardDTO> searchAll(String field, String search, Pageable pageable) {
+        final Page<Board> boardPage = boardRepository.searchFuzzy(field, search, pageable);
+        final List<Board> lazyBoards = boardPage.getContent();
+        final List<BoardDTO> boardDTOS = lazyBoards.stream().map(this::lazyBoardToDto).collect(Collectors.toList());
+        final Page<BoardDTO> boardDTOsPage = new PageImpl<>(boardDTOS, pageable, boardPage.getTotalElements());
+        return boardDTOsPage;
     }
 
     @Override

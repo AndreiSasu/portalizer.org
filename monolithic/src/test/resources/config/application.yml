@@ -44,6 +44,8 @@ spring:
       hibernate.generate_statistics: false
       hibernate.hbm2ddl.auto: validate
       hibernate.jdbc.time_zone: UTC
+      hibernate.search.default.directory_provider: filesystem
+      hibernate.search.default.indexBase: /tmp/testindex/default
   liquibase:
     contexts: test
   mail:

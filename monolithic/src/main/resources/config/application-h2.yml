@@ -20,3 +20,5 @@ spring:
       hibernate.cache.use_second_level_cache: false
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
+      hibernate.search.default.directory_provider: filesystem
+      hibernate.search.default.indexBase: /tmp/index/default

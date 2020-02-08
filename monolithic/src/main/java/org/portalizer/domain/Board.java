@@ -3,6 +3,10 @@ package org.portalizer.domain;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TermVector;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -15,6 +19,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "board")
+@Indexed
 public class Board implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,8 +34,10 @@ public class Board implements Serializable {
     private UUID id;
 
     @NotEmpty
+    @Field(termVector = TermVector.YES, store = Store.YES)
     private String name;
 
+    @Field(termVector = TermVector.YES, store = Store.YES)
     @Column(columnDefinition = "VARCHAR(2048)")
     private String description;
 
