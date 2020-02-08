@@ -3,7 +3,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { BoardService } from '../board.service';
 import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
-import { BoardSummary, TextSearch } from '../model/boards';
+import { BoardSummary, TextSearch, ClearSearch } from '../model/boards';
 import { Router } from '@angular/router';
 import { ColorsService } from '../colors.service';
 
@@ -20,6 +20,7 @@ export class SearchbarComponent implements OnInit {
   searchFailed = false;
 
   @Output() searchEvent = new EventEmitter<TextSearch>();
+  @Output() clearEvent = new EventEmitter<ClearSearch>();
 
   constructor(private boardService: BoardService, private colorService: ColorsService, private router: Router) {}
 
@@ -53,15 +54,24 @@ export class SearchbarComponent implements OnInit {
     this.router.navigateByUrl('retro/boards/' + event.item.id);
   }
 
-  onKeyUp(event: any) {
-    if ('Enter' === event.code) {
+  /*eslint-disable*/
+  onEvent(event: any) {
+    event.preventDefault();
+    console.log(event);
+
+    if ('Enter' === event.code || ('search' === event.type && this.searchValue)) {
       this.doEmit();
+    } else if ('search' === event.type) {
+      console.log('is clear search');
+      this.clearEvent.emit(new ClearSearch());
     }
   }
 
   doEmit() {
     if (this.searchValue) {
-      this.searchEvent.emit(new TextSearch(this.selection.toLowerCase(), this.searchValue));
+      let event = new TextSearch(this.selection.toLowerCase(), this.searchValue);
+      console.log(event);
+      this.searchEvent.emit();
     }
   }
 }

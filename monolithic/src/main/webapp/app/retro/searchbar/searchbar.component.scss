@@ -1,3 +1,19 @@
+.unified-with-input {
+  border: 1px solid #ced4da;
+}
+
+.no-hover {
+  pointer-events: none;
+}
+
+.no-right-border {
+  border-right: none;
+}
+
+.no-left-border {
+  border-left: none;
+}
+
 .name-label {
   color: blueviolet;
   font-style: italic;
@@ -6,4 +22,8 @@
 .description-label {
   color: darkcyan;
   font-style: italic;
+}
+
+.clearSearch {
+  position: absolute;
 }

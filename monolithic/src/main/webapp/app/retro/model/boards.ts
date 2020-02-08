@@ -42,3 +42,5 @@ export class CreateBoardRequest {
 export class TextSearch {
   constructor(public fieldName: string, public search: string) {}
 }
+
+export class ClearSearch {}
