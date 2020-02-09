@@ -12,7 +12,7 @@ import { InformationCardComponent } from './information-card/information-card.co
 import { PortalizerSharedModule } from '../shared/shared.module';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { CreateBoardModalComponent } from './create-board-modal/create-board-modal.component';
-import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +22,9 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     InformationCardComponent,
     SearchbarComponent,
     CreateBoardModalComponent,
-    ConfirmationModalComponent
+    DeleteConfirmationModalComponent
   ],
   imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule],
-  entryComponents: [CreateBoardModalComponent, ConfirmationModalComponent]
+  entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent]
 })
 export class RetroModule {}

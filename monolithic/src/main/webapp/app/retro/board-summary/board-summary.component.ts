@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { PaginationPage } from '../model/pagination';
 import { CreateBoardModalComponent } from '../create-board-modal/create-board-modal.component';
 import { Subject } from 'rxjs';
-import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
+import { DeleteConfirmationModalComponent } from '../delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
   selector: 'jhi-board-summary',
@@ -105,7 +105,7 @@ export class BoardSummaryComponent implements OnInit {
 
   openDeleteConfirmationModal(boardSummary: BoardSummary) {
     const ok = new Subject<DeleteBoardRequest>();
-    this.modalService.open(ConfirmationModalComponent, {
+    this.modalService.open(DeleteConfirmationModalComponent, {
       centered: true,
 
       injector: Injector.create([
