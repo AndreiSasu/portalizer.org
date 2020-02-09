@@ -12,6 +12,7 @@ import org.portalizer.service.dto.BoardSummaryDTO;
 import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 
 import java.util.List;
 
@@ -28,7 +29,9 @@ public class BoardServiceImplTest {
     private BoardService boardService;
 
     @BeforeAll
+    @Commit
     public void setup() {
+        boardRepository.deleteAll();
         savedBoard = boardRepository.save(EntityUtils.validBoard());
     }
 

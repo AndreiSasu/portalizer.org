@@ -1,13 +1,13 @@
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit, Injector, InjectionToken } from '@angular/core';
 import { BoardService } from '../board.service';
 import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch, DeleteBoardRequest } from '../model/boards';
 import { faEye, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
+import { CommunicationService } from '../communication.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { PaginationPage } from '../model/pagination';
 import { CreateBoardModalComponent } from '../create-board-modal/create-board-modal.component';
-import { Subject } from 'rxjs';
 import { DeleteConfirmationModalComponent } from '../delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
@@ -84,7 +84,7 @@ export class BoardSummaryComponent implements OnInit {
   }
 
   openCreateBoardModal() {
-    const submit = new Subject<CreateBoardRequest>();
+    const submit = new CommunicationService<CreateBoardRequest>();
     this.modalService.open(CreateBoardModalComponent, {
       centered: true,
 
@@ -94,18 +94,19 @@ export class BoardSummaryComponent implements OnInit {
           useValue: this.boardService
         },
         {
-          provide: Subject,
-          useValue: submit
+          provide: CommunicationService,
+          useValue: submit,
+          deps: []
         }
       ])
     });
-    submit.subscribe(createBoardRequest => {
+    submit.subject.subscribe(createBoardRequest => {
       this.onSubmit(createBoardRequest);
     });
   }
 
   openDeleteConfirmationModal(boardSummary: BoardSummary) {
-    const ok = new Subject<DeleteBoardRequest>();
+    const ok = new CommunicationService<DeleteBoardRequest>();
     this.modalService.open(DeleteConfirmationModalComponent, {
       centered: true,
 
@@ -115,12 +116,12 @@ export class BoardSummaryComponent implements OnInit {
           useValue: boardSummary
         },
         {
-          provide: Subject,
+          provide: CommunicationService,
           useValue: ok
         }
       ])
     });
-    ok.subscribe(deleteBoardRequest => {
+    ok.subject.subscribe(deleteBoardRequest => {
       console.log(deleteBoardRequest);
       this.boardService.deleteBoardById(deleteBoardRequest.id).subscribe(
         () => {

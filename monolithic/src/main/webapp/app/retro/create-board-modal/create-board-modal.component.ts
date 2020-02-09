@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CreateBoardRequest, BoardColumn, BoardTemplate } from '../model/boards';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BoardService } from '../board.service';
-import { Subject } from 'rxjs';
+import { CommunicationService } from '../communication.service';
 
 @Component({
   selector: 'jhi-create-board-modal',
@@ -18,14 +18,14 @@ export class CreateBoardModalComponent implements OnInit {
 
   boardTemplates: Array<BoardTemplate>;
 
-  constructor(public modal: NgbActiveModal, public boardService: BoardService, public submit: Subject<CreateBoardRequest>) {
+  constructor(public modal: NgbActiveModal, public boardService: BoardService, public submit: CommunicationService<CreateBoardRequest>) {
     this.boardService.getBoardTemplates().subscribe(data => (this.boardTemplates = data));
   }
 
   ngOnInit() {}
 
   onSubmit() {
-    this.submit.next(this.formModelToRequest(this.formModel));
+    this.submit.getSubject().next(this.formModelToRequest(this.formModel));
   }
 
   formModelToRequest(formModel: any): CreateBoardRequest {
