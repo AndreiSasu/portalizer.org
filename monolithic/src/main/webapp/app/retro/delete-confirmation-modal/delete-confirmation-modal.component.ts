@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BoardSummary, DeleteBoardRequest } from '../model/boards';
-import { Subject } from 'rxjs';
+import { CommunicationService } from '../communication.service';
 
 @Component({
   selector: 'jhi-confirmation-modal',
@@ -9,11 +9,11 @@ import { Subject } from 'rxjs';
   styleUrls: ['./delete-confirmation-modal.component.scss']
 })
 export class DeleteConfirmationModalComponent implements OnInit {
-  constructor(public modal: NgbActiveModal, public boardSummary: BoardSummary, public ok: Subject<DeleteBoardRequest>) {}
+  constructor(public modal: NgbActiveModal, public boardSummary: BoardSummary, public ok: CommunicationService<DeleteBoardRequest>) {}
 
   ngOnInit() {}
 
   onOk() {
-    this.ok.next(new DeleteBoardRequest(this.boardSummary.id));
+    this.ok.subject.next(new DeleteBoardRequest(this.boardSummary.id));
   }
 }
