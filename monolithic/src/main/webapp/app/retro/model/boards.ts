@@ -39,6 +39,10 @@ export class CreateBoardRequest {
   constructor(public name: string, public description: string, public columnDefinitions: Array<BoardColumn>) {}
 }
 
+export class DeleteBoardRequest {
+  constructor(public id: string) {}
+}
+
 export class TextSearch {
   constructor(public fieldName: string, public search: string) {}
 }

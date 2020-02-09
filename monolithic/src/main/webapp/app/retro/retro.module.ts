@@ -24,6 +24,7 @@ import { ConfirmationModalComponent } from './confirmation-modal/confirmation-mo
     CreateBoardModalComponent,
     ConfirmationModalComponent
   ],
-  imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule]
+  imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule],
+  entryComponents: [CreateBoardModalComponent, ConfirmationModalComponent]
 })
 export class RetroModule {}

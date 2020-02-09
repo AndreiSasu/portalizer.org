@@ -56,6 +56,13 @@ export class BoardService {
     );
   }
 
+  deleteBoardById(id: string): Observable<any> {
+    return this.http.delete<any>(this.BOARDS_URL + id).pipe(
+      tap(_ => console.log(`deleted full board ${this.BOARDS_URL}${id}`)),
+      catchError(this.handleError<any>(`deleteBoardById ${id}`))
+    );
+  }
+
   /** POST: add a new hero to the server */
   createBoard(createBoardRequest: CreateBoardRequest): Observable<Board> {
     return this.http.post<Board>(this.BOARDS_URL, createBoardRequest, this.httpOptions).pipe(

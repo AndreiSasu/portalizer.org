@@ -1,14 +1,4 @@
-<ng-template #createBoardModal let-modal>
-    <jhi-create-board-modal [modal]="modal" (submit)="onSubmit($event)" [boardTemplates]="boardTemplates">
-    </jhi-create-board-modal>
-</ng-template>
-
-<ng-template #confirmationModal let-modal>
-    <jhi-confirmation-modal [modal]="modal"></jhi-confirmation-modal>
-</ng-template>
-
 <jhi-searchbar (clearEvent)="onClear($event)" (searchEvent)="onSearch($event)"></jhi-searchbar>
-<br>
 
 <div class="container">
     <ngb-pagination [collectionSize]="pageObject?.totalElements" (pageChange)="onPageChange($event)"
@@ -20,7 +10,7 @@
         <div class="cardList">
 
             <button class="btn btn-outline-primary mb-3" style="max-width: 20rem; vertical-align:middle;"
-                (click)="openVerticallyCentered(createBoardModal)">
+                (click)="openCreateBoardModal()">
                 <fa-icon [icon]="faPlusSquare" style="size: 9x;" class="fa-10x"></fa-icon>
                 <br>Add New Board
             </button>
@@ -42,7 +32,7 @@
                                 <fa-icon [icon]="faEye"></fa-icon> View
                             </a>
                             <button class="btn btn-secondary card-link" data-dismiss="modal"
-                                (click)="openVerticallyCentered(confirmationModal)">
+                                (click)="openDeleteConfirmationModal(boardsummary)">
                                 <fa-icon [icon]="faTrash"></fa-icon> Remove
                             </button>
 
