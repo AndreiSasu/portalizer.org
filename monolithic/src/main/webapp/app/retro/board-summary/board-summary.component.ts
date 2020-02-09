@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { BoardService } from '../board.service';
 import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch, DeleteBoardRequest } from '../model/boards';
-import { faEye, faTrash, faArchive, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -22,6 +22,7 @@ export class BoardSummaryComponent implements OnInit {
   faEye = faEye;
   faTrash = faTrash;
   faArchive = faArchive;
+  faClock = faClock;
   faPlusSquare = faPlusSquare;
   colorService: ColorsService;
   closeResult: string;

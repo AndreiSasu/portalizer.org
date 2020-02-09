@@ -3,6 +3,7 @@ package org.portalizer.web.rest;
 import io.github.jhipster.web.util.HeaderUtil;
 import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.BoardDTO;
+import org.portalizer.service.dto.BoardSummaryDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +33,7 @@ public class BoardResource {
     }
 
     @GetMapping("/boards")
-    public ResponseEntity<Page<BoardDTO>> getAllBoards(@PageableDefault(size = 25, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<BoardSummaryDTO>> getAllBoards(@PageableDefault(size = 25, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return new ResponseEntity<>(boardService.findAll(pageable), HttpStatus.OK);
     }
 

@@ -3,7 +3,6 @@ package org.portalizer.service.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.SortedSet;
 import java.util.UUID;
 
 public class BoardDTO implements Serializable {

@@ -6,6 +6,7 @@ export class BoardSummary {
   description: string;
   columnDefinitions: Array<BoardColumn>;
   createdAt: Date;
+  totalCards: number;
 }
 
 export class BoardColumn {
