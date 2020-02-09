@@ -8,14 +8,12 @@ import { CommunicationService } from '../communication.service';
   templateUrl: './delete-confirmation-modal.component.html',
   styleUrls: ['./delete-confirmation-modal.component.scss']
 })
-/*eslint-disable*/
 export class DeleteConfirmationModalComponent implements OnInit {
   constructor(public modal: NgbActiveModal, public boardSummary: BoardSummary, public ok: CommunicationService<DeleteBoardRequest>) {}
 
   ngOnInit() {}
 
   onOk() {
-    console.log(this.ok);
     this.ok.subject.next(new DeleteBoardRequest(this.boardSummary.id));
   }
 }
