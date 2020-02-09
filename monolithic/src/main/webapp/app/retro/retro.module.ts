@@ -11,9 +11,20 @@ import { SortByPipe } from './sort-by.pipe';
 import { InformationCardComponent } from './information-card/information-card.component';
 import { PortalizerSharedModule } from '../shared/shared.module';
 import { SearchbarComponent } from './searchbar/searchbar.component';
+import { CreateBoardModalComponent } from './create-board-modal/create-board-modal.component';
+import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
 
 @NgModule({
-  declarations: [SortByPipe, BoardSummaryComponent, BoardDetailsComponent, InformationCardComponent, SearchbarComponent],
-  imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule]
+  declarations: [
+    SortByPipe,
+    BoardSummaryComponent,
+    BoardDetailsComponent,
+    InformationCardComponent,
+    SearchbarComponent,
+    CreateBoardModalComponent,
+    DeleteConfirmationModalComponent
+  ],
+  imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule],
+  entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent]
 })
 export class RetroModule {}

@@ -1,13 +1,9 @@
 <ng-template #rt let-r="result" let-t="term">
-
-    <span *ngFor="let columnDefinition of r.columnDefinitions"
-        [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.columnType)]">{{columnDefinition.title}}</span>
-
     <label [ngClass]="['name-label']" for="name">Name: </label>
     <ngb-highlight id="name" [result]="r.name" [term]="t"></ngb-highlight>
 
     <label [ngClass]="['description-label']" for="description">Description: </label>
-    <ngb-highlight id="description" [result]="r.description" [term]="t" [highlightClass]="highlight-font">
+    <ngb-highlight id="description" [result]="r.description" [term]="t">
     </ngb-highlight>
 </ng-template>
 

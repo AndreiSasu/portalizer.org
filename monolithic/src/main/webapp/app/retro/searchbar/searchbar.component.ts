@@ -5,7 +5,6 @@ import { Observable, of } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 import { BoardSummary, TextSearch, ClearSearch } from '../model/boards';
 import { Router } from '@angular/router';
-import { ColorsService } from '../colors.service';
 
 @Component({
   selector: 'jhi-searchbar',
@@ -22,7 +21,7 @@ export class SearchbarComponent implements OnInit {
   @Output() searchEvent = new EventEmitter<TextSearch>();
   @Output() clearEvent = new EventEmitter<ClearSearch>();
 
-  constructor(private boardService: BoardService, private colorService: ColorsService, private router: Router) {}
+  constructor(private boardService: BoardService, private router: Router) {}
 
   searchBoards = (text$: Observable<string>) =>
     text$.pipe(

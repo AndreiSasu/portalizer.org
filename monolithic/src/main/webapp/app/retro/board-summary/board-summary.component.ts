@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, CreateBoardRequest, BoardColumn, BoardTemplate, TextSearch, ClearSearch } from '../model/boards';
+import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch, DeleteBoardRequest } from '../model/boards';
 import { faEye, faTrash, faArchive, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { PaginationPage } from '../model/pagination';
+import { CreateBoardModalComponent } from '../create-board-modal/create-board-modal.component';
+import { Subject } from 'rxjs';
+import { DeleteConfirmationModalComponent } from '../delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
   selector: 'jhi-board-summary',
@@ -79,12 +82,57 @@ export class BoardSummaryComponent implements OnInit {
     this.getBoardPages();
   }
 
-  openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true });
+  openCreateBoardModal() {
+    const submit = new Subject<CreateBoardRequest>();
+    this.modalService.open(CreateBoardModalComponent, {
+      centered: true,
+
+      injector: Injector.create([
+        {
+          provide: BoardService,
+          useValue: this.boardService
+        },
+        {
+          provide: Subject,
+          useValue: submit
+        }
+      ])
+    });
+    submit.subscribe(createBoardRequest => {
+      this.onSubmit(createBoardRequest);
+    });
   }
 
-  onSubmit() {
-    const request: CreateBoardRequest = this.formModelToRequest(this.formModel);
+  openDeleteConfirmationModal(boardSummary: BoardSummary) {
+    const ok = new Subject<DeleteBoardRequest>();
+    this.modalService.open(DeleteConfirmationModalComponent, {
+      centered: true,
+
+      injector: Injector.create([
+        {
+          provide: BoardSummary,
+          useValue: boardSummary
+        },
+        {
+          provide: Subject,
+          useValue: ok
+        }
+      ])
+    });
+    ok.subscribe(deleteBoardRequest => {
+      console.log(deleteBoardRequest);
+      this.boardService.deleteBoardById(deleteBoardRequest.id).subscribe(
+        () => {
+          this.getBoardPages();
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    });
+  }
+
+  onSubmit(request: CreateBoardRequest) {
     console.log(request);
     this.boardService.createBoard(request).subscribe(
       board => {
@@ -96,18 +144,5 @@ export class BoardSummaryComponent implements OnInit {
         console.log(error);
       }
     );
-  }
-
-  formModelToRequest(formModel): CreateBoardRequest {
-    const key = formModel.templateKey;
-    const columnDefinitions: BoardColumn[] = this.boardTemplates.filter(boardTemplate => {
-      return boardTemplate.key === key;
-    })[0].boardColumns;
-    return new CreateBoardRequest(formModel.boardName, formModel.description, columnDefinitions);
-  }
-
-  // TODO: Remove this when we're done
-  get diagnostic() {
-    return JSON.stringify(this.formModel);
   }
 }
