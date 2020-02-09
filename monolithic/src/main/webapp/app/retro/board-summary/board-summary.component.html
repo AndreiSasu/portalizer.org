@@ -22,7 +22,8 @@
 
                 <div class="form-group">
                     <select class="custom-select" [(ngModel)]="formModel.templateKey" name="templateKey" required>
-                        <option *ngFor="let boardTemplate of boardTemplates" selected="">
+                        <option value="" selected disabled hidden>Choose Board template</option>
+                        <option *ngFor="let boardTemplate of boardTemplates">
                             {{boardTemplate.key}} </option>
                     </select>
                 </div>
