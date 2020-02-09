@@ -80,11 +80,11 @@ export class BoardSummaryComponent implements OnInit {
   }
 
   openVerticallyCentered(content) {
+    console.log(content);
     this.modalService.open(content, { centered: true });
   }
 
-  onSubmit() {
-    const request: CreateBoardRequest = this.formModelToRequest(this.formModel);
+  onSubmit(request: CreateBoardRequest) {
     console.log(request);
     this.boardService.createBoard(request).subscribe(
       board => {
@@ -96,18 +96,5 @@ export class BoardSummaryComponent implements OnInit {
         console.log(error);
       }
     );
-  }
-
-  formModelToRequest(formModel): CreateBoardRequest {
-    const key = formModel.templateKey;
-    const columnDefinitions: BoardColumn[] = this.boardTemplates.filter(boardTemplate => {
-      return boardTemplate.key === key;
-    })[0].boardColumns;
-    return new CreateBoardRequest(formModel.boardName, formModel.description, columnDefinitions);
-  }
-
-  // TODO: Remove this when we're done
-  get diagnostic() {
-    return JSON.stringify(this.formModel);
   }
 }

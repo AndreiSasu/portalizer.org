@@ -1,44 +1,7 @@
-<ng-template #content let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title">Create Board</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-        {{diagnostic}}
-
-        <form (ngSubmit)="onSubmit(); modal.dismiss('Submitted')" #newBoardForm="ngForm">
-            <fieldset>
-                <div class="form-group">
-                    <label class="col-form-label col-form-label-lg" for="boardName">Board Name</label>
-                    <input class="form-control form-control-lg" type="text" placeholder="Enter board name"
-                        id="boardName" name="boardName" required [(ngModel)]="formModel.boardName" #reference="ngModel">
-
-                    <div [hidden]="reference.valid || reference.pristine" class="alert alert-danger">
-                        Board Name is required
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <select class="custom-select" [(ngModel)]="formModel.templateKey" name="templateKey" required>
-                        <option value="" selected disabled hidden>Choose Board template</option>
-                        <option *ngFor="let boardTemplate of boardTemplates">
-                            {{boardTemplate.key}} </option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="boardDescription">Board description</label>
-                    <textarea class="form-control" id="boardDescription" name="boardDescription"
-                        [(ngModel)]="formModel.description" rows="3"></textarea>
-                </div>
-            </fieldset>
-            <button type="submit" class="btn btn-success" [disabled]="!newBoardForm.form.valid">Submit</button>
-            <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-        </form>
-    </div>
+<ng-template #createBoardModal let-modal>
+    <jhi-create-board-modal [modal]="modal" (submit)="onSubmit($event)" [boardTemplates]="boardTemplates"></jhi-create-board-modal>
 </ng-template>
+
 
 <jhi-searchbar (clearEvent)="onClear($event)" (searchEvent)="onSearch($event)"></jhi-searchbar>
 <br>
@@ -53,7 +16,7 @@
         <div class="cardList">
 
             <button class="btn btn-outline-primary mb-3" style="max-width: 20rem; vertical-align:middle;"
-                (click)="openVerticallyCentered(content)">
+                (click)="openVerticallyCentered(createBoardModal)">
                 <fa-icon [icon]="faPlusSquare" style="size: 9x;" class="fa-10x"></fa-icon>
                 <br>Add New Board
             </button>
