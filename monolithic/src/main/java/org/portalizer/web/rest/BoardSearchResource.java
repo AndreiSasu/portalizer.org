@@ -4,6 +4,7 @@ package org.portalizer.web.rest;
 import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.BoardDTO;
 import org.portalizer.service.dto.BoardProjectionDTO;
+import org.portalizer.service.dto.BoardSummaryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -33,8 +34,8 @@ public class BoardSearchResource {
     }
 
     @GetMapping("/heavy")
-    public ResponseEntity<Page<BoardDTO>> getBoards(@RequestParam(required = true) final String fieldName, @RequestParam(required = true) final String search,
-                                                 @PageableDefault(size = 25, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<BoardSummaryDTO>> getBoards(@RequestParam(required = true) final String fieldName, @RequestParam(required = true) final String search,
+                                                           @PageableDefault(size = 25, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return new ResponseEntity<>(boardService.searchAll(fieldName, search, pageable), HttpStatus.OK);
     }
 }

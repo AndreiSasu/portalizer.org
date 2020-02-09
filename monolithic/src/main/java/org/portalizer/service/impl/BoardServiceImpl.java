@@ -2,9 +2,11 @@ package org.portalizer.service.impl;
 
 import org.portalizer.domain.Board;
 import org.portalizer.repository.BoardRepository;
+import org.portalizer.repository.InformationCardRepository;
 import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.BoardDTO;
 import org.portalizer.service.dto.BoardProjectionDTO;
+import org.portalizer.service.dto.BoardSummaryDTO;
 import org.portalizer.service.dto.ColumnDefinitionDTO;
 import org.portalizer.service.mapper.BoardMapper;
 import org.portalizer.service.mapper.ColumnDefinitionMapper;
@@ -20,13 +22,15 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService {
 
     private BoardRepository boardRepository;
+    private InformationCardRepository informationCardRepository;
     private BoardMapper boardMapper;
     private ColumnDefinitionMapper columnDefinitionMapper;
 
-    public BoardServiceImpl(BoardRepository boardRepository, BoardMapper boardMapper, ColumnDefinitionMapper columnDefinitionMapper) {
+    public BoardServiceImpl(BoardRepository boardRepository, BoardMapper boardMapper, InformationCardRepository informationCardRepository, ColumnDefinitionMapper columnDefinitionMapper) {
         this.boardRepository = boardRepository;
         this.boardMapper = boardMapper;
         this.columnDefinitionMapper = columnDefinitionMapper;
+        this.informationCardRepository = informationCardRepository;
     }
 
     @Override
@@ -35,25 +39,25 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public Page<BoardDTO> searchAll(String field, String search, Pageable pageable) {
+    public Page<BoardSummaryDTO> searchAll(String field, String search, Pageable pageable) {
         final Page<Board> boardPage = boardRepository.searchFuzzy(field, search, pageable);
         final List<Board> lazyBoards = boardPage.getContent();
-        final List<BoardDTO> boardDTOS = lazyBoards.stream().map(this::lazyBoardToDto).collect(Collectors.toList());
-        final Page<BoardDTO> boardDTOsPage = new PageImpl<>(boardDTOS, pageable, boardPage.getTotalElements());
+        final List<BoardSummaryDTO> boardDTOS = lazyBoards.stream().map(this::lazyBoardToDto).collect(Collectors.toList());
+        final Page<BoardSummaryDTO> boardDTOsPage = new PageImpl<>(boardDTOS, pageable, boardPage.getTotalElements());
         return boardDTOsPage;
     }
 
     @Override
-    public Page<BoardDTO> findAll(final Pageable pageable) {
+    public Page<BoardSummaryDTO> findAll(final Pageable pageable) {
         final Page<Board> boardPage = boardRepository.findAll(pageable);
         final List<Board> lazyBoards = boardPage.getContent();
-        final List<BoardDTO> boardDTOS = lazyBoards.stream().map(this::lazyBoardToDto).collect(Collectors.toList());
-        final Page<BoardDTO> boardDTOsPage = new PageImpl<>(boardDTOS, pageable, boardPage.getTotalElements());
+        final List<BoardSummaryDTO> boardDTOS = lazyBoards.stream().map(this::lazyBoardToDto).collect(Collectors.toList());
+        final Page<BoardSummaryDTO> boardDTOsPage = new PageImpl<>(boardDTOS, pageable, boardPage.getTotalElements());
         return boardDTOsPage;
     }
 
     @Override
-    public List<BoardDTO> findAll() {
+    public List<BoardSummaryDTO> findAll() {
         return boardRepository.findAll().stream().map(this::lazyBoardToDto).collect(Collectors.toList());
     }
 
@@ -73,12 +77,13 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.deleteById(id);
     }
 
-    private BoardDTO lazyBoardToDto(final Board board) {
-        final BoardDTO boardDTO = new BoardDTO();
+    private BoardSummaryDTO lazyBoardToDto(final Board board) {
+        final BoardSummaryDTO boardDTO = new BoardSummaryDTO();
         boardDTO.setId(board.getId());
         boardDTO.setName(board.getName());
         boardDTO.setDescription(board.getDescription());
         boardDTO.setCreatedAt(board.getCreatedAt());
+        boardDTO.setTotalCards(informationCardRepository.countByBoardId(board.getId()));
         List<ColumnDefinitionDTO> columnDefinitionDTOS = new ArrayList<>();
         board.getColumnDefinitions().forEach(columnDefinition -> {
             columnDefinitionDTOS.add(columnDefinitionMapper.toDto(columnDefinition));
