@@ -130,6 +130,7 @@ Desktop.ini
 *.*~
 *~
 .merge_file*
+junit.xml
 
 ######################
 # Gradle Wrapper
