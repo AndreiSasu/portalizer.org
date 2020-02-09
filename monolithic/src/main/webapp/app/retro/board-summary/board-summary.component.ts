@@ -1,4 +1,4 @@
-import { Component, OnInit, Injector, InjectionToken } from '@angular/core';
+import { Component, OnInit, Injector } from '@angular/core';
 import { BoardService } from '../board.service';
 import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch, DeleteBoardRequest } from '../model/boards';
 import { faEye, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
@@ -95,8 +95,7 @@ export class BoardSummaryComponent implements OnInit {
         },
         {
           provide: CommunicationService,
-          useValue: submit,
-          deps: []
+          useValue: submit
         }
       ])
     });
