@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, CreateBoardRequest, BoardColumn, BoardTemplate, TextSearch, ClearSearch } from '../model/boards';
+import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch } from '../model/boards';
 import { faEye, faTrash, faArchive, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';

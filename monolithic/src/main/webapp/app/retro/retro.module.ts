@@ -12,6 +12,7 @@ import { InformationCardComponent } from './information-card/information-card.co
 import { PortalizerSharedModule } from '../shared/shared.module';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { CreateBoardModalComponent } from './create-board-modal/create-board-modal.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CreateBoardModalComponent } from './create-board-modal/create-board-mod
     BoardDetailsComponent,
     InformationCardComponent,
     SearchbarComponent,
-    CreateBoardModalComponent
+    CreateBoardModalComponent,
+    ConfirmationModalComponent
   ],
   imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule]
 })

@@ -1,7 +1,11 @@
 <ng-template #createBoardModal let-modal>
-    <jhi-create-board-modal [modal]="modal" (submit)="onSubmit($event)" [boardTemplates]="boardTemplates"></jhi-create-board-modal>
+    <jhi-create-board-modal [modal]="modal" (submit)="onSubmit($event)" [boardTemplates]="boardTemplates">
+    </jhi-create-board-modal>
 </ng-template>
 
+<ng-template #confirmationModal let-modal>
+    <jhi-confirmation-modal [modal]="modal"></jhi-confirmation-modal>
+</ng-template>
 
 <jhi-searchbar (clearEvent)="onClear($event)" (searchEvent)="onSearch($event)"></jhi-searchbar>
 <br>
@@ -37,13 +41,16 @@
                             <a href="retro/boards/{{boardsummary.id}}" class="btn btn-primary active">
                                 <fa-icon [icon]="faEye"></fa-icon> View
                             </a>
-                            <a href="/cancel/1" class="btn btn-secondary card-link" data-dismiss="modal">
+                            <button class="btn btn-secondary card-link" data-dismiss="modal"
+                                (click)="openVerticallyCentered(confirmationModal)">
                                 <fa-icon [icon]="faTrash"></fa-icon> Remove
-                            </a>
+                            </button>
 
-                            <a href="/cancel/1" class="btn btn-info card-link" data-dismiss="modal">
+                            <button class="btn btn-info card-link" data-dismiss="modal"
+                                (click)="openVerticallyCentered(confirmationModal)">
                                 <fa-icon [icon]="faArchive"></fa-icon> Archive
-                            </a>
+                            </button>
+
                         </div>
                     </div>
                 </div>

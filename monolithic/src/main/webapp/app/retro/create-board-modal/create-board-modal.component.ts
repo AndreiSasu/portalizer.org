@@ -1,5 +1,5 @@
 import { EventEmitter, Output, Input, Component, OnInit } from '@angular/core';
-import { BoardSummary, CreateBoardRequest, BoardColumn, BoardTemplate, TextSearch, ClearSearch } from '../model/boards';
+import { CreateBoardRequest, BoardColumn, BoardTemplate } from '../model/boards';
 
 @Component({
   selector: 'jhi-create-board-modal',
