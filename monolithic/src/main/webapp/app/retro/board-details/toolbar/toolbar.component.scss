@@ -1,6 +1,6 @@
 .grid-container {
   display: grid;
-  grid-template-columns: auto 10%;
+  grid-template-columns: auto 40%;
   grid-gap: 0px;
 }
 
@@ -8,6 +8,7 @@
   background-color: rgba(255, 255, 255, 0.8);
   text-align: left;
   overflow: auto;
+  border: 1px solid black;
 }
 
 .board-title {
@@ -24,6 +25,10 @@
   -o-box-sizing: border-box;
   -ms-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+fa-icon:hover {
+  color: #3e8acc;
 }
 
 .success-message {
