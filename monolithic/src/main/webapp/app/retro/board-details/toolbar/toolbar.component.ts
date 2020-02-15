@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { faPlusCircle, faSync, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faSync, faSave, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Board } from 'app/retro/model/boards';
 
 @Component({
@@ -14,12 +14,25 @@ export class ToolbarComponent implements OnInit {
   faChevronRight = faChevronRight;
   faSearch = faSearch;
   faPencilAlt = faPencilAlt;
+  faSave = faSave;
 
   @Input() board: Board;
 
   editMode = false;
+  edited = false;
 
   constructor() {}
 
   ngOnInit() {}
+
+  onSave(event: any) {
+    this.edited = true;
+    this.editMode = false;
+    setTimeout(
+      function() {
+        this.edited = false;
+      }.bind(this),
+      3000
+    );
+  }
 }

@@ -1,17 +1,27 @@
-<div class="toolbar">
-    <small class="text-muted" style="float: right;">Created at: {{board?.createdAt | date: 'short' }}</small>
-    <br>
-    <div>
-        <fa-icon [icon]="faPencilAlt" (click)="this.editMode=!this.editMode" class="fa-2x"></fa-icon>
+<div class="grid-container">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <a><fa-icon [icon]="faPencilAlt" (click)="this.editMode=!this.editMode" class="fa-2x"></fa-icon></a>        
+        </div>
         <input type="text" *ngIf="this.editMode" [(ngModel)]="board.name"></input>
 
-        <span *ngIf="!this.editMode">{{board?.name}}</span>
+        <div *ngIf="this.editMode" class="input-group-append">
+            <button class="btn btn-success" type="button" id="button-addon2" (click)="onSave($event)">
+                <fa-icon [icon]="faSave"></fa-icon> Save
+            </button>
+        </div>
+
+        <span class="board-title" *ngIf="!this.editMode">{{board?.name}}</span>
+        <small class="success-message" *ngIf="!this.editMode && this.edited" style="float: right;">Board saved successfully. </small>
+    </div>
+
+    <div>
         <div style="float: right">
             <fa-icon [icon]="faSearch" class="fa-2x"></fa-icon>
             <fa-icon [icon]="faPlusCircle" class="fa-2x"></fa-icon>
             <fa-icon [icon]="faSync" class="fa-2x"></fa-icon>
         </div>
-
     </div>
 
 </div>
+<small class="text-muted" style="float: right;">Created at: {{board?.createdAt | date: 'short' }}</small><br>
