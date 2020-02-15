@@ -30,12 +30,12 @@
         Created at: {{ board?.createdAt | date: 'short' }}
     </small>
 
-    <span class="badge badge-primary badge-pill">10 Cards</span>
-    
-    <a style="float: right;">
+    <span class="badge badge-primary badge-pill">{{this.board.informationCards.length}} Cards</span>
+
+    <a style="float: right;" (click)="onRefresh($event)">
         <fa-icon [icon]="faSync" class="fa-2x"></fa-icon> Refresh Board
     </a>
-    <a style="float: right;">
+    <a style="float: right;" (click)="onAdd($event)">
         <fa-icon [icon]="faPlusCircle" class="fa-2x"></fa-icon> Add column
     </a>
 </div>

@@ -1,15 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import {
-  faPlusCircle,
-  faSync,
-  faSave,
-  faPencilAlt,
-  faClock,
-  faSearch,
-  faChevronLeft,
-  faChevronRight
-} from '@fortawesome/free-solid-svg-icons';
-import { Board } from 'app/retro/model/boards';
+import { EventEmitter, Component, OnInit, Input, Output } from '@angular/core';
+import { faPlusCircle, faSync, faSave, faPencilAlt, faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Board, RefreshBoardRequest, ColumnAddRequest } from 'app/retro/model/boards';
 
 @Component({
   selector: 'jhi-toolbar',
@@ -19,14 +10,14 @@ import { Board } from 'app/retro/model/boards';
 export class ToolbarComponent implements OnInit {
   faPlusCircle = faPlusCircle;
   faSync = faSync;
-  faChevronLeft = faChevronLeft;
-  faChevronRight = faChevronRight;
   faSearch = faSearch;
   faPencilAlt = faPencilAlt;
   faSave = faSave;
   faClock = faClock;
 
   @Input() board: Board;
+  @Output() refreshed = new EventEmitter<RefreshBoardRequest>();
+  @Output() addColumn = new EventEmitter<ColumnAddRequest>();
 
   editMode = false;
   edited = false;
@@ -48,4 +39,8 @@ export class ToolbarComponent implements OnInit {
       3000
     );
   }
+
+  onRefresh(event: any) {}
+
+  onAdd(event: any) {}
 }
