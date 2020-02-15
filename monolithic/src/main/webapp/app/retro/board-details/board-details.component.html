@@ -33,25 +33,4 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs">
-        <div style="border-width: 3px;" [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.columnType)]">
-            <h4 class="card-header"><b> {{ boardColumnVM.title }}</b>
-            </h4>
-
-            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="addBlankCard(boardColumnVM)">
-                <fa-icon [icon]="faPlusCircle"></fa-icon> Add item
-            </button>
-
-            <div class="card-body" style="padding-left: 1%; padding-right: 1%;">
-                <div
-                    *ngFor="let informationCard of boardColumnVM.informationCards | sortBy:'desc':'updatedAt'; let i = index;">
-
-                    <jhi-information-card [color]="colorService.getColor(boardColumnVM.columnType)"
-                        [informationCard]="informationCard" (removed)="removeCard($event)" (saved)="onSaveCard($event)">
-                    </jhi-information-card>
-
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
