@@ -1,15 +1,18 @@
 <p *ngIf="error">{{ error }} </p>
 <jhi-alert-error></jhi-alert-error>
-<small class="text-muted" style="float: left;">Created at: {{board?.createdAt | date: 'dd/MM/yyyy' }}</small>
-<br>
-<h1>
-    <fa-icon [icon]="faPencilAlt"></fa-icon> {{board?.name}}
-    <div style="float: right">
-        <fa-icon [icon]="faSearch"></fa-icon>
-        <fa-icon [icon]="faPlusCircle"></fa-icon>
-        <fa-icon [icon]="faSync"></fa-icon>
-    </div>
-</h1>
+
+<div class="toolbar">
+    <small class="text-muted" style="float: left;">Created at: {{board?.createdAt | date: 'dd/MM/yyyy' }}</small>
+    <br>
+    <h1>
+        <fa-icon [icon]="faPencilAlt"></fa-icon> {{board?.name}}
+        <div style="float: right">
+            <fa-icon [icon]="faSearch"></fa-icon>
+            <fa-icon [icon]="faPlusCircle"></fa-icon>
+            <fa-icon [icon]="faSync"></fa-icon>
+        </div>
+    </h1>
+</div>
 
 <div *ngIf="boardColumnVMs.length > 3" style="float: left;">
     <fa-icon [icon]="faChevronLeft" class="fa-2x"></fa-icon>
