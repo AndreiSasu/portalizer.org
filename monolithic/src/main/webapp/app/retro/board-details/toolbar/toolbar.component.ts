@@ -1,5 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { faPlusCircle, faSync, faSave, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlusCircle,
+  faSync,
+  faSave,
+  faPencilAlt,
+  faClock,
+  faSearch,
+  faChevronLeft,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
 import { Board } from 'app/retro/model/boards';
 
 @Component({
@@ -15,6 +24,7 @@ export class ToolbarComponent implements OnInit {
   faSearch = faSearch;
   faPencilAlt = faPencilAlt;
   faSave = faSave;
+  faClock = faClock;
 
   @Input() board: Board;
 
@@ -23,7 +33,10 @@ export class ToolbarComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  /*eslint-disable*/
+  ngOnInit() {
+    console.log(this.board);
+  }
 
   onSave(event: any) {
     this.edited = true;

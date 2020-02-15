@@ -36,7 +36,19 @@
   box-sizing: border-box;
 }
 
+fa-icon {
+  margin-right: 5px;
+}
+
 fa-icon:hover {
+  color: #3e8acc;
+}
+
+.badge-primary {
+  margin-left: 5px;
+}
+
+a:hover {
   color: #3e8acc;
 }
 

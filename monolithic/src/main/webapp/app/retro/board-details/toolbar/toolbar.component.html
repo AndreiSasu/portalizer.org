@@ -1,8 +1,9 @@
 <div class="grid-container">
     <div class="input-group">
         <div class="input-group-prepend">
-            <a>
-                <fa-icon [icon]="faPencilAlt" (click)="this.editMode=!this.editMode" class="fa-2x"></fa-icon>
+            <a (click)="this.editMode=!this.editMode">
+                <fa-icon [icon]="faPencilAlt" class="fa-2x"></fa-icon>
+                <span class="board-title" *ngIf="!this.editMode">{{board?.name}}</span>
             </a>
         </div>
         <input type="text" *ngIf="this.editMode" [(ngModel)]="board.name"></input>
@@ -12,10 +13,10 @@
                 <fa-icon [icon]="faSave"></fa-icon> Save
             </button>
         </div>
-
-        <span class="board-title" *ngIf="!this.editMode">{{board?.name}}</span>
-        <small class="success-message" *ngIf="!this.editMode && this.edited" style="float: right;">Board saved
-            successfully. </small>
+        <small class="success-message" *ngIf="!this.editMode && this.edited" style="float: right;">
+            <fa-icon [icon]="faSave"></fa-icon>Board saved
+            successfully.
+        </small>
     </div>
 
     <div class="board-search">
@@ -24,6 +25,13 @@
 
 </div>
 <div class="board-operations">
+    <small class="text-muted" style="float: left;">
+        <fa-icon [icon]="faClock"></fa-icon>
+        Created at: {{ board?.createdAt | date: 'short' }}
+    </small>
+
+    <span class="badge badge-primary badge-pill">10 Cards</span>
+    
     <a style="float: right;">
         <fa-icon [icon]="faSync" class="fa-2x"></fa-icon> Refresh Board
     </a>
