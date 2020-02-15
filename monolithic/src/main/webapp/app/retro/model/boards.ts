@@ -44,6 +44,14 @@ export class DeleteBoardRequest {
   constructor(public id: string) {}
 }
 
+export class RefreshBoardRequest {
+  constructor(public id: string) {}
+}
+
+export class SaveBoardRequest {
+  constructor(public id: string, public name: string) {}
+}
+
 export class TextSearch {
   constructor(public fieldName: string, public search: string) {}
 }
