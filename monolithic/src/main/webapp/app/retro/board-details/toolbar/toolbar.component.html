@@ -1,0 +1,17 @@
+<div class="toolbar">
+    <small class="text-muted" style="float: right;">Created at: {{board?.createdAt | date: 'short' }}</small>
+    <br>
+    <div>
+        <fa-icon [icon]="faPencilAlt" (click)="this.editMode=!this.editMode" class="fa-2x"></fa-icon>
+        <input type="text" *ngIf="this.editMode" [(ngModel)]="board.name"></input>
+
+        <span *ngIf="!this.editMode">{{board?.name}}</span>
+        <div style="float: right">
+            <fa-icon [icon]="faSearch" class="fa-2x"></fa-icon>
+            <fa-icon [icon]="faPlusCircle" class="fa-2x"></fa-icon>
+            <fa-icon [icon]="faSync" class="fa-2x"></fa-icon>
+        </div>
+
+    </div>
+
+</div>
