@@ -1,25 +1,19 @@
 <p *ngIf="error">{{ error }} </p>
 <jhi-alert-error></jhi-alert-error>
-<small class="text-muted" style="float: left;">Created at: {{board?.createdAt | date: 'dd/MM/yyyy' }}</small>
-<br>
-<h1>
-    {{board?.name}}
-    <div style="float: right">
-        <fa-icon [icon]="faPlusCircle"></fa-icon>
-        <fa-icon [icon]="faSync"></fa-icon>
-        <fa-icon [icon]="faPlusCircle"></fa-icon>
-    </div>
-</h1>
-
-<div style="float: left;">
-    <fa-icon [icon]="faPlusCircle"></fa-icon>
+<div class="toolbar">
+    <small class="text-muted" style="float: left;">Created at: {{board?.createdAt | date: 'dd/MM/yyyy' }}</small>
+    <br>
+    <h1>
+        {{board?.name}}
+        <div style="float: right">
+            <fa-icon [icon]="faPlusCircle"></fa-icon>
+            <fa-icon [icon]="faSync"></fa-icon>
+            <fa-icon [icon]="faPlusCircle"></fa-icon>
+        </div>
+    </h1>
 </div>
 
-<div style="float: right">
-    <fa-icon [icon]="faPlusCircle"></fa-icon>
-</div>
-
-<div class="row" style="overflow-x: scroll; flex-wrap: nowrap;">
+<div class="row" style="margin-top: 3%;height: 100%; flex-wrap: nowrap;">
     <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs">
         <div [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.columnType)]">
             <h4 class="card-header"><b> {{ boardColumnVM.title }}</b>
