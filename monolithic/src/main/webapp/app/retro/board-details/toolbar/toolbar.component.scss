@@ -8,7 +8,16 @@
   background-color: rgba(255, 255, 255, 0.8);
   text-align: left;
   overflow: auto;
-  border: 1px solid black;
+  //   border: 1px solid black;
+}
+
+.grid-container > div.board-search {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: right !important;
+  overflow: auto;
+  > input {
+    padding: 15px;
+  }
 }
 
 .board-title {
@@ -29,6 +38,14 @@
 
 fa-icon:hover {
   color: #3e8acc;
+}
+
+.board-operations > a:hover {
+  color: #3e8acc;
+}
+
+.board-operations > a {
+  margin-right: 1%;
 }
 
 .success-message {

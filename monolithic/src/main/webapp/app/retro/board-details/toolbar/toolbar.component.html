@@ -1,7 +1,9 @@
 <div class="grid-container">
     <div class="input-group">
         <div class="input-group-prepend">
-            <a><fa-icon [icon]="faPencilAlt" (click)="this.editMode=!this.editMode" class="fa-2x"></fa-icon></a>        
+            <a>
+                <fa-icon [icon]="faPencilAlt" (click)="this.editMode=!this.editMode" class="fa-2x"></fa-icon>
+            </a>
         </div>
         <input type="text" *ngIf="this.editMode" [(ngModel)]="board.name"></input>
 
@@ -12,16 +14,21 @@
         </div>
 
         <span class="board-title" *ngIf="!this.editMode">{{board?.name}}</span>
-        <small class="success-message" *ngIf="!this.editMode && this.edited" style="float: right;">Board saved successfully. </small>
+        <small class="success-message" *ngIf="!this.editMode && this.edited" style="float: right;">Board saved
+            successfully. </small>
     </div>
 
-    <div>
-        <div style="float: right">
-            <a><fa-icon [icon]="faSearch" class="fa-2x"></fa-icon>
-            <a><fa-icon [icon]="faPlusCircle" class="fa-2x"></fa-icon></a>
-            <a><fa-icon [icon]="faSync" class="fa-2x"></fa-icon></a>
-        </div>
+    <div class="board-search">
+        <input class="search_input" type="text" name="" placeholder="Search cards..."></input>
     </div>
 
 </div>
-<small class="text-muted" style="float: right;">Created at: {{board?.createdAt | date: 'short' }}</small><br>
+<div class="board-operations">
+    <a style="float: right;">
+        <fa-icon [icon]="faSync" class="fa-2x"></fa-icon> Refresh Board
+    </a>
+    <a style="float: right;">
+        <fa-icon [icon]="faPlusCircle" class="fa-2x"></fa-icon> Add column
+    </a>
+</div>
+<br><br>
