@@ -6,7 +6,7 @@ import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardReques
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
 import { InformationCardService } from '../information-card.service';
-import { faPlusCircle, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faSync, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import * as uuid from 'uuid';
 import { CardStorageService } from '../card-storage.service';
 
@@ -21,6 +21,10 @@ export class BoardDetailsComponent implements OnInit {
   error: string;
   faPlusCircle = faPlusCircle;
   faSync = faSync;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
+  faSearch = faSearch;
+  faPencilAlt = faPencilAlt;
 
   editMode: boolean;
 

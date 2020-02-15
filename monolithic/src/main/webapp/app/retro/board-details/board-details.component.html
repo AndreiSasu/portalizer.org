@@ -3,20 +3,20 @@
 <small class="text-muted" style="float: left;">Created at: {{board?.createdAt | date: 'dd/MM/yyyy' }}</small>
 <br>
 <h1>
-    {{board?.name}}
+    <fa-icon [icon]="faPencilAlt"></fa-icon> {{board?.name}}
     <div style="float: right">
+        <fa-icon [icon]="faSearch"></fa-icon>
         <fa-icon [icon]="faPlusCircle"></fa-icon>
         <fa-icon [icon]="faSync"></fa-icon>
-        <fa-icon [icon]="faPlusCircle"></fa-icon>
     </div>
 </h1>
 
-<div style="float: left;">
-    <fa-icon [icon]="faPlusCircle"></fa-icon>
+<div *ngIf="boardColumnVMs.length > 3" style="float: left;">
+    <fa-icon [icon]="faChevronLeft" class="fa-2x"></fa-icon>
 </div>
 
-<div style="float: right">
-    <fa-icon [icon]="faPlusCircle"></fa-icon>
+<div *ngIf="boardColumnVMs.length > 3"style="float: right">
+    <fa-icon [icon]="faChevronRight" class="fa-2x"></fa-icon>
 </div>
 
 <div class="row" style="overflow-x: scroll; flex-wrap: nowrap;">
