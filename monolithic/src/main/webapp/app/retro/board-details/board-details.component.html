@@ -3,11 +3,11 @@
 
 <jhi-toolbar [board]="board"></jhi-toolbar>
 
-<div *ngIf="boardColumnVMs.length > 3" style="float: left;">
+<div *ngIf="boardColumnVMs.length > 3" class="show-prev">
     <fa-icon [icon]="faChevronLeft" class="fa-2x"></fa-icon>
 </div>
 
-<div *ngIf="boardColumnVMs.length > 3"style="float: right">
+<div *ngIf="boardColumnVMs.length > 3" class="show-next">
     <fa-icon [icon]="faChevronRight" class="fa-2x"></fa-icon>
 </div>
 
