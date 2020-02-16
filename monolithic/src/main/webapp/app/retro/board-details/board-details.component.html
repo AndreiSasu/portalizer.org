@@ -11,7 +11,7 @@
     <fa-icon [icon]="faChevronRight" class="fa-2x"></fa-icon>
 </div>
 
-<div class="row" style="overflow-x: scroll; flex-wrap: nowrap;">
+<div class="row column-container">
     <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs">
         <div column="true" [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.columnType)]">
             <h4 class="card-header"><b> {{ boardColumnVM.title }}</b>
