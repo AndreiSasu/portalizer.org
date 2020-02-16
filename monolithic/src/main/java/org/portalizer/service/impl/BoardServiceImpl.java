@@ -4,21 +4,20 @@ import org.portalizer.domain.Board;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.repository.InformationCardRepository;
 import org.portalizer.service.BoardService;
-import org.portalizer.service.dto.BoardDTO;
-import org.portalizer.service.dto.BoardProjectionDTO;
-import org.portalizer.service.dto.BoardSummaryDTO;
-import org.portalizer.service.dto.ColumnDefinitionDTO;
+import org.portalizer.service.dto.*;
 import org.portalizer.service.mapper.BoardMapper;
 import org.portalizer.service.mapper.ColumnDefinitionMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class BoardServiceImpl implements BoardService {
 
     private BoardRepository boardRepository;
@@ -75,6 +74,14 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public void delete(UUID id) {
         boardRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean update(UUID id, UpdateBoardDTO updateBoardDTO) {
+        final Board board = boardRepository.findById(id).get();
+        board.setName(updateBoardDTO.getName());
+        boardRepository.save(board);
+        return true;
     }
 
     private BoardSummaryDTO lazyBoardToDto(final Board board) {
