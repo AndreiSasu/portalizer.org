@@ -17,5 +17,7 @@ export class AddColumnModalComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSubmit() {}
+  onSubmit() {
+    this.communicationService.subject.next(new ColumnAddRequest('', this.formModel.columnName));
+  }
 }
