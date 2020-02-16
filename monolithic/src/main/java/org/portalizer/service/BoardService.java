@@ -19,5 +19,5 @@ public interface BoardService {
     BoardDTO findOne(UUID id);
     BoardDTO save(BoardDTO boardDTO);
     void delete(UUID id);
-    boolean update(UUID id, UpdateBoardDTO updateBoardDTO);
+    BoardDTO update(UUID id, UpdateBoardDTO updateBoardDTO);
 }

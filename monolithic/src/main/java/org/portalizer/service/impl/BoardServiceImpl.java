@@ -77,11 +77,12 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public boolean update(UUID id, UpdateBoardDTO updateBoardDTO) {
+    public BoardDTO update(UUID id, UpdateBoardDTO updateBoardDTO) {
         final Board board = boardRepository.findById(id).get();
         board.setName(updateBoardDTO.getName());
         boardRepository.save(board);
-        return true;
+        final Board savedBoard = boardRepository.findById(id).get();
+        return boardMapper.toDto(savedBoard);
     }
 
     private BoardSummaryDTO lazyBoardToDto(final Board board) {
