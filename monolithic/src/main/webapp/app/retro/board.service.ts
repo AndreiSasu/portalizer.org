@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { BoardSummary, Board, CreateBoardRequest, BoardTemplate } from './model/boards';
+import { BoardSummary, Board, CreateBoardRequest, BoardTemplate, SaveBoardRequest } from './model/boards';
 import { PaginationPage } from './model/pagination';
 import { SERVER_API_URL } from '../app.constants';
 
@@ -60,6 +60,13 @@ export class BoardService {
     return this.http.delete<any>(this.BOARDS_URL + id).pipe(
       tap(_ => console.log(`deleted full board ${this.BOARDS_URL}${id}`)),
       catchError(this.handleError<any>(`deleteBoardById ${id}`))
+    );
+  }
+
+  saveBoard(id: string, saveBoardRequest: SaveBoardRequest): Observable<any> {
+    return this.http.put<any>(this.BOARDS_URL + id, saveBoardRequest, this.httpOptions).pipe(
+      tap(_ => console.log(`saved board ${this.BOARDS_URL}${id}`)),
+      catchError(this.handleError<any>(`saveBoard ${id}`))
     );
   }
 

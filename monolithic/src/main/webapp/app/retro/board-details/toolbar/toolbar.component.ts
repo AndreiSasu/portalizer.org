@@ -1,6 +1,7 @@
 import { EventEmitter, Component, OnInit, Input, Output } from '@angular/core';
 import { faPlusCircle, faSync, faSave, faPencilAlt, faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Board, RefreshBoardRequest, ColumnAddRequest } from 'app/retro/model/boards';
+import { BoardService } from 'app/retro/board.service';
 
 @Component({
   selector: 'jhi-toolbar',
@@ -24,7 +25,7 @@ export class ToolbarComponent implements OnInit {
   edited = false;
   searchModel: string;
 
-  constructor() {}
+  constructor(private boardService: BoardService) {}
 
   /*eslint-disable*/
   ngOnInit() {
