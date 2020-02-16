@@ -51,7 +51,9 @@ export class ToolbarComponent implements OnInit {
     );
   }
 
-  onRefresh(event: any) {}
+  onRefresh(event: any) {
+    this.refreshed.emit(new RefreshBoardRequest(this.board.id));
+  }
 
   onAdd(event: any) {}
 

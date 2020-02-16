@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Board, BoardColumn, BoardColumnVM } from '../model/boards';
+import { Board, BoardColumn, BoardColumnVM, RefreshBoardRequest } from '../model/boards';
 import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
@@ -199,5 +199,7 @@ export class BoardDetailsComponent implements OnInit {
     this.search = event;
   }
 
-  onSave(event: string) {}
+  onRefresh(event: RefreshBoardRequest) {
+    this.refreshBoard();
+  }
 }

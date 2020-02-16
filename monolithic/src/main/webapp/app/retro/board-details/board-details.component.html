@@ -1,7 +1,7 @@
 <p *ngIf="error">{{ error }} </p>
 <jhi-alert-error></jhi-alert-error>
 
-<jhi-toolbar [board]="board" (searching)="onSearch($event)"></jhi-toolbar>
+<jhi-toolbar [board]="board" (searching)="onSearch($event)" (refreshed)="onRefresh($event)"></jhi-toolbar>
 
 <div *ngIf="boardColumnVMs.length > 3" class="show-prev">
     <fa-icon [icon]="faChevronLeft" class="fa-2x"></fa-icon>
