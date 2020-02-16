@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title">Add new column</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <form (ngSubmit)="onSubmit(); modal.dismiss('Submitted')" #newColumnForm="ngForm">
+        <fieldset>
+            <div class="form-group">
+                <label class="col-form-label col-form-label-lg" for="columnName">Column Name</label>
+                <input class="form-control form-control-lg" type="text" placeholder="Enter column name" id="columnName"
+                    name="columnName" required [(ngModel)]="formModel.columnName" #reference="ngModel">
+
+                <div [hidden]="reference.valid || reference.pristine" class="alert alert-danger">
+                    Column Name is required
+                </div>
+            </div>
+        </fieldset>
+        <button type="submit" class="btn btn-success" [disabled]="!newColumnForm
+    .form.valid">Submit</button>
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </form>
+</div>
