@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Board, BoardColumn, BoardColumnVM } from '../model/boards';
+import { Board, BoardColumn, BoardColumnVM, RefreshBoardRequest } from '../model/boards';
 import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
 import { InformationCardService } from '../information-card.service';
-import { faPlusCircle, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faSync, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import * as uuid from 'uuid';
 import { CardStorageService } from '../card-storage.service';
 
@@ -21,8 +21,13 @@ export class BoardDetailsComponent implements OnInit {
   error: string;
   faPlusCircle = faPlusCircle;
   faSync = faSync;
+  faChevronLeft = faChevronLeft;
+  faChevronRight = faChevronRight;
+  faSearch = faSearch;
+  faPencilAlt = faPencilAlt;
 
   editMode: boolean;
+  search: string;
 
   columnAndCards: Map<String, BoardColumnVM> = new Map();
   boardColumnVMs: Array<BoardColumnVM> = [];
@@ -188,5 +193,13 @@ export class BoardDetailsComponent implements OnInit {
         this.error = error;
       }
     );
+  }
+
+  onSearch(event: string) {
+    this.search = event;
+  }
+
+  onRefresh(event: RefreshBoardRequest) {
+    this.refreshBoard();
   }
 }

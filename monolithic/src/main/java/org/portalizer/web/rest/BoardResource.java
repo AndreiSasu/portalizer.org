@@ -4,6 +4,7 @@ import io.github.jhipster.web.util.HeaderUtil;
 import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.BoardDTO;
 import org.portalizer.service.dto.BoardSummaryDTO;
+import org.portalizer.service.dto.UpdateBoardDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,6 +52,14 @@ public class BoardResource {
     public ResponseEntity<Void> deleteBoard(@PathVariable UUID id) {
         boardService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert("",
+            false,
+            "board", id.toString())).build();
+    }
+
+    @PutMapping("/boards/{id}")
+    public ResponseEntity<Void> updateBoard(@PathVariable UUID id, @RequestBody UpdateBoardDTO updateBoardDTO) {
+        boardService.update(id, updateBoardDTO);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert("",
             false,
             "board", id.toString())).build();
     }

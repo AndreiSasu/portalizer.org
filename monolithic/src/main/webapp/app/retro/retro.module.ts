@@ -13,6 +13,9 @@ import { PortalizerSharedModule } from '../shared/shared.module';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { CreateBoardModalComponent } from './create-board-modal/create-board-modal.component';
 import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
+import { ToolbarComponent } from './board-details/toolbar/toolbar.component';
+import { FilterPipe } from './filter.pipe';
+import { AddColumnModalComponent } from './board-details/add-column-modal/add-column-modal.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +25,12 @@ import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/de
     InformationCardComponent,
     SearchbarComponent,
     CreateBoardModalComponent,
-    DeleteConfirmationModalComponent
+    DeleteConfirmationModalComponent,
+    ToolbarComponent,
+    FilterPipe,
+    AddColumnModalComponent
   ],
   imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule],
-  entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent]
+  entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent, AddColumnModalComponent]
 })
 export class RetroModule {}

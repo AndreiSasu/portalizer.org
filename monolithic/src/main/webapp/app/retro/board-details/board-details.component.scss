@@ -1,0 +1,27 @@
+div[column='true']:hover {
+  border-width: medium;
+}
+
+@media (min-width: 800px) {
+  .column-container {
+    overflow-x: scroll;
+    flex-wrap: nowrap;
+  }
+  .show-prev {
+    display: block !important;
+    float: left;
+  }
+
+  .show-next {
+    display: block !important;
+    float: right;
+  }
+}
+
+.show-prev {
+  display: none;
+}
+
+.show-next {
+  display: none;
+}

@@ -41,7 +41,37 @@ export class CreateBoardRequest {
 }
 
 export class DeleteBoardRequest {
+  /**
+   *
+   * @param id board id
+   */
   constructor(public id: string) {}
+}
+
+export class RefreshBoardRequest {
+  /**
+   *
+   * @param id board id
+   */
+  constructor(public id: string) {}
+}
+
+export class SaveBoardRequest {
+  /**
+   *
+   * @param id board id
+   * @param name board name
+   */
+  constructor(public id: string, public name: string) {}
+}
+
+export class ColumnAddRequest {
+  /**
+   *
+   * @param id board id
+   * @param name  column name
+   */
+  constructor(public id: string, public name: string) {}
 }
 
 export class TextSearch {

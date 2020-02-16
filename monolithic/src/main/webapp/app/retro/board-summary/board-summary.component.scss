@@ -5,6 +5,24 @@
   justify-content: flex-start;
 }
 
+.desktop-pagination {
+  display: none;
+}
+
+.mobile-pagination {
+  display: flex;
+}
+
+@media (min-width: 800px) {
+  .mobile-pagination {
+    display: none;
+  }
+
+  .desktop-pagination {
+    display: flex;
+  }
+}
+
 /* Column Gap */
 .cardList > * {
   box-sizing: border-box;
