@@ -14,6 +14,7 @@ import { SearchbarComponent } from './searchbar/searchbar.component';
 import { CreateBoardModalComponent } from './create-board-modal/create-board-modal.component';
 import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
 import { ToolbarComponent } from './board-details/toolbar/toolbar.component';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ToolbarComponent } from './board-details/toolbar/toolbar.component';
     SearchbarComponent,
     CreateBoardModalComponent,
     DeleteConfirmationModalComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    FilterPipe
   ],
   imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule],
   entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent]

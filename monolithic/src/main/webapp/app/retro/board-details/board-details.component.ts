@@ -27,6 +27,7 @@ export class BoardDetailsComponent implements OnInit {
   faPencilAlt = faPencilAlt;
 
   editMode: boolean;
+  search: string;
 
   columnAndCards: Map<String, BoardColumnVM> = new Map();
   boardColumnVMs: Array<BoardColumnVM> = [];
@@ -192,5 +193,9 @@ export class BoardDetailsComponent implements OnInit {
         this.error = error;
       }
     );
+  }
+
+  onSearch(event: string) {
+    this.search = event;
   }
 }

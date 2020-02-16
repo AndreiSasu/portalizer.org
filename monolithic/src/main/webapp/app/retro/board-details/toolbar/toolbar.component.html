@@ -20,7 +20,7 @@
     </div>
 
     <div class="board-search">
-        <input class="search_input" type="text" name="" placeholder="Search cards..."></input>
+        <input (ngModelChange)="onSearch($event)" type="search" class="form-control" name="cards" [(ngModel)]="searchModel" placeholder="Search cards..."></input>
     </div>
 
 </div>
@@ -30,7 +30,7 @@
         Created at: {{ board?.createdAt | date: 'short' }}
     </small>
 
-    <span class="badge badge-primary badge-pill">{{this.board.informationCards.length}} Cards</span>
+    <span class="badge badge-primary badge-pill">{{this.board?.informationCards?.length}} Cards</span>
 
     <a style="float: right;" (click)="onRefresh($event)">
         <fa-icon [icon]="faSync" class="fa-2x"></fa-icon> Refresh Board

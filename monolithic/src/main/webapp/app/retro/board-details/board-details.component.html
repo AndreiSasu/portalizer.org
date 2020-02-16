@@ -1,7 +1,7 @@
 <p *ngIf="error">{{ error }} </p>
 <jhi-alert-error></jhi-alert-error>
 
-<jhi-toolbar [board]="board"></jhi-toolbar>
+<jhi-toolbar [board]="board" (searching)="onSearch($event)"></jhi-toolbar>
 
 <div *ngIf="boardColumnVMs.length > 3" class="show-prev">
     <fa-icon [icon]="faChevronLeft" class="fa-2x"></fa-icon>
@@ -10,7 +10,6 @@
 <div *ngIf="boardColumnVMs.length > 3" class="show-next">
     <fa-icon [icon]="faChevronRight" class="fa-2x"></fa-icon>
 </div>
-
 <div class="row column-container">
     <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs">
         <div column="true" [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.columnType)]">
@@ -23,7 +22,7 @@
 
             <div class="card-body" style="padding-left: 1%; padding-right: 1%;">
                 <div
-                    *ngFor="let informationCard of boardColumnVM.informationCards | sortBy:'desc':'updatedAt'; let i = index;">
+                    *ngFor="let informationCard of boardColumnVM?.informationCards | sortBy:'desc':'updatedAt' | filter: search; let i = index;">
 
                     <jhi-information-card [color]="colorService.getColor(boardColumnVM.columnType)"
                         [informationCard]="informationCard" (removed)="removeCard($event)" (saved)="onSaveCard($event)">
