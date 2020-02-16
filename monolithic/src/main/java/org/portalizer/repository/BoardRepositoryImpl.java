@@ -39,7 +39,6 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     public BoardRepositoryImpl(EntityManager entityManager, EntityManagerFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
         this.entityManager = entityManager;
-//        this.entityManager = this.sessionFactory.createEntityManager();
     }
 
     @Override

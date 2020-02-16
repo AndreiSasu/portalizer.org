@@ -30,10 +30,7 @@ export class ToolbarComponent implements OnInit {
 
   constructor(private boardService: BoardService, private modalService: NgbModal) {}
 
-  /*eslint-disable*/
-  ngOnInit() {
-    console.log(this.board);
-  }
+  ngOnInit() {}
 
   onSave(event: any) {
     this.edited = true;
@@ -48,7 +45,6 @@ export class ToolbarComponent implements OnInit {
         );
       },
       error => {
-        console.log(error);
         alert(error);
       }
     );
@@ -76,8 +72,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   onSearch(event: string) {
-    console.log(event);
-    if (event.length == 0) {
+    if (event.length === 0) {
       this.searchModel = '';
     }
     this.searching.emit(this.searchModel);
