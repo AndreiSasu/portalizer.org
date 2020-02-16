@@ -1,6 +1,6 @@
 import { EventEmitter, Component, OnInit, Input, Output } from '@angular/core';
 import { faPlusCircle, faSync, faSave, faPencilAlt, faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Board, RefreshBoardRequest, ColumnAddRequest } from 'app/retro/model/boards';
+import { Board, RefreshBoardRequest, ColumnAddRequest, SaveBoardRequest } from 'app/retro/model/boards';
 import { BoardService } from 'app/retro/board.service';
 
 @Component({
@@ -35,11 +35,19 @@ export class ToolbarComponent implements OnInit {
   onSave(event: any) {
     this.edited = true;
     this.editMode = false;
-    setTimeout(
-      function() {
-        this.edited = false;
-      }.bind(this),
-      3000
+    this.boardService.saveBoard(this.board.id, new SaveBoardRequest(this.board.id, this.board.name)).subscribe(
+      success => {
+        setTimeout(
+          function() {
+            this.edited = false;
+          }.bind(this),
+          3000
+        );
+      },
+      error => {
+        console.log(error);
+        alert(error);
+      }
     );
   }
 
