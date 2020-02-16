@@ -198,4 +198,6 @@ export class BoardDetailsComponent implements OnInit {
   onSearch(event: string) {
     this.search = event;
   }
+
+  onSave(event: string) {}
 }
