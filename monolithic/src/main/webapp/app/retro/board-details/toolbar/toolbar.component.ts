@@ -1,7 +1,10 @@
-import { EventEmitter, Component, OnInit, Input, Output } from '@angular/core';
+import { EventEmitter, Component, OnInit, Input, Output, Injector } from '@angular/core';
 import { faPlusCircle, faSync, faSave, faPencilAlt, faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Board, RefreshBoardRequest, ColumnAddRequest, SaveBoardRequest } from 'app/retro/model/boards';
 import { BoardService } from 'app/retro/board.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/retro/communication.service';
+import { AddColumnModalComponent } from '../add-column-modal/add-column-modal.component';
 
 @Component({
   selector: 'jhi-toolbar',
@@ -25,7 +28,7 @@ export class ToolbarComponent implements OnInit {
   edited = false;
   searchModel: string;
 
-  constructor(private boardService: BoardService) {}
+  constructor(private boardService: BoardService, private modalService: NgbModal) {}
 
   /*eslint-disable*/
   ngOnInit() {
@@ -55,7 +58,22 @@ export class ToolbarComponent implements OnInit {
     this.refreshed.emit(new RefreshBoardRequest(this.board.id));
   }
 
-  onAdd(event: any) {}
+  onAdd(event: any) {
+    const submit = new CommunicationService<ColumnAddRequest>();
+    this.modalService.open(AddColumnModalComponent, {
+      centered: true,
+
+      injector: Injector.create([
+        {
+          provide: CommunicationService,
+          useValue: submit
+        }
+      ])
+    });
+    submit.subject.subscribe(createColumnRequest => {
+      this.addColumn.emit(createColumnRequest);
+    });
+  }
 
   onSearch(event: string) {
     console.log(event);
