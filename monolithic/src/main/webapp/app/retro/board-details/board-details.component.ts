@@ -6,9 +6,11 @@ import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardReques
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
 import { InformationCardService } from '../information-card.service';
-import { faPlusCircle, faSync, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faArrowsAlt, faSync, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import * as uuid from 'uuid';
 import { CardStorageService } from '../card-storage.service';
+import { Subscription } from 'rxjs';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'jhi-board-details',
@@ -25,6 +27,7 @@ export class BoardDetailsComponent implements OnInit {
   faChevronRight = faChevronRight;
   faSearch = faSearch;
   faPencilAlt = faPencilAlt;
+  faArrowsAlt = faArrowsAlt;
 
   editMode: boolean;
   search: string;
@@ -32,13 +35,15 @@ export class BoardDetailsComponent implements OnInit {
   columnAndCards: Map<String, BoardColumnVM> = new Map();
   boardColumnVMs: Array<BoardColumnVM> = [];
   colorService: ColorsService;
+  subs = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
     private boardService: BoardService,
     private informationCardService: InformationCardService,
     private cardStorageService: CardStorageService,
-    colorService: ColorsService
+    colorService: ColorsService,
+    private dragulaService: DragulaService
   ) {
     this.colorService = colorService;
   }
@@ -48,6 +53,54 @@ export class BoardDetailsComponent implements OnInit {
     this.boardId = this.route.snapshot.paramMap.get('id');
     this.cardStorageService.initBoardStorageIfNecessary(this.boardId);
     this.refreshBoard();
+
+    this.dragulaService.createGroup('COLUMNS', {
+      direction: 'horizontal',
+      moves: (el, source, handle: any) => {
+        // it makes sense not to drag and drop from icons as they might be edit icons
+        if (handle.className instanceof SVGAnimatedString) return false;
+        return handle.className.includes('column-drag');
+      }
+    });
+
+    // These will get events limited to the VAMPIRES group.
+
+    this.subs.add(
+      this.dragulaService.drag('CARDS').subscribe(({ name, el, source }) => {
+        // ...
+        console.log('DRAG: ');
+        console.log('NAME:' + JSON.stringify(name), 'EL: ' + JSON.stringify(el), 'SOURCE: ' + JSON.stringify(source));
+      })
+    );
+    this.subs.add(
+      this.dragulaService.drop('CARDS').subscribe(({ name, el, target, source, sibling }) => {
+        // ...
+        console.log('DROP: ');
+        console.log(
+          'NAME: ' + JSON.stringify(name),
+          'EL: ' + JSON.stringify(el),
+          'TARGET: ' + JSON.stringify(target),
+          'SOURCE: ' + JSON.stringify(source),
+          'SIBLING: ' + JSON.stringify(sibling)
+        );
+      })
+    );
+    // some events have lots of properties, just pick the ones you need
+    this.subs.add(
+      this.dragulaService
+        .dropModel('CARDS')
+        // WHOA
+        // .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item }) => {
+        .subscribe(({ sourceModel, targetModel, item }) => {
+          console.log('DROPMODEL: ');
+          console.log(
+            'SOURCEMODEL: \n' + JSON.stringify(sourceModel),
+            'TARGETMODEL: \n' + JSON.stringify(targetModel),
+            'ITEM: \n' + JSON.stringify(item)
+          );
+          // ...
+        })
+    );
   }
 
   refreshBoard() {
@@ -201,5 +254,9 @@ export class BoardDetailsComponent implements OnInit {
 
   onRefresh(event: RefreshBoardRequest) {
     this.refreshBoard();
+  }
+
+  onDragCard(event: any) {
+    console.log(event);
   }
 }

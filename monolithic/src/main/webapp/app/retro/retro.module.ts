@@ -16,6 +16,7 @@ import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/de
 import { ToolbarComponent } from './board-details/toolbar/toolbar.component';
 import { FilterPipe } from './filter.pipe';
 import { AddColumnModalComponent } from './board-details/add-column-modal/add-column-modal.component';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,15 @@ import { AddColumnModalComponent } from './board-details/add-column-modal/add-co
     FilterPipe,
     AddColumnModalComponent
   ],
-  imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule],
+  imports: [
+    FontAwesomeModule,
+    NgbPaginationModule,
+    CommonModule,
+    FormsModule,
+    RetroRoutingModule,
+    PortalizerSharedModule,
+    DragulaModule.forRoot()
+  ],
   entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent, AddColumnModalComponent]
 })
 export class RetroModule {}

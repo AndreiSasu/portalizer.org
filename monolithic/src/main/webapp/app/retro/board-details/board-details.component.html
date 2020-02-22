@@ -10,17 +10,19 @@
 <div *ngIf="boardColumnVMs.length > 3" class="show-next">
     <fa-icon [icon]="faChevronRight" class="fa-2x"></fa-icon>
 </div>
-<div class="row column-container">
+<div class="row column-container" dragula="COLUMNS" [(dragulaModel)]="boardColumnVMs"
+    (dragulaModelChange)="onDragCard($event)">
     <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs">
         <div column="true" [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.columnType)]">
-            <h4 class="card-header"><b> {{ boardColumnVM.title }}</b>
+            <h4 class="card-header column-drag"><b class="column-drag"> {{ boardColumnVM.title }} </b>
             </h4>
 
             <button type="button" class="btn btn-primary btn-lg btn-block" (click)="addBlankCard(boardColumnVM)">
                 <fa-icon [icon]="faPlusCircle"></fa-icon> Add item
             </button>
 
-            <div class="card-body" style="padding-left: 1%; padding-right: 1%;">
+            <div class="card-body cards-drag" style="padding-left: 1%; padding-right: 1%;" dragula="CARDS"
+                [(dragulaModel)]="boardColumnVM.informationCards" (dragulaModelChange)="onDragCard($event)">
                 <div
                     *ngFor="let informationCard of boardColumnVM?.informationCards | sortBy:'desc':'updatedAt' | filter: search; let i = index;">
 

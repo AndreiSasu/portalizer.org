@@ -10,6 +10,9 @@ export class InformationCard {
 }
 
 export class InformationCardVM extends InformationCard {
+  /**
+   * Only used internally for blank cards, as they do not have an id in the backend.
+   */
   key: string;
   editMode: boolean;
 
