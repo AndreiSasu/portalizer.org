@@ -94,18 +94,24 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
           //   ' SOURCEINDEX: ' + sourceIndex,
           //   ' TARGETINDEX: ' + targetIndex
           // );
-          console.log(name, el, target, source, sibling);
+          console.log(name, el, target, source, sibling, sourceIndex, targetIndex);
           console.log(target.getAttribute('columnType'));
           const cardId = el.getAttribute('id');
           const targetBoardColumnVM = this.columnAndCards.get(target.getAttribute('columnType'));
           const sourceBoardColumnVM = this.columnAndCards.get(source.getAttribute('columnType'));
           const card = sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id === cardId)[0];
           console.log(card);
-          targetBoardColumnVM.informationCards.push(card);
-          targetBoardColumnVM.informationCards = [...targetBoardColumnVM.informationCards];
           sourceBoardColumnVM.informationCards = [
             ...sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id != cardId)
           ];
+          if (targetBoardColumnVM.columnType === sourceBoardColumnVM.columnType) {
+            sourceBoardColumnVM.informationCards.splice(targetIndex, 0, card);
+            return;
+          }
+
+          targetBoardColumnVM.informationCards.splice(targetIndex, 0, card);
+          targetBoardColumnVM.informationCards = [...targetBoardColumnVM.informationCards];
+
           console.log(targetBoardColumnVM);
           // this.updateCardColors();
         })
@@ -276,12 +282,6 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
 
   onRefresh(event: RefreshBoardRequest) {
     this.refreshBoard();
-  }
-
-  onDragCard(event: any) {
-    console.log('drag event: ');
-    console.log(event);
-    // this.updateCardColors();
   }
 
   ngOnDestroy() {
