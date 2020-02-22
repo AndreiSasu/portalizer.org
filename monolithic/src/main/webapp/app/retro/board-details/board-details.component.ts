@@ -37,8 +37,6 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
   colorService: ColorsService;
   subs = new Subscription();
 
-  columnWithLastDraggedCard: BoardColumnVM = new BoardColumnVM();
-
   constructor(
     private route: ActivatedRoute,
     private boardService: BoardService,
@@ -89,16 +87,26 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
         // .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item }) => {
         .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item, sourceIndex, targetIndex }) => {
           console.log('------- DROPMODEL: ');
-          console.log(
-            'SOURCEMODEL: \n' + JSON.stringify(sourceModel),
-            'TARGETMODEL: \n' + JSON.stringify(targetModel),
-            'ITEM: \n' + JSON.stringify(item),
-            ' SOURCEINDEX: ' + sourceIndex,
-            ' TARGETINDEX: ' + targetIndex
-          );
+          // console.log(
+          //   'SOURCEMODEL: \n' + JSON.stringify(sourceModel),
+          //   'TARGETMODEL: \n' + JSON.stringify(targetModel),
+          //   'ITEM: \n' + JSON.stringify(item),
+          //   ' SOURCEINDEX: ' + sourceIndex,
+          //   ' TARGETINDEX: ' + targetIndex
+          // );
           console.log(name, el, target, source, sibling);
           console.log(target.getAttribute('columnType'));
-
+          const cardId = el.getAttribute('id');
+          const targetBoardColumnVM = this.columnAndCards.get(target.getAttribute('columnType'));
+          const sourceBoardColumnVM = this.columnAndCards.get(source.getAttribute('columnType'));
+          const card = sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id === cardId)[0];
+          console.log(card);
+          targetBoardColumnVM.informationCards.push(card);
+          targetBoardColumnVM.informationCards = [...targetBoardColumnVM.informationCards];
+          sourceBoardColumnVM.informationCards = [
+            ...sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id != cardId)
+          ];
+          console.log(targetBoardColumnVM);
           // this.updateCardColors();
         })
     );

@@ -22,9 +22,7 @@
 
             <div class="card-body cards-drag" [attr.columnType]="boardColumnVM.columnType" style="padding-left: 1%; padding-right: 1%;" dragula="CARDS"
                 [dragulaModel]="boardColumnVM.informationCards">
-                <div
-                    *ngFor="let informationCard of boardColumnVM?.informationCards | sortBy:'desc':'updatedAt' | filter: search; let i = index;">
-
+                <div [attr.id]="informationCard.id" *ngFor="let informationCard of boardColumnVM?.informationCards | sortBy:'desc':'updatedAt' | filter: search; let i = index;">
                     <jhi-information-card [color]="colorService.getColor(boardColumnVM.columnType)"
                         [informationCard]="informationCard" (removed)="removeCard($event)" (saved)="onSaveCard($event)">
                     </jhi-information-card>
