@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board, BoardColumn, BoardColumnVM, RefreshBoardRequest } from '../model/boards';
 import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
@@ -17,7 +17,7 @@ import { DragulaService } from 'ng2-dragula';
   templateUrl: './board-details.component.html',
   styleUrls: ['./board-details.component.scss']
 })
-export class BoardDetailsComponent implements OnInit {
+export class BoardDetailsComponent implements OnInit, OnDestroy {
   boardId: string;
   board: Board;
   error: string;
@@ -36,6 +36,8 @@ export class BoardDetailsComponent implements OnInit {
   boardColumnVMs: Array<BoardColumnVM> = [];
   colorService: ColorsService;
   subs = new Subscription();
+
+  columnWithLastDraggedCard: BoardColumnVM = new BoardColumnVM();
 
   constructor(
     private route: ActivatedRoute,
@@ -65,26 +67,26 @@ export class BoardDetailsComponent implements OnInit {
 
     // These will get events limited to the VAMPIRES group.
 
-    this.subs.add(
-      this.dragulaService.drag('CARDS').subscribe(({ name, el, source }) => {
-        // ...
-        console.log('DRAG: ');
-        console.log('NAME:' + JSON.stringify(name), 'EL: ' + JSON.stringify(el), 'SOURCE: ' + JSON.stringify(source));
-      })
-    );
-    this.subs.add(
-      this.dragulaService.drop('CARDS').subscribe(({ name, el, target, source, sibling }) => {
-        // ...
-        console.log('DROP: ');
-        console.log(
-          'NAME: ' + JSON.stringify(name),
-          'EL: ' + JSON.stringify(el),
-          'TARGET: ' + JSON.stringify(target),
-          'SOURCE: ' + JSON.stringify(source),
-          'SIBLING: ' + JSON.stringify(sibling)
-        );
-      })
-    );
+    // this.subs.add(
+    //   this.dragulaService.drag('CARDS').subscribe(({ name, el, source }) => {
+    //     // ...
+    //     console.log('DRAG: ');
+    //     console.log('NAME:' + JSON.stringify(name), 'EL: ' + JSON.stringify(el), 'SOURCE: ' + JSON.stringify(source));
+    //   })
+    // );
+    // this.subs.add(
+    //   this.dragulaService.drop('CARDS').subscribe(({ name, el, target, source, sibling }) => {
+    //     // ...
+    //     console.log('DROP: ');
+    //     console.log(
+    //       'NAME: ' + JSON.stringify(name),
+    //       'EL: ' + JSON.stringify(el),
+    //       'TARGET: ' + JSON.stringify(target),
+    //       'SOURCE: ' + JSON.stringify(source),
+    //       'SIBLING: ' + JSON.stringify(sibling)
+    //     );
+    //   })
+    // );
     // some events have lots of properties, just pick the ones you need
     this.subs.add(
       this.dragulaService
@@ -98,9 +100,25 @@ export class BoardDetailsComponent implements OnInit {
             'TARGETMODEL: \n' + JSON.stringify(targetModel),
             'ITEM: \n' + JSON.stringify(item)
           );
+          // this.updateCardColors(targetModel);
           // ...
+
+          // console.log(this.boardColumnVMs);
         })
     );
+  }
+
+  updateCardColors(targetModel: BoardColumnVM[]) {
+    console.log(targetModel);
+    targetModel.forEach(boardColumnVM => {
+      boardColumnVM.informationCards.forEach(informationCard => {
+        console.log(informationCard.columnType, boardColumnVM.columnType);
+        if (informationCard.columnType !== boardColumnVM.columnType) {
+          informationCard.columnType = boardColumnVM.columnType;
+          console.log('---' + JSON.stringify(informationCard));
+        }
+      });
+    });
   }
 
   refreshBoard() {
@@ -257,6 +275,14 @@ export class BoardDetailsComponent implements OnInit {
   }
 
   onDragCard(event: any) {
+    console.log('drag event: ');
     console.log(event);
+    this.updateCardColors(this.boardColumnVMs);
+    console.log(this.boardColumnVMs);
+  }
+
+  ngOnDestroy() {
+    // destroy all the subscriptions at once
+    this.subs.unsubscribe();
   }
 }
