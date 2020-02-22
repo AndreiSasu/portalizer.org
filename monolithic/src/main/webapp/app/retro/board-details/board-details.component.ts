@@ -78,13 +78,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     //   this.dragulaService.drop('CARDS').subscribe(({ name, el, target, source, sibling }) => {
     //     // ...
     //     console.log('DROP: ');
-    //     console.log(
-    //       'NAME: ' + JSON.stringify(name),
-    //       'EL: ' + JSON.stringify(el),
-    //       'TARGET: ' + JSON.stringify(target),
-    //       'SOURCE: ' + JSON.stringify(source),
-    //       'SIBLING: ' + JSON.stringify(sibling)
-    //     );
+    //     console.log(name,el,target,source,sibling);
     //   })
     // );
     // some events have lots of properties, just pick the ones you need
@@ -93,32 +87,34 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
         .dropModel('CARDS')
         // WHOA
         // .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item }) => {
-        .subscribe(({ sourceModel, targetModel, item }) => {
-          console.log('DROPMODEL: ');
+        .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item, sourceIndex, targetIndex }) => {
+          console.log('------- DROPMODEL: ');
           console.log(
             'SOURCEMODEL: \n' + JSON.stringify(sourceModel),
             'TARGETMODEL: \n' + JSON.stringify(targetModel),
-            'ITEM: \n' + JSON.stringify(item)
+            'ITEM: \n' + JSON.stringify(item),
+            ' SOURCEINDEX: ' + sourceIndex,
+            ' TARGETINDEX: ' + targetIndex
           );
-          // this.updateCardColors(targetModel);
-          // ...
+          console.log(name, el, target, source, sibling);
+          console.log(target.getAttribute('columnType'));
 
-          // console.log(this.boardColumnVMs);
+          // this.updateCardColors();
         })
     );
   }
 
-  updateCardColors(targetModel: BoardColumnVM[]) {
-    console.log(targetModel);
-    targetModel.forEach(boardColumnVM => {
+  updateCardColors() {
+    this.boardColumnVMs.forEach(boardColumnVM => {
+      console.log(boardColumnVM);
+      console.log(boardColumnVM.informationCards.length);
       boardColumnVM.informationCards.forEach(informationCard => {
-        console.log(informationCard.columnType, boardColumnVM.columnType);
-        if (informationCard.columnType !== boardColumnVM.columnType) {
-          informationCard.columnType = boardColumnVM.columnType;
-          console.log('---' + JSON.stringify(informationCard));
-        }
+        informationCard.columnType = boardColumnVM.columnType;
       });
+      boardColumnVM.informationCards = [...boardColumnVM.informationCards];
     });
+    this.boardColumnVMs = [...this.boardColumnVMs];
+    console.log(this.boardColumnVMs);
   }
 
   refreshBoard() {
@@ -277,8 +273,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
   onDragCard(event: any) {
     console.log('drag event: ');
     console.log(event);
-    this.updateCardColors(this.boardColumnVMs);
-    console.log(this.boardColumnVMs);
+    // this.updateCardColors();
   }
 
   ngOnDestroy() {
