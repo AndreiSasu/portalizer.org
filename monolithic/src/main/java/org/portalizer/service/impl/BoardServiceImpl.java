@@ -97,7 +97,10 @@ public class BoardServiceImpl implements BoardService {
         final int oldIndex = reorderColumnsDTO.getOldIndex();
         final int newIndex = reorderColumnsDTO.getNewIndex();
         final ColumnDefinition columnDefinition = columnDefinitions.remove(oldIndex);
-//        columnDefinitions.add(newIndex, columnDefinition);
+        columnDefinitions.add(newIndex, columnDefinition);
+        for(int i = 0; i < columnDefinitions.size(); i++) {
+            columnDefinitions.get(i).setPriority(i);
+        }
         return boardMapper.toDto(boardRepository.save(board));
     }
 

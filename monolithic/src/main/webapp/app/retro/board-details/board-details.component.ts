@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board, RefreshBoardRequest } from '../model/boards';
-import { BoardColumn, BoardColumnVM } from '../model/columns';
+import { BoardColumn, BoardColumnVM, ColumnsUpdateRequest } from '../model/columns';
 import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
@@ -68,10 +68,14 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
       this.dragulaService
         .dropModel('COLUMNS')
         .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item, sourceIndex, targetIndex }) => {
-          const sourceBoardColumnVM = this.boardColumnVMs[sourceIndex];
-          this.boardColumnVMs.splice(sourceIndex, 1);
-          this.boardColumnVMs.splice(targetIndex, 0, sourceBoardColumnVM);
-          console.log(this.boardColumnVMs);
+          this.boardService
+            .reorderColumns(this.board.id, new ColumnsUpdateRequest(this.board.id, sourceIndex, targetIndex))
+            .subscribe(response => {
+              const sourceBoardColumnVM = this.boardColumnVMs[sourceIndex];
+              this.boardColumnVMs.splice(sourceIndex, 1);
+              this.boardColumnVMs.splice(targetIndex, 0, sourceBoardColumnVM);
+              console.log(this.boardColumnVMs);
+            });
         })
     );
 

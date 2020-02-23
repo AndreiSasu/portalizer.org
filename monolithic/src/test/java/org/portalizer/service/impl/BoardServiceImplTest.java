@@ -9,10 +9,7 @@ import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.service.BoardService;
-import org.portalizer.service.dto.BoardDTO;
-import org.portalizer.service.dto.BoardSummaryDTO;
-import org.portalizer.service.dto.ReorderColumnsDTO;
-import org.portalizer.service.dto.UpdateBoardDTO;
+import org.portalizer.service.dto.*;
 import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -70,5 +67,9 @@ public class BoardServiceImplTest {
         reorderColumnsDTO.setNewIndex(0);
         final BoardDTO boardDTO = boardService.reorderColumns(savedBoard.getId(), reorderColumnsDTO);
         Assertions.assertThat(boardDTO).isNotNull();
+        final List<ColumnDefinitionDTO> columnDefinitionDTOS = boardDTO.getColumnDefinitions();
+        Assertions.assertThat(columnDefinitionDTOS.get(0).getKey()).isEqualTo(two.getKey());
+        Assertions.assertThat(columnDefinitionDTOS.get(0).getTitle()).isEqualTo(two.getTitle());
+        Assertions.assertThat(columnDefinitionDTOS.get(0).getPriority()).isEqualTo(two.getPriority());
     }
 }

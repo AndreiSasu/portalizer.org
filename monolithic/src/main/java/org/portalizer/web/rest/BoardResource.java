@@ -4,6 +4,7 @@ import io.github.jhipster.web.util.HeaderUtil;
 import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.BoardDTO;
 import org.portalizer.service.dto.BoardSummaryDTO;
+import org.portalizer.service.dto.ReorderColumnsDTO;
 import org.portalizer.service.dto.UpdateBoardDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,5 +63,13 @@ public class BoardResource {
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert("",
             false,
             "board", id.toString())).build();
+    }
+
+    @PutMapping("/boards/{id}/reorder-columns")
+    public ResponseEntity<Void> reorderColumns(@PathVariable UUID id, @RequestBody ReorderColumnsDTO reorderColumnsDTO) {
+        final BoardDTO boardDTO = boardService.reorderColumns(id, reorderColumnsDTO);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert("",
+            false,
+            "board", boardDTO.getId().toString())).build();
     }
 }

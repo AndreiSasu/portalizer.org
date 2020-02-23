@@ -7,6 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { BoardSummary, Board, CreateBoardRequest, BoardTemplate, SaveBoardRequest } from './model/boards';
 import { PaginationPage } from './model/pagination';
 import { SERVER_API_URL } from '../app.constants';
+import { ColumnsUpdateRequest } from './model/columns';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,13 @@ export class BoardService {
     }
     console.log(url);
     return this.http.get<PaginationPage<BoardSummary>>(url);
+  }
+
+  reorderColumns(boardId: string, updateColumnOrdering: ColumnsUpdateRequest): Observable<any> {
+    return this.http.put<any>(this.BOARDS_URL + boardId + '/reorder-columns', updateColumnOrdering, this.httpOptions).pipe(
+      tap(_ => console.log(`updated columns ${this.BOARDS_URL}${boardId}`)),
+      catchError(this.handleError<any>(`updateColumnOrdering ${boardId}`))
+    );
   }
 
   getBoardsPage(page: number): Observable<PaginationPage<BoardSummary>> {
