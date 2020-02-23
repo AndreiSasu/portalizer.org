@@ -10,7 +10,7 @@ export class BoardSummary {
 }
 
 export class BoardColumn {
-  columnType: string;
+  key: string;
   title: string;
   color?: string;
 }
@@ -25,7 +25,7 @@ export class BoardColumnVM extends BoardColumn {
   static of(boardColumn: BoardColumn): BoardColumnVM {
     const boardColumnVM = new BoardColumnVM();
     boardColumnVM.color = boardColumn.color;
-    boardColumnVM.columnType = boardColumn.columnType;
+    boardColumnVM.key = boardColumn.key;
     boardColumnVM.title = boardColumn.title;
     boardColumnVM.informationCards = [];
     return boardColumnVM;

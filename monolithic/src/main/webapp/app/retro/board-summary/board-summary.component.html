@@ -28,7 +28,7 @@
 
                         <p>
                             <span *ngFor="let columnDefinition of boardsummary.columnDefinitions"
-                                [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.columnType)]">{{columnDefinition.title}}</span>
+                                [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.title)]">{{columnDefinition.title}}</span>
                         </p>
 
                         <span class="badge badge-primary badge-pill">{{boardsummary.totalCards}} Cards</span>

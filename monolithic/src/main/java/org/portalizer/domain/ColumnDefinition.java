@@ -19,7 +19,7 @@ public class ColumnDefinition {
     @Type(type="uuid-char")
     private UUID key;
 
-    private int priority;
+    private int priority = 0;
 
     @NotNull
     private String title;

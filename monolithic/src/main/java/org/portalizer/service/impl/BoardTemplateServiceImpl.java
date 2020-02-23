@@ -20,8 +20,8 @@ public class BoardTemplateServiceImpl implements BoardTemplateService {
 
     public BoardTemplateServiceImpl() {
 
-        List<ColumnDefinitionDTO> madSadGladColumns = Arrays.asList(new ColumnDefinitionDTO(UUID.randomUUID(), "What makes me Mad", 0),
-            new ColumnDefinitionDTO(UUID.randomUUID(), "What makes me Sad", 1), new ColumnDefinitionDTO(UUID.randomUUID(), "What makes me Glad", 2));
+        List<ColumnDefinitionDTO> madSadGladColumns = Arrays.asList(new ColumnDefinitionDTO(UUID.randomUUID(), "Mad", 0),
+            new ColumnDefinitionDTO(UUID.randomUUID(), "Sad", 1), new ColumnDefinitionDTO(UUID.randomUUID(), "Glad", 2));
         BoardTemplateDTO madSadGlad = new BoardTemplateDTO("Mad - Sad - Glad",  madSadGladColumns,"(Most simple 3 column board)");
 
         List<ColumnDefinitionDTO> wentWellToImproveActionItemsColumns = Arrays.asList(new ColumnDefinitionDTO(UUID.randomUUID(), "Went Well", 0),

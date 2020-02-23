@@ -106,16 +106,16 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
           //   ' TARGETINDEX: ' + targetIndex
           // );
           console.log(name, el, target, source, sibling, sourceIndex, targetIndex);
-          console.log(target.getAttribute('columnType'));
+          console.log(target.getAttribute('columnKey'));
           const cardId = el.getAttribute('id');
-          const targetBoardColumnVM = this.columnAndCards.get(target.getAttribute('columnType'));
-          const sourceBoardColumnVM = this.columnAndCards.get(source.getAttribute('columnType'));
+          const targetBoardColumnVM = this.columnAndCards.get(target.getAttribute('columnKey'));
+          const sourceBoardColumnVM = this.columnAndCards.get(source.getAttribute('columnKey'));
           const card = sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id === cardId)[0];
           console.log(card);
           sourceBoardColumnVM.informationCards = [
             ...sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id != cardId)
           ];
-          if (targetBoardColumnVM.columnType === sourceBoardColumnVM.columnType) {
+          if (targetBoardColumnVM.key === sourceBoardColumnVM.key) {
             sourceBoardColumnVM.informationCards.splice(targetIndex, 0, card);
             return;
           }
@@ -129,19 +129,6 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  updateCardColors() {
-    this.boardColumnVMs.forEach(boardColumnVM => {
-      console.log(boardColumnVM);
-      console.log(boardColumnVM.informationCards.length);
-      boardColumnVM.informationCards.forEach(informationCard => {
-        informationCard.columnType = boardColumnVM.columnType;
-      });
-      boardColumnVM.informationCards = [...boardColumnVM.informationCards];
-    });
-    this.boardColumnVMs = [...this.boardColumnVMs];
-    console.log(this.boardColumnVMs);
-  }
-
   refreshBoard() {
     this.boardService.getBoardById(this.boardId).subscribe(
       board => {
@@ -149,7 +136,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
         this.buildBoardColumnVMs(board.columnDefinitions, board.informationCards);
 
         this.cardStorageService.getCards(this.boardId).forEach(informationCardVM => {
-          const boardColumnVM: BoardColumnVM = this.columnAndCards.get(informationCardVM.columnType);
+          const boardColumnVM: BoardColumnVM = this.columnAndCards.get(informationCardVM.columnKey);
           boardColumnVM.informationCards.push(informationCardVM);
         });
 
@@ -167,11 +154,11 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
   buildBoardColumnVMs(boardColumns: Array<BoardColumn>, informationCards: Array<InformationCard>) {
     this.boardColumnVMs = [...[]];
     boardColumns.forEach(element => {
-      this.columnAndCards.set(element.columnType, BoardColumnVM.of(element));
+      this.columnAndCards.set(element.key, BoardColumnVM.of(element));
     });
 
     informationCards.forEach(informationCard => {
-      const boardColumnVM: BoardColumnVM = this.columnAndCards.get(informationCard.columnType);
+      const boardColumnVM: BoardColumnVM = this.columnAndCards.get(informationCard.columnKey);
       boardColumnVM.informationCards.push(InformationCardVM.of(informationCard));
     });
 
@@ -184,7 +171,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     console.log('Adding blank card to ' + JSON.stringify(boardColumnVM));
     const blankCard = new InformationCardVM();
     blankCard.boardId = this.board.id;
-    blankCard.columnType = boardColumnVM.columnType;
+    blankCard.columnKey = boardColumnVM.key;
     blankCard.editMode = true;
     blankCard.key = uuid.v4();
     boardColumnVM.informationCards = [...boardColumnVM.informationCards, blankCard];
@@ -193,7 +180,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
   removeCard(informationCardVM: InformationCardVM) {
     const keyToRemove = informationCardVM.key;
     const idToRemove = informationCardVM.id;
-    const boardColumnVM = this.columnAndCards.get(informationCardVM.columnType);
+    const boardColumnVM = this.columnAndCards.get(informationCardVM.columnKey);
 
     this.cardStorageService.removeCard(this.boardId, informationCardVM.key);
 
@@ -204,7 +191,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
       });
       return;
     }
-    console.log('removing card with key ' + informationCardVM.key + ' from ' + informationCardVM.columnType);
+    console.log('removing card with key ' + informationCardVM.key + ' from ' + informationCardVM.columnKey);
 
     this.informationCardService.removeCard(idToRemove).subscribe(
       response => {
@@ -234,13 +221,13 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     const keyToRemove = informationCardVM.key;
     const createCardRequest = new CreateCardRequest();
     createCardRequest.boardId = this.board.id;
-    createCardRequest.columnType = informationCardVM.columnType;
+    createCardRequest.columnKey = informationCardVM.columnKey;
     createCardRequest.text = informationCardVM.text;
 
     this.informationCardService.addCard(createCardRequest).subscribe(
       informationCard => {
         console.log(informationCard);
-        const boardColumnVM = this.columnAndCards.get(informationCard.columnType);
+        const boardColumnVM = this.columnAndCards.get(informationCard.columnKey);
 
         // remove previous unsaved card
         boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
@@ -264,12 +251,12 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     updateCardRequest.id = informationCardVM.id;
     updateCardRequest.boardId = informationCardVM.boardId;
     updateCardRequest.text = informationCardVM.text;
-    updateCardRequest.columnType = informationCardVM.columnType;
+    updateCardRequest.columnKey = informationCardVM.columnKey;
 
     this.informationCardService.updateCard(updateCardRequest).subscribe(
       updatedCard => {
         console.log(updatedCard);
-        const boardColumnVM = this.columnAndCards.get(updatedCard.columnType);
+        const boardColumnVM = this.columnAndCards.get(updatedCard.columnKey);
 
         // remove previous unsaved card
         boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
