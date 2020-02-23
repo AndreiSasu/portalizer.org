@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board, BoardColumn, BoardColumnVM, RefreshBoardRequest } from '../model/boards';
 import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
@@ -6,16 +6,18 @@ import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardReques
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
 import { InformationCardService } from '../information-card.service';
-import { faPlusCircle, faSync, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle, faArrowsAlt, faSync, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import * as uuid from 'uuid';
 import { CardStorageService } from '../card-storage.service';
+import { Subscription } from 'rxjs';
+import { DragulaService } from 'ng2-dragula';
 
 @Component({
   selector: 'jhi-board-details',
   templateUrl: './board-details.component.html',
   styleUrls: ['./board-details.component.scss']
 })
-export class BoardDetailsComponent implements OnInit {
+export class BoardDetailsComponent implements OnInit, OnDestroy {
   boardId: string;
   board: Board;
   error: string;
@@ -25,6 +27,7 @@ export class BoardDetailsComponent implements OnInit {
   faChevronRight = faChevronRight;
   faSearch = faSearch;
   faPencilAlt = faPencilAlt;
+  faArrowsAlt = faArrowsAlt;
 
   editMode: boolean;
   search: string;
@@ -32,13 +35,15 @@ export class BoardDetailsComponent implements OnInit {
   columnAndCards: Map<String, BoardColumnVM> = new Map();
   boardColumnVMs: Array<BoardColumnVM> = [];
   colorService: ColorsService;
+  subs = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
     private boardService: BoardService,
     private informationCardService: InformationCardService,
     private cardStorageService: CardStorageService,
-    colorService: ColorsService
+    colorService: ColorsService,
+    private dragulaService: DragulaService
   ) {
     this.colorService = colorService;
   }
@@ -48,6 +53,93 @@ export class BoardDetailsComponent implements OnInit {
     this.boardId = this.route.snapshot.paramMap.get('id');
     this.cardStorageService.initBoardStorageIfNecessary(this.boardId);
     this.refreshBoard();
+
+    this.dragulaService.createGroup('COLUMNS', {
+      direction: 'horizontal',
+      moves: (el, source, handle: any) => {
+        // it makes sense not to drag and drop from icons as they might be edit icons
+        if (handle.className instanceof SVGAnimatedString) return false;
+        return handle.className.includes('column-drag');
+      }
+    });
+
+    this.subs.add(
+      this.dragulaService
+        .dropModel('COLUMNS')
+        .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item, sourceIndex, targetIndex }) => {
+          const sourceBoardColumnVM = this.boardColumnVMs[sourceIndex];
+          this.boardColumnVMs.splice(sourceIndex, 1);
+          this.boardColumnVMs.splice(targetIndex, 0, sourceBoardColumnVM);
+          console.log(this.boardColumnVMs);
+        })
+    );
+
+    // These will get events limited to the VAMPIRES group.
+
+    // this.subs.add(
+    //   this.dragulaService.drag('CARDS').subscribe(({ name, el, source }) => {
+    //     // ...
+    //     console.log('DRAG: ');
+    //     console.log('NAME:' + JSON.stringify(name), 'EL: ' + JSON.stringify(el), 'SOURCE: ' + JSON.stringify(source));
+    //   })
+    // );
+    // this.subs.add(
+    //   this.dragulaService.drop('CARDS').subscribe(({ name, el, target, source, sibling }) => {
+    //     // ...
+    //     console.log('DROP: ');
+    //     console.log(name,el,target,source,sibling);
+    //   })
+    // );
+    // some events have lots of properties, just pick the ones you need
+    this.subs.add(
+      this.dragulaService
+        .dropModel('CARDS')
+        // WHOA
+        // .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item }) => {
+        .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item, sourceIndex, targetIndex }) => {
+          console.log('------- DROPMODEL: ');
+          // console.log(
+          //   'SOURCEMODEL: \n' + JSON.stringify(sourceModel),
+          //   'TARGETMODEL: \n' + JSON.stringify(targetModel),
+          //   'ITEM: \n' + JSON.stringify(item),
+          //   ' SOURCEINDEX: ' + sourceIndex,
+          //   ' TARGETINDEX: ' + targetIndex
+          // );
+          console.log(name, el, target, source, sibling, sourceIndex, targetIndex);
+          console.log(target.getAttribute('columnType'));
+          const cardId = el.getAttribute('id');
+          const targetBoardColumnVM = this.columnAndCards.get(target.getAttribute('columnType'));
+          const sourceBoardColumnVM = this.columnAndCards.get(source.getAttribute('columnType'));
+          const card = sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id === cardId)[0];
+          console.log(card);
+          sourceBoardColumnVM.informationCards = [
+            ...sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id != cardId)
+          ];
+          if (targetBoardColumnVM.columnType === sourceBoardColumnVM.columnType) {
+            sourceBoardColumnVM.informationCards.splice(targetIndex, 0, card);
+            return;
+          }
+
+          targetBoardColumnVM.informationCards.splice(targetIndex, 0, card);
+          targetBoardColumnVM.informationCards = [...targetBoardColumnVM.informationCards];
+
+          console.log(targetBoardColumnVM);
+          // this.updateCardColors();
+        })
+    );
+  }
+
+  updateCardColors() {
+    this.boardColumnVMs.forEach(boardColumnVM => {
+      console.log(boardColumnVM);
+      console.log(boardColumnVM.informationCards.length);
+      boardColumnVM.informationCards.forEach(informationCard => {
+        informationCard.columnType = boardColumnVM.columnType;
+      });
+      boardColumnVM.informationCards = [...boardColumnVM.informationCards];
+    });
+    this.boardColumnVMs = [...this.boardColumnVMs];
+    console.log(this.boardColumnVMs);
   }
 
   refreshBoard() {
@@ -201,5 +293,10 @@ export class BoardDetailsComponent implements OnInit {
 
   onRefresh(event: RefreshBoardRequest) {
     this.refreshBoard();
+  }
+
+  ngOnDestroy() {
+    // destroy all the subscriptions at once
+    this.subs.unsubscribe();
   }
 }
