@@ -98,10 +98,25 @@ public class BoardServiceImpl implements BoardService {
         final int newIndex = reorderColumnsDTO.getNewIndex();
         final ColumnDefinition columnDefinition = columnDefinitions.remove(oldIndex);
         columnDefinitions.add(newIndex, columnDefinition);
-        for(int i = 0; i < columnDefinitions.size(); i++) {
+        for (int i = 0; i < columnDefinitions.size(); i++) {
             columnDefinitions.get(i).setPriority(i);
         }
         return boardMapper.toDto(boardRepository.save(board));
+    }
+
+    @Override
+    public ColumnDefinitionDTO addColumn(UUID id, AddColumnDTO addColumnDTO) {
+        final Board board = boardRepository.findById(id).get();
+        final List<ColumnDefinition> columnDefinitions = board.getColumnDefinitions();
+        final ColumnDefinition newColumn = new ColumnDefinition();
+        newColumn.setBoard(board);
+        newColumn.setTitle(addColumnDTO.getTitle());
+        newColumn.setKey(UUID.randomUUID());
+        newColumn.setPriority(columnDefinitions.size());
+        columnDefinitions.add(newColumn);
+        final Board savedBoard = boardRepository.save(board);
+        final ColumnDefinition savedColumnDefinition = savedBoard.getColumnDefinitions().stream().filter(columnDefinition -> columnDefinition.getKey().equals(newColumn.getKey())).findFirst().get();
+        return columnDefinitionMapper.toDto(savedColumnDefinition);
     }
 
     private BoardSummaryDTO lazyBoardToDto(final Board board) {

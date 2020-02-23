@@ -1,13 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board, RefreshBoardRequest } from '../model/boards';
-import { BoardColumn, BoardColumnVM, ColumnsUpdateRequest } from '../model/columns';
+import { BoardColumn, BoardColumnVM, ColumnsUpdateRequest, ColumnAddRequest } from '../model/columns';
 import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
 import { InformationCardService } from '../information-card.service';
-import { faPlusCircle, faArrowsAlt, faSync, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlusCircle,
+  faArrowsAlt,
+  faSync,
+  faTrash,
+  faEllipsisH,
+  faPencilAlt,
+  faSearch,
+  faChevronLeft,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
 import * as uuid from 'uuid';
 import { CardStorageService } from '../card-storage.service';
 import { Subscription } from 'rxjs';
@@ -29,6 +39,8 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
   faSearch = faSearch;
   faPencilAlt = faPencilAlt;
   faArrowsAlt = faArrowsAlt;
+  faEllipsisH = faEllipsisH;
+  faTrash = faTrash;
 
   editMode: boolean;
   search: string;
@@ -125,6 +137,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
             return;
           }
 
+          card.columnKey = targetBoardColumnVM.key;
           targetBoardColumnVM.informationCards.splice(targetIndex, 0, card);
           targetBoardColumnVM.informationCards = [...targetBoardColumnVM.informationCards];
 
@@ -200,7 +213,6 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
 
     this.informationCardService.removeCard(idToRemove).subscribe(
       response => {
-        // remove previous unsaved card
         boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
           return informationCardVM.key !== keyToRemove;
         });
@@ -285,6 +297,20 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
 
   onRefresh(event: RefreshBoardRequest) {
     this.refreshBoard();
+  }
+
+  onAddColumn(event: ColumnAddRequest) {
+    console.log(event);
+    event.id = this.board.id;
+    this.boardService.addColumn(this.board.id, event).subscribe(
+      newColumn => {
+        const newBoardColumnVM = BoardColumnVM.of(newColumn);
+        this.columnAndCards.set(newColumn.key, newBoardColumnVM);
+        this.boardColumnVMs.push(newBoardColumnVM);
+        this.boardColumnVMs = [...this.boardColumnVMs];
+      },
+      error => {}
+    );
   }
 
   ngOnDestroy() {

@@ -33,9 +33,9 @@ export class ColumnAddRequest {
   /**
    *
    * @param id board id
-   * @param name  column name
+   * @param title  column title
    */
-  constructor(public id: string, public name: string) {}
+  constructor(public id: string, public title: string) {}
 }
 
 export class ColumnsUpdateRequest {
