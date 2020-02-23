@@ -1,7 +1,5 @@
 package org.portalizer.service.dto;
 
-import org.portalizer.domain.ColumnType;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -16,7 +14,7 @@ public class InformationCardDTO implements Serializable {
 
     @NotBlank private String text;
 
-    @NotNull private ColumnType columnType;
+    @NotNull private UUID columnKey;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -45,14 +43,6 @@ public class InformationCardDTO implements Serializable {
         this.text = text;
     }
 
-    public ColumnType getColumnType() {
-        return columnType;
-    }
-
-    public void setColumnType(ColumnType columnType) {
-        this.columnType = columnType;
-    }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -69,11 +59,21 @@ public class InformationCardDTO implements Serializable {
         this.updatedAt = updatedAt;
     }
 
+    public UUID getColumnKey() {
+        return columnKey;
+    }
+
+    public void setColumnKey(UUID columnKey) {
+        this.columnKey = columnKey;
+    }
+
     @Override
     public String toString() {
         return "InformationCardDTO{" +
-            "text='" + text + '\'' +
-            ", columnType=" + columnType +
+            "id=" + id +
+            ", boardId=" + boardId +
+            ", text='" + text + '\'' +
+            ", columnKey=" + columnKey +
             ", createdAt=" + createdAt +
             ", updatedAt=" + updatedAt +
             '}';

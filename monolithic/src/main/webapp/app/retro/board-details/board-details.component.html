@@ -11,8 +11,8 @@
     <fa-icon [icon]="faChevronRight" class="fa-2x"></fa-icon>
 </div>
 <div class="row column-container" dragula="COLUMNS" [(dragulaModel)]="boardColumnVMs">
-    <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs">
-        <div column="true" [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.columnType)]">
+    <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs | sortBy:'asc':'priority'">
+        <div column="true" [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.title)]">
             <h4 class="card-header column-drag"><b class="column-drag"> {{ boardColumnVM.title }} </b>
             </h4>
 
@@ -20,10 +20,10 @@
                 <fa-icon [icon]="faPlusCircle"></fa-icon> Add item
             </button>
 
-            <div class="card-body cards-drag" [attr.columnType]="boardColumnVM.columnType" style="padding-left: 1%; padding-right: 1%;" dragula="CARDS"
+            <div class="card-body cards-drag" [attr.columnKey]="boardColumnVM.key" style="padding-left: 1%; padding-right: 1%;" dragula="CARDS"
                 [dragulaModel]="boardColumnVM.informationCards">
                 <div [attr.id]="informationCard.id" *ngFor="let informationCard of boardColumnVM?.informationCards | sortBy:'desc':'updatedAt' | filter: search; let i = index;">
-                    <jhi-information-card [color]="colorService.getColor(boardColumnVM.columnType)"
+                    <jhi-information-card [color]="colorService.getColor(boardColumnVM.title)"
                         [informationCard]="informationCard" (removed)="removeCard($event)" (saved)="onSaveCard($event)">
                     </jhi-information-card>
 

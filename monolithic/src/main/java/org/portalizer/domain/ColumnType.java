@@ -2,6 +2,7 @@ package org.portalizer.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+@Deprecated
 public enum ColumnType {
     MAD("Mad"),
     SAD("Sad"),

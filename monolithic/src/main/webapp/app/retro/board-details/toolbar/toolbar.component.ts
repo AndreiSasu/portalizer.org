@@ -1,6 +1,7 @@
 import { EventEmitter, Component, OnInit, Input, Output, Injector } from '@angular/core';
 import { faPlusCircle, faSync, faSave, faPencilAlt, faClock, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Board, RefreshBoardRequest, ColumnAddRequest, SaveBoardRequest } from 'app/retro/model/boards';
+import { Board, RefreshBoardRequest, SaveBoardRequest } from 'app/retro/model/boards';
+import { ColumnAddRequest } from 'app/retro/model/columns';
 import { BoardService } from 'app/retro/board.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommunicationService } from 'app/retro/communication.service';

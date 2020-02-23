@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.portalizer.PortalizerApp;
 import org.portalizer.domain.Board;
+import org.portalizer.domain.ColumnDefinition;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.service.BoardService;
-import org.portalizer.service.dto.BoardSummaryDTO;
-import org.portalizer.service.dto.UpdateBoardDTO;
+import org.portalizer.service.dto.*;
 import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,5 +54,22 @@ public class BoardServiceImplTest {
         boardService.update(board.getId(), updateBoardDTO);
         final Board updatedBoard = boardRepository.findById(savedBoard.getId()).get();
         Assertions.assertThat(updatedBoard.getName()).isEqualTo(board.getName()+"updated");
+    }
+
+    @Test
+    public void testReorderColumns() {
+        final List<ColumnDefinition> columnDefinitions = savedBoard.getColumnDefinitions();
+        final ColumnDefinition zero = columnDefinitions.get(0);
+        final ColumnDefinition two = columnDefinitions.get(2);
+        final ReorderColumnsDTO reorderColumnsDTO = new ReorderColumnsDTO();
+        reorderColumnsDTO.setBoardId(savedBoard.getId());
+        reorderColumnsDTO.setOldIndex(2);
+        reorderColumnsDTO.setNewIndex(0);
+        final BoardDTO boardDTO = boardService.reorderColumns(savedBoard.getId(), reorderColumnsDTO);
+        Assertions.assertThat(boardDTO).isNotNull();
+        final List<ColumnDefinitionDTO> columnDefinitionDTOS = boardDTO.getColumnDefinitions();
+        Assertions.assertThat(columnDefinitionDTOS.get(0).getKey()).isEqualTo(two.getKey());
+        Assertions.assertThat(columnDefinitionDTOS.get(0).getTitle()).isEqualTo(two.getTitle());
+        Assertions.assertThat(columnDefinitionDTOS.get(0).getPriority()).isEqualTo(two.getPriority());
     }
 }
