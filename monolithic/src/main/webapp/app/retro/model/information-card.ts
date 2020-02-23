@@ -41,3 +41,7 @@ export class UpdateCardRequest {
   columnKey: string;
   text: string;
 }
+
+export class ReorderCardRequest {
+  constructor(public id: string, public oldIndex: number, public newIndex: number, public oldColumn: string, public newColumn: string) {}
+}

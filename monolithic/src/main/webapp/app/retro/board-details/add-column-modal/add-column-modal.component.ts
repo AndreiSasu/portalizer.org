@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommunicationService } from 'app/retro/communication.service';
-import { ColumnAddRequest } from 'app/retro/model/boards';
+import { ColumnAddRequest } from 'app/retro/model/columns';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

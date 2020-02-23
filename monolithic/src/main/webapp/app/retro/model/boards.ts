@@ -1,4 +1,5 @@
-import { InformationCard, InformationCardVM } from './information-card';
+import { InformationCard } from './information-card';
+import { BoardColumn } from './columns';
 
 export class BoardSummary {
   id: string;
@@ -9,27 +10,8 @@ export class BoardSummary {
   totalCards: number;
 }
 
-export class BoardColumn {
-  key: string;
-  title: string;
-  color?: string;
-}
-
 export class Board extends BoardSummary {
   informationCards: Array<InformationCard>;
-}
-
-export class BoardColumnVM extends BoardColumn {
-  informationCards: Array<InformationCardVM>;
-
-  static of(boardColumn: BoardColumn): BoardColumnVM {
-    const boardColumnVM = new BoardColumnVM();
-    boardColumnVM.color = boardColumn.color;
-    boardColumnVM.key = boardColumn.key;
-    boardColumnVM.title = boardColumn.title;
-    boardColumnVM.informationCards = [];
-    return boardColumnVM;
-  }
 }
 
 export class BoardTemplate {
@@ -65,25 +47,8 @@ export class SaveBoardRequest {
   constructor(public id: string, public name: string) {}
 }
 
-export class ColumnAddRequest {
-  /**
-   *
-   * @param id board id
-   * @param name  column name
-   */
-  constructor(public id: string, public name: string) {}
-}
-
 export class TextSearch {
   constructor(public fieldName: string, public search: string) {}
 }
 
 export class ClearSearch {}
-
-export class ColumnReorderRequest {
-  constructor(public id: string, public oldIndex: number, public newIndex: number) {}
-}
-
-export class InformationCardReorderRequest {
-  constructor(public id: string, public oldIndex: number, public newIndex: number, public oldColumn: string, public newColumn: string) {}
-}
