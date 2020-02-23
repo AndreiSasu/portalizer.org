@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Board, BoardColumn, BoardColumnVM, RefreshBoardRequest, ColumnReorderRequest } from '../model/boards';
+import { Board, BoardColumn, BoardColumnVM, RefreshBoardRequest } from '../model/boards';
 import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
