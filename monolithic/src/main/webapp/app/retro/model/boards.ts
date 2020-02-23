@@ -79,3 +79,11 @@ export class TextSearch {
 }
 
 export class ClearSearch {}
+
+export class ColumnReorderRequest {
+  constructor(public id: string, public oldIndex: number, public newIndex: number) {}
+}
+
+export class InformationCardReorderRequest {
+  constructor(public id: string, public oldIndex: number, public newIndex: number, public oldColumn: string, public newColumn: string) {}
+}

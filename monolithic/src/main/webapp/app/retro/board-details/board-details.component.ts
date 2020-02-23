@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Board, BoardColumn, BoardColumnVM, RefreshBoardRequest } from '../model/boards';
+import { Board, BoardColumn, BoardColumnVM, RefreshBoardRequest, ColumnReorderRequest } from '../model/boards';
 import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
@@ -62,6 +62,17 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
         return handle.className.includes('column-drag');
       }
     });
+
+    this.subs.add(
+      this.dragulaService
+        .dropModel('COLUMNS')
+        .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item, sourceIndex, targetIndex }) => {
+          const sourceBoardColumnVM = this.boardColumnVMs[sourceIndex];
+          this.boardColumnVMs.splice(sourceIndex, 1);
+          this.boardColumnVMs.splice(targetIndex, 0, sourceBoardColumnVM);
+          console.log(this.boardColumnVMs);
+        })
+    );
 
     // These will get events limited to the VAMPIRES group.
 
