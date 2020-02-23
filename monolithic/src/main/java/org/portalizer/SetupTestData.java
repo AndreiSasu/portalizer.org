@@ -29,8 +29,9 @@ public class SetupTestData implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         for (int i = 0; i < 500; i++) {
-            List<ColumnDefinition> columnDefinitions = EntityUtils.buildRandomColumnDefinitions();
             Board board = new Board();
+            List<ColumnDefinition> columnDefinitions = EntityUtils.buildRandomColumnDefinitions(board);
+
             board.setName(faker.company().bs());
             board.setDescription(faker.shakespeare().asYouLikeItQuote());
             final List<InformationCard> informationCards = new ArrayList<>();
