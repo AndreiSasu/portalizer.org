@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.SortedSet;
+import java.util.UUID;
 
 @SpringBootTest(classes = PortalizerApp.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -56,7 +57,7 @@ public class InformationCardRepositoryTest {
     @Test
     public void testCannotAddCardWithoutBoardReference() {
         InformationCard informationCard = new InformationCard();
-        informationCard.setColumnType(ColumnType.GLAD);
+        informationCard.setColumnKey(UUID.randomUUID());
         informationCard.setText("Some text");
         final Throwable throwable = Assertions.catchThrowable(() -> informationCardRepository.save(informationCard));
         Assertions.assertThat(throwable.getCause().getCause()).isInstanceOf(javax.validation.ConstraintViolationException.class);
@@ -74,7 +75,7 @@ public class InformationCardRepositoryTest {
     @Test
     public void testAddCardToExistingBoardAutoGeneratesFields() {
         InformationCard informationCard = new InformationCard();
-        informationCard.setColumnType(ColumnType.GLAD);
+        informationCard.setColumnKey(UUID.randomUUID());
         informationCard.setText("Some text 123");
         informationCard.setBoard(savedBoard);
         InformationCard savedCard = informationCardRepository.save(informationCard);

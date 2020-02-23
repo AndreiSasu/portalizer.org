@@ -3,7 +3,6 @@ package org.portalizer.utils;
 import com.github.javafaker.Faker;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
-import org.portalizer.domain.ColumnType;
 import org.portalizer.domain.InformationCard;
 import org.portalizer.service.BoardTemplateService;
 import org.portalizer.service.dto.BoardTemplateDTO;
@@ -14,6 +13,7 @@ import org.portalizer.service.mapper.ColumnDefinitionMapperImpl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class EntityUtils {
 
@@ -44,7 +44,7 @@ public class EntityUtils {
         columnDefinitions.forEach(columnDefinition -> {
             final InformationCard informationCard = new InformationCard();
             informationCard.setBoard(board);
-            informationCard.setColumnType(columnDefinition.getColumnType());
+            informationCard.setColumnKey(columnDefinition.getKey());
             informationCard.setText(faker.hitchhikersGuideToTheGalaxy().quote());
             informationCards.add(informationCard);
         });
@@ -62,15 +62,15 @@ public class EntityUtils {
 
     public static List<ColumnDefinition> buildColumnDefinitions() {
         ColumnDefinition mad = new ColumnDefinition();
-        mad.setColumnType(ColumnType.MAD);
+        mad.setKey(UUID.randomUUID());
         mad.setTitle("Mad");
 
         ColumnDefinition sad = new ColumnDefinition();
-        sad.setColumnType(ColumnType.SAD);
+        sad.setKey(UUID.randomUUID());
         sad.setTitle("Sad");
 
         ColumnDefinition glad = new ColumnDefinition();
-        glad.setColumnType(ColumnType.GLAD);
+        glad.setKey(UUID.randomUUID());
         glad.setTitle("Glad");
 
         List<ColumnDefinition> columnDefinitions = new ArrayList<>();

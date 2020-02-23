@@ -35,7 +35,8 @@ public class InformationCard {
     private String text;
 
     @NotNull
-    private ColumnType columnType;
+    @Type(type="uuid-char")
+    private UUID columnKey;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -67,12 +68,12 @@ public class InformationCard {
         this.text = text;
     }
 
-    public ColumnType getColumnType() {
-        return columnType;
+    public UUID getColumnKey() {
+        return columnKey;
     }
 
-    public void setColumnType(ColumnType columnType) {
-        this.columnType = columnType;
+    public void setColumnKey(UUID columnKey) {
+        this.columnKey = columnKey;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -97,8 +98,9 @@ public class InformationCard {
         if (o == null || getClass() != o.getClass()) return false;
         InformationCard that = (InformationCard) o;
         return Objects.equals(id, that.id) &&
+            Objects.equals(board, that.board) &&
             Objects.equals(text, that.text) &&
-            columnType == that.columnType &&
+            Objects.equals(columnKey, that.columnKey) &&
             Objects.equals(createdAt, that.createdAt) &&
             Objects.equals(updatedAt, that.updatedAt);
     }
@@ -111,9 +113,10 @@ public class InformationCard {
     @Override
     public String toString() {
         return "InformationCard{" +
-            "cardId=" + id +
+            "id=" + id +
+            ", board=" + board +
             ", text='" + text + '\'' +
-            ", columnType=" + columnType +
+            ", columnKey=" + columnKey +
             ", createdAt=" + createdAt +
             ", updatedAt=" + updatedAt +
             '}';

@@ -1,8 +1,11 @@
 package org.portalizer.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "column_definition")
@@ -13,10 +16,29 @@ public class ColumnDefinition {
     private Long id;
 
     @NotNull
-    private ColumnType columnType;
+    @Type(type="uuid-char")
+    private UUID key;
+
+    private int priority;
 
     @NotNull
     private String title;
+
+    public UUID getKey() {
+        return key;
+    }
+
+    public void setKey(UUID key) {
+        this.key = key;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
 
     public Long getId() {
         return id;
@@ -24,14 +46,6 @@ public class ColumnDefinition {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public ColumnType getColumnType() {
-        return columnType;
-    }
-
-    public void setColumnType(ColumnType columnType) {
-        this.columnType = columnType;
     }
 
     public String getTitle() {
@@ -43,27 +57,29 @@ public class ColumnDefinition {
     }
 
     @Override
-    public String toString() {
-        return "ColumnDefinition{" +
-            "id=" + id +
-            ", columnType=" + columnType +
-            ", title='" + title + '\'' +
-            '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ColumnDefinition that = (ColumnDefinition) o;
-        return Objects.equals(id, that.id) &&
-            columnType == that.columnType &&
+        return priority == that.priority &&
+            Objects.equals(id, that.id) &&
+            Objects.equals(key, that.key) &&
             Objects.equals(title, that.title);
     }
 
     @Override
     public int hashCode() {
         return 31;
+    }
+
+    @Override
+    public String toString() {
+        return "ColumnDefinition{" +
+            "id=" + id +
+            ", columnKey=" + key +
+            ", priority=" + priority +
+            ", title='" + title + '\'' +
+            '}';
     }
 
 }

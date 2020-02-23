@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.portalizer.PortalizerApp;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
-import org.portalizer.domain.ColumnType;
 import org.portalizer.domain.InformationCard;
 import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +29,19 @@ public class BoardRepositoryTest {
         board.setName("Test");
         List<ColumnDefinition> columnDefinitions = new ArrayList<>();
         ColumnDefinition keep = new ColumnDefinition();
-        keep.setColumnType(ColumnType.KEEP);
+        keep.setKey(UUID.randomUUID());
         keep.setTitle("Keep");
 
         ColumnDefinition add = new ColumnDefinition();
-        add.setColumnType(ColumnType.ADD);
+        add.setKey(UUID.randomUUID());
         add.setTitle("Add");
 
         ColumnDefinition less = new ColumnDefinition();
-        less.setColumnType(ColumnType.LESS);
+        less.setKey(UUID.randomUUID());
         less.setTitle("Less");
 
         ColumnDefinition more = new ColumnDefinition();
-        more.setColumnType(ColumnType.MORE);
+        more.setKey(UUID.randomUUID());
         more.setTitle("More");
         columnDefinitions.addAll(Arrays.asList(keep, add, less, more));
         board.setColumnDefinitions(columnDefinitions);
@@ -101,7 +100,7 @@ public class BoardRepositoryTest {
 
         InformationCard newCard = new InformationCard();
         newCard.setText("Test Text");
-        newCard.setColumnType(ColumnType.GLAD);
+        newCard.setColumnKey(UUID.randomUUID());
         newCard.setBoard(savedBoard);
         informationCardRepository.save(newCard);
         Assertions.assertThat(informationCardRepository.findAllByBoardId(savedBoard.getId()).get())
