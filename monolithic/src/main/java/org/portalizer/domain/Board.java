@@ -45,8 +45,8 @@ public class Board implements Serializable {
     private LocalDateTime createdAt;
 
     @NotNull
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @OrderColumn
+    @OneToMany(targetEntity = ColumnDefinition.class, mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy("priority")
     private List<ColumnDefinition> columnDefinitions;
 
     @OneToMany(targetEntity = InformationCard.class, mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

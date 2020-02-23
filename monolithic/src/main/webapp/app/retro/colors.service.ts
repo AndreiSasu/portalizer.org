@@ -40,6 +40,7 @@ export class ColorsService {
   }
 
   getColor(key: string): string {
-    return this.colorMap.get(key);
+    const color = this.colorMap.get(key);
+    return undefined !== color ? color : 'secondary';
   }
 }

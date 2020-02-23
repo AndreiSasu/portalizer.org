@@ -18,8 +18,8 @@ import java.util.UUID;
 public class EntityUtils {
 
     public static Board validBoard(final String name, final String description) {
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
         List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setColumnDefinitions(columnDefinitions);
         board.setInformationCards(informationCards);
@@ -29,8 +29,8 @@ public class EntityUtils {
     }
 
     public static Board validBoard() {
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
         List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setColumnDefinitions(columnDefinitions);
         board.setInformationCards(informationCards);
@@ -60,18 +60,21 @@ public class EntityUtils {
         return columnDefinitions;
     }
 
-    public static List<ColumnDefinition> buildColumnDefinitions() {
+    public static List<ColumnDefinition> buildColumnDefinitions(final Board board) {
         ColumnDefinition mad = new ColumnDefinition();
         mad.setKey(UUID.randomUUID());
         mad.setTitle("Mad");
+        mad.setBoard(board);
 
         ColumnDefinition sad = new ColumnDefinition();
         sad.setKey(UUID.randomUUID());
         sad.setTitle("Sad");
+        sad.setBoard(board);
 
         ColumnDefinition glad = new ColumnDefinition();
         glad.setKey(UUID.randomUUID());
         glad.setTitle("Glad");
+        glad.setBoard(board);
 
         List<ColumnDefinition> columnDefinitions = new ArrayList<>();
         columnDefinitions.add(mad);

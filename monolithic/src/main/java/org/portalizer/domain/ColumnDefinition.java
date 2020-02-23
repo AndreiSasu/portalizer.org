@@ -24,6 +24,19 @@ public class ColumnDefinition {
     @NotNull
     private String title;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "board_id", referencedColumnName = "id")
+    private Board board;
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
+    }
+
     public UUID getKey() {
         return key;
     }

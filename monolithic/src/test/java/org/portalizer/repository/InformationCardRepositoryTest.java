@@ -31,8 +31,8 @@ public class InformationCardRepositoryTest {
 
     @BeforeAll
     public void setup() {
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
         List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setColumnDefinitions(columnDefinitions);
         board.setInformationCards(informationCards);

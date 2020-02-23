@@ -1,6 +1,7 @@
 package org.portalizer.service.impl;
 
 import org.portalizer.domain.Board;
+import org.portalizer.domain.ColumnDefinition;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.repository.InformationCardRepository;
 import org.portalizer.service.BoardService;
@@ -67,7 +68,11 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardDTO save(BoardDTO boardDTO) {
-        Board saved = boardRepository.save(boardMapper.toEntity(boardDTO));
+        final Board toSave = boardMapper.toEntity(boardDTO);
+        toSave.getColumnDefinitions().forEach(columnDefinition -> {
+            columnDefinition.setBoard(toSave);
+        });
+        Board saved = boardRepository.save(toSave);
         return boardMapper.toDto(saved);
     }
 
@@ -83,6 +88,17 @@ public class BoardServiceImpl implements BoardService {
         boardRepository.save(board);
         final Board savedBoard = boardRepository.findById(id).get();
         return boardMapper.toDto(savedBoard);
+    }
+
+    @Override
+    public BoardDTO reorderColumns(UUID id, ReorderColumnsDTO reorderColumnsDTO) {
+        final Board board = boardRepository.findById(id).get();
+        final List<ColumnDefinition> columnDefinitions = board.getColumnDefinitions();
+        final int oldIndex = reorderColumnsDTO.getOldIndex();
+        final int newIndex = reorderColumnsDTO.getNewIndex();
+        final ColumnDefinition columnDefinition = columnDefinitions.remove(oldIndex);
+//        columnDefinitions.add(newIndex, columnDefinition);
+        return boardMapper.toDto(boardRepository.save(board));
     }
 
     private BoardSummaryDTO lazyBoardToDto(final Board board) {
