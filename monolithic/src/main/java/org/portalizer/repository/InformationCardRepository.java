@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface InformationCardRepository extends JpaRepository<InformationCard, UUID> {
-    
+
     Optional<List<InformationCard>> findAllByBoardId(final UUID boardId);
 
     boolean existsByIdAndBoardId(final UUID id, final UUID boardId);
@@ -20,4 +20,6 @@ public interface InformationCardRepository extends JpaRepository<InformationCard
     long countByBoardId(final UUID boardId);
 
     Optional<List<InformationCard>> findAllByBoardIdAndColumnKey(final UUID boardId, final UUID columnKey);
+
+    void deleteAllByBoardIdAndColumnKey(final UUID boardId, final UUID columnKey);
 }

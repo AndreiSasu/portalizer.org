@@ -75,4 +75,13 @@ public class BoardResource {
         final ColumnDefinitionDTO columnDefinitionDTO = boardService.addColumn(id, addColumnDTO);
         return new ResponseEntity<>(columnDefinitionDTO, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/boards/{boardId}/delete-column/{columnKey}")
+    public ResponseEntity<Void> deleteColumn(@PathVariable UUID boardId, @PathVariable UUID columnKey) {
+        boardService.removeColumn(boardId, columnKey);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert("",
+            false,
+            "column", columnKey.toString())).build();
+    }
+
 }
