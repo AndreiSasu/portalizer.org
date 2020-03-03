@@ -14,6 +14,9 @@ import {
   faTrash,
   faEllipsisH,
   faPencilAlt,
+  faExchangeAlt,
+  faSort,
+  faPalette,
   faSearch,
   faChevronLeft,
   faChevronRight
@@ -41,6 +44,9 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
   faArrowsAlt = faArrowsAlt;
   faEllipsisH = faEllipsisH;
   faTrash = faTrash;
+  faExchangeAlt = faExchangeAlt;
+  faSort = faSort;
+  faPalette = faPalette;
 
   editMode: boolean;
   search: string;
