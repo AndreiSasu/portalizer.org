@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board, RefreshBoardRequest } from '../model/boards';
-import { BoardColumn, BoardColumnVM, ColumnsUpdateRequest, ColumnAddRequest } from '../model/columns';
+import { BoardColumn, BoardColumnVM, ColumnsUpdateRequest, ColumnAddRequest, ColumnDeleteRequest } from '../model/columns';
 import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
@@ -25,6 +25,9 @@ import * as uuid from 'uuid';
 import { CardStorageService } from '../card-storage.service';
 import { Subscription } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/retro/communication.service';
+import { DeleteColumnModalComponent } from './delete-column-modal/delete-column-modal.component';
 
 @Component({
   selector: 'jhi-board-details',
@@ -62,7 +65,8 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     private informationCardService: InformationCardService,
     private cardStorageService: CardStorageService,
     colorService: ColorsService,
-    private dragulaService: DragulaService
+    private dragulaService: DragulaService,
+    private modalService: NgbModal
   ) {
     this.colorService = colorService;
   }
@@ -176,7 +180,8 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
 
   /* eslint-disable */
   buildBoardColumnVMs(boardColumns: Array<BoardColumn>, informationCards: Array<InformationCard>) {
-    this.boardColumnVMs = [...[]];
+    this.boardColumnVMs = [];
+    this.columnAndCards.clear();
     boardColumns.forEach(element => {
       this.columnAndCards.set(element.key, BoardColumnVM.of(element));
     });
@@ -189,6 +194,8 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     this.columnAndCards.forEach((value: BoardColumnVM, key: string) => {
       this.boardColumnVMs.push(value);
     });
+
+    this.boardColumnVMs = [...this.boardColumnVMs];
   }
 
   addBlankCard(boardColumnVM: BoardColumnVM) {
@@ -317,6 +324,38 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
       },
       error => {}
     );
+  }
+
+  onDeleteColumn(event: any, boardColumnVM: BoardColumnVM) {
+    const submit = new CommunicationService<ColumnDeleteRequest>();
+    this.modalService.open(DeleteColumnModalComponent, {
+      centered: true,
+
+      injector: Injector.create([
+        {
+          provide: CommunicationService,
+          useValue: submit
+        },
+        {
+          provide: BoardColumnVM,
+          useValue: boardColumnVM
+        },
+        {
+          provide: String,
+          useValue: this.board.id
+        }
+      ])
+    });
+    submit.subject.subscribe(deleteColumnRequest => {
+      console.log(deleteColumnRequest);
+
+      this.boardService.deleteColumn(deleteColumnRequest).subscribe(success => {
+        this.boardColumnVMs = this.boardColumnVMs.filter(column => {
+          return column.key !== boardColumnVM.key;
+        });
+        this.boardColumnVMs = [...this.boardColumnVMs];
+      });
+    });
   }
 
   ngOnDestroy() {

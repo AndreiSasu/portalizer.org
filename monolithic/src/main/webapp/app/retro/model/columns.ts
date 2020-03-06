@@ -41,3 +41,7 @@ export class ColumnAddRequest {
 export class ColumnsUpdateRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number) {}
 }
+
+export class ColumnDeleteRequest {
+  constructor(public boardId: string, public columnId: string) {}
+}

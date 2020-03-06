@@ -51,7 +51,17 @@ public class EntityUtils {
         return informationCards;
     }
 
-    public static List<ColumnDefinition> buildRandomColumnDefinitions(final Board board) {
+    public static List<ColumnDefinition> buildRandomColumnDefinitionsFromTemplate(final Board board) {
+        final BoardTemplateService boardTemplateService = new BoardTemplateServiceImpl();
+        final ColumnDefinitionMapper columnDefinitionMapper = new ColumnDefinitionMapperImpl();
+        final int size = boardTemplateService.getBoardTemplates().size();
+        final BoardTemplateDTO boardTemplateDTO = boardTemplateService.getBoardTemplates().get(new Random().nextInt(size - 1));
+        final List<ColumnDefinition> columnDefinitions = columnDefinitionMapper.toEntity(boardTemplateDTO.getBoardColumns());
+        columnDefinitions.forEach(columnDefinition -> columnDefinition.setBoard(board));
+        return columnDefinitions;
+    }
+
+    public static List<ColumnDefinition> buildRandomColumnDefinitions(final Board board, final int maxColumns) {
         final BoardTemplateService boardTemplateService = new BoardTemplateServiceImpl();
         final ColumnDefinitionMapper columnDefinitionMapper = new ColumnDefinitionMapperImpl();
         final int size = boardTemplateService.getBoardTemplates().size();
@@ -82,5 +92,13 @@ public class EntityUtils {
         columnDefinitions.add(sad);
         columnDefinitions.add(glad);
         return columnDefinitions;
+    }
+
+    public static ColumnDefinition columnDefinition(final Board board, final String title) {
+        ColumnDefinition columnDefinition = new ColumnDefinition();
+        columnDefinition.setBoard(board);
+        columnDefinition.setTitle(title);
+        columnDefinition.setKey(UUID.randomUUID());
+        return columnDefinition;
     }
 }
