@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board, RefreshBoardRequest } from '../model/boards';
 import { BoardColumn, BoardColumnVM, ColumnsUpdateRequest, ColumnAddRequest, ColumnDeleteRequest } from '../model/columns';
-import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
+import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest, ReorderCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
@@ -101,23 +101,6 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
         })
     );
 
-    // These will get events limited to the VAMPIRES group.
-
-    // this.subs.add(
-    //   this.dragulaService.drag('CARDS').subscribe(({ name, el, source }) => {
-    //     // ...
-    //     console.log('DRAG: ');
-    //     console.log('NAME:' + JSON.stringify(name), 'EL: ' + JSON.stringify(el), 'SOURCE: ' + JSON.stringify(source));
-    //   })
-    // );
-    // this.subs.add(
-    //   this.dragulaService.drop('CARDS').subscribe(({ name, el, target, source, sibling }) => {
-    //     // ...
-    //     console.log('DROP: ');
-    //     console.log(name,el,target,source,sibling);
-    //   })
-    // );
-    // some events have lots of properties, just pick the ones you need
     this.subs.add(
       this.dragulaService
         .dropModel('CARDS')
@@ -125,13 +108,6 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
         // .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item }) => {
         .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item, sourceIndex, targetIndex }) => {
           console.log('------- DROPMODEL: ');
-          // console.log(
-          //   'SOURCEMODEL: \n' + JSON.stringify(sourceModel),
-          //   'TARGETMODEL: \n' + JSON.stringify(targetModel),
-          //   'ITEM: \n' + JSON.stringify(item),
-          //   ' SOURCEINDEX: ' + sourceIndex,
-          //   ' TARGETINDEX: ' + targetIndex
-          // );
           console.log(name, el, target, source, sibling, sourceIndex, targetIndex);
           console.log(target.getAttribute('columnKey'));
           const cardId = el.getAttribute('id');
@@ -139,20 +115,25 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
           const sourceBoardColumnVM = this.columnAndCards.get(source.getAttribute('columnKey'));
           const card = sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id === cardId)[0];
           console.log(card);
-          sourceBoardColumnVM.informationCards = [
-            ...sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id != cardId)
-          ];
-          if (targetBoardColumnVM.key === sourceBoardColumnVM.key) {
-            sourceBoardColumnVM.informationCards.splice(targetIndex, 0, card);
-            return;
-          }
 
-          card.columnKey = targetBoardColumnVM.key;
-          targetBoardColumnVM.informationCards.splice(targetIndex, 0, card);
-          targetBoardColumnVM.informationCards = [...targetBoardColumnVM.informationCards];
+          const reorderCardRequest = new ReorderCardRequest(
+            card.id,
+            sourceIndex,
+            targetIndex,
+            sourceBoardColumnVM.key,
+            targetBoardColumnVM.key
+          );
 
+          this.informationCardService.moveCard(reorderCardRequest).subscribe(success => {
+            sourceBoardColumnVM.informationCards = [
+              ...sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id != cardId)
+            ];
+
+            card.columnKey = targetBoardColumnVM.key;
+            targetBoardColumnVM.informationCards.splice(targetIndex, 0, card);
+            targetBoardColumnVM.informationCards = [...targetBoardColumnVM.informationCards];
+          });
           console.log(targetBoardColumnVM);
-          // this.updateCardColors();
         })
     );
   }

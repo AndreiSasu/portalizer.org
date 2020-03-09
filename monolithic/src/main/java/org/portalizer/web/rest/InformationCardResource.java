@@ -2,6 +2,7 @@ package org.portalizer.web.rest;
 
 import org.portalizer.service.InformationCardService;
 import org.portalizer.service.dto.InformationCardDTO;
+import org.portalizer.service.dto.ReorderCardDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,12 @@ public class InformationCardResource {
 
     public InformationCardResource(InformationCardService informationCardService) {
         this.informationCardService = informationCardService;
+    }
+
+    @PutMapping("/information-card/reorder")
+    public ResponseEntity<InformationCardDTO> addCard(@RequestBody ReorderCardDTO reorderCardDTO) {
+        final InformationCardDTO savedCard = informationCardService.reorder(reorderCardDTO);
+        return new ResponseEntity<>(savedCard, HttpStatus.OK);
     }
 
     @PostMapping("/information-card")
