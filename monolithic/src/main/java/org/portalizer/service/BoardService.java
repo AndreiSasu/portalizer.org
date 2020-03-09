@@ -18,4 +18,6 @@ public interface BoardService {
     void delete(UUID id);
     BoardDTO update(UUID id, UpdateBoardDTO updateBoardDTO);
     BoardDTO reorderColumns(UUID id, ReorderColumnsDTO reorderColumnsDTO);
+    ColumnDefinitionDTO addColumn(UUID id, AddColumnDTO addColumnDTO);
+    void removeColumn(final UUID boardId, final UUID columnKey);
 }

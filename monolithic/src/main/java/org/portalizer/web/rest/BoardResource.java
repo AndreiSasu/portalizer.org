@@ -2,10 +2,7 @@ package org.portalizer.web.rest;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import org.portalizer.service.BoardService;
-import org.portalizer.service.dto.BoardDTO;
-import org.portalizer.service.dto.BoardSummaryDTO;
-import org.portalizer.service.dto.ReorderColumnsDTO;
-import org.portalizer.service.dto.UpdateBoardDTO;
+import org.portalizer.service.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -72,4 +69,19 @@ public class BoardResource {
             false,
             "board", boardDTO.getId().toString())).build();
     }
+
+    @PostMapping("/boards/{id}/add-column")
+    public ResponseEntity<ColumnDefinitionDTO> addColumn(@PathVariable UUID id, @RequestBody AddColumnDTO addColumnDTO) {
+        final ColumnDefinitionDTO columnDefinitionDTO = boardService.addColumn(id, addColumnDTO);
+        return new ResponseEntity<>(columnDefinitionDTO, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/boards/{boardId}/delete-column/{columnKey}")
+    public ResponseEntity<Void> deleteColumn(@PathVariable UUID boardId, @PathVariable UUID columnKey) {
+        boardService.removeColumn(boardId, columnKey);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert("",
+            false,
+            "column", columnKey.toString())).build();
+    }
+
 }

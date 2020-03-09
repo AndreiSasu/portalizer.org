@@ -7,7 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { BoardSummary, Board, CreateBoardRequest, BoardTemplate, SaveBoardRequest } from './model/boards';
 import { PaginationPage } from './model/pagination';
 import { SERVER_API_URL } from '../app.constants';
-import { ColumnsUpdateRequest } from './model/columns';
+import { ColumnsUpdateRequest, ColumnAddRequest, BoardColumn, ColumnDeleteRequest } from './model/columns';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +37,20 @@ export class BoardService {
     }
     console.log(url);
     return this.http.get<PaginationPage<BoardSummary>>(url);
+  }
+
+  deleteColumn(columnDeleteRequest: ColumnDeleteRequest): Observable<any> {
+    return this.http.delete<any>(`${this.BOARDS_URL}${columnDeleteRequest.boardId}/delete-column/${columnDeleteRequest.columnId}`).pipe(
+      tap(_ => console.log(`deleted column  ${columnDeleteRequest.boardId}/delete-column/${columnDeleteRequest.columnId}`)),
+      catchError(this.handleError<any>(`deleteColumn ${columnDeleteRequest.columnId}`))
+    );
+  }
+
+  addColumn(boardId: string, columnAddRequest: ColumnAddRequest): Observable<BoardColumn> {
+    return this.http.post<BoardColumn>(this.BOARDS_URL + boardId + '/add-column', columnAddRequest, this.httpOptions).pipe(
+      tap((newColumn: BoardColumn) => console.log(`added column w/ key=${newColumn.key}`)),
+      catchError(this.handleError<BoardColumn>('addColumn'))
+    );
   }
 
   reorderColumns(boardId: string, updateColumnOrdering: ColumnsUpdateRequest): Observable<any> {

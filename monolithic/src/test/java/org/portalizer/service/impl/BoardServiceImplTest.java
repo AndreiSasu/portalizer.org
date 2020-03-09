@@ -7,6 +7,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.portalizer.PortalizerApp;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
+import org.portalizer.domain.InformationCard;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.*;
@@ -16,6 +17,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @SpringBootTest(classes = PortalizerApp.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -71,5 +74,24 @@ public class BoardServiceImplTest {
         Assertions.assertThat(columnDefinitionDTOS.get(0).getKey()).isEqualTo(two.getKey());
         Assertions.assertThat(columnDefinitionDTOS.get(0).getTitle()).isEqualTo(two.getTitle());
         Assertions.assertThat(columnDefinitionDTOS.get(0).getPriority()).isEqualTo(two.getPriority());
+    }
+
+
+    @Test
+    public void testRemoveColumn() {
+        final Board beforeDelete = boardRepository.findFullBoardById(savedBoard.getId()).get();
+        final List<ColumnDefinition> columnDefinitions = beforeDelete.getColumnDefinitions();
+        final List<InformationCard> cardsBeforeDelete = beforeDelete.getInformationCards();
+        final int columnsBeforeDelete = columnDefinitions.size();
+        final int totalCardsBeforeDelete = cardsBeforeDelete.size();
+        final UUID key = columnDefinitions.get(0).getKey();
+
+        final List<InformationCard> cardsToBeRemoved = cardsBeforeDelete.stream().filter(informationCard -> informationCard.getColumnKey().equals(key)).collect(Collectors.toList());;
+        boardService.removeColumn(beforeDelete.getId(), key);
+
+        final Board afterDelete = boardRepository.findFullBoardById(savedBoard.getId()).get();
+        Assertions.assertThat(afterDelete.getColumnDefinitions()).hasSize(columnsBeforeDelete - 1);
+        Assertions.assertThat(afterDelete.getInformationCards()).hasSize(totalCardsBeforeDelete - cardsToBeRemoved.size());
+        Assertions.assertThat(afterDelete.getInformationCards()).doesNotContainAnyElementsOf(cardsToBeRemoved);
     }
 }

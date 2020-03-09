@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
 
 @Component
 @Profile("testdata")
@@ -30,7 +29,7 @@ public class SetupTestData implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         for (int i = 0; i < 500; i++) {
             Board board = new Board();
-            List<ColumnDefinition> columnDefinitions = EntityUtils.buildRandomColumnDefinitions(board);
+            List<ColumnDefinition> columnDefinitions = EntityUtils.buildRandomColumnDefinitionsFromTemplate(board);
 
             board.setName(faker.company().bs());
             board.setDescription(faker.shakespeare().asYouLikeItQuote());

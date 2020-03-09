@@ -6,7 +6,7 @@ import { tap } from 'rxjs/operators';
 
 import { SERVER_API_URL } from '../app.constants';
 
-import { CreateCardRequest, InformationCard, UpdateCardRequest } from './model/information-card';
+import { CreateCardRequest, InformationCard, UpdateCardRequest, ReorderCardRequest } from './model/information-card';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,7 @@ export class InformationCardService {
   };
 
   CARDS_URL = SERVER_API_URL + '/api/retro/information-card/';
+  REORDER_CARDS_URL = SERVER_API_URL + '/api/retro/information-card/reorder';
 
   constructor(private http: HttpClient) {}
 
@@ -32,6 +33,12 @@ export class InformationCardService {
   updateCard(updateCardRequest: UpdateCardRequest): Observable<InformationCard> {
     return this.http
       .put<InformationCard>(this.CARDS_URL, updateCardRequest, this.httpOptions)
+      .pipe(tap((updateCard: InformationCard) => console.log(`updated card w/ id=${updateCard.id}`)));
+  }
+
+  moveCard(reorderCardRequest: ReorderCardRequest): Observable<InformationCard> {
+    return this.http
+      .put<InformationCard>(this.REORDER_CARDS_URL, reorderCardRequest, this.httpOptions)
       .pipe(tap((updateCard: InformationCard) => console.log(`updated card w/ id=${updateCard.id}`)));
   }
 }

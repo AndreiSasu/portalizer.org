@@ -3,6 +3,7 @@ package org.portalizer.service.impl;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
 import org.portalizer.repository.BoardRepository;
+import org.portalizer.repository.ColumnDefinitionRepository;
 import org.portalizer.repository.InformationCardRepository;
 import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.*;
@@ -25,12 +26,16 @@ public class BoardServiceImpl implements BoardService {
     private InformationCardRepository informationCardRepository;
     private BoardMapper boardMapper;
     private ColumnDefinitionMapper columnDefinitionMapper;
+    private ColumnDefinitionRepository columnDefinitionRepository;
 
-    public BoardServiceImpl(BoardRepository boardRepository, BoardMapper boardMapper, InformationCardRepository informationCardRepository, ColumnDefinitionMapper columnDefinitionMapper) {
+    public BoardServiceImpl(BoardRepository boardRepository, BoardMapper boardMapper,
+                            ColumnDefinitionRepository columnDefinitionRepository,
+                            InformationCardRepository informationCardRepository, ColumnDefinitionMapper columnDefinitionMapper) {
         this.boardRepository = boardRepository;
         this.boardMapper = boardMapper;
         this.columnDefinitionMapper = columnDefinitionMapper;
         this.informationCardRepository = informationCardRepository;
+        this.columnDefinitionRepository = columnDefinitionRepository;
     }
 
     @Override
@@ -98,10 +103,40 @@ public class BoardServiceImpl implements BoardService {
         final int newIndex = reorderColumnsDTO.getNewIndex();
         final ColumnDefinition columnDefinition = columnDefinitions.remove(oldIndex);
         columnDefinitions.add(newIndex, columnDefinition);
-        for(int i = 0; i < columnDefinitions.size(); i++) {
+        for (int i = 0; i < columnDefinitions.size(); i++) {
             columnDefinitions.get(i).setPriority(i);
         }
         return boardMapper.toDto(boardRepository.save(board));
+    }
+
+    @Override
+    public ColumnDefinitionDTO addColumn(UUID id, AddColumnDTO addColumnDTO) {
+        final Board board = boardRepository.findById(id).get();
+        final List<ColumnDefinition> columnDefinitions = board.getColumnDefinitions();
+        final ColumnDefinition newColumn = new ColumnDefinition();
+        newColumn.setBoard(board);
+        newColumn.setTitle(addColumnDTO.getTitle());
+        newColumn.setKey(UUID.randomUUID());
+        newColumn.setPriority(columnDefinitions.size());
+        columnDefinitions.add(newColumn);
+        final Board savedBoard = boardRepository.save(board);
+        final ColumnDefinition savedColumnDefinition = savedBoard.getColumnDefinitions().stream().filter(columnDefinition -> columnDefinition.getKey().equals(newColumn.getKey())).findFirst().get();
+        return columnDefinitionMapper.toDto(savedColumnDefinition);
+    }
+
+    @Override
+    public void removeColumn(UUID boardId, UUID columnKey) {
+        final Optional<Board> board = boardRepository.findById(boardId);
+        if(board.isPresent()) {
+            final List<ColumnDefinition> columnDefinitions = board.get().getColumnDefinitions();
+            final List<ColumnDefinition> filtered = columnDefinitions.stream().filter(columnDefinition -> columnKey.equals(columnDefinition.getKey())).collect(Collectors.toList());
+            filtered.forEach(columnDefinition -> {
+                columnDefinitionRepository.deleteById(columnDefinition.getId());
+                columnDefinitions.remove(columnDefinition);
+            });
+            boardRepository.save(board.get());
+            informationCardRepository.deleteAllByBoardIdAndColumnKey(board.get().getId(), columnKey);
+        }
     }
 
     private BoardSummaryDTO lazyBoardToDto(final Board board) {

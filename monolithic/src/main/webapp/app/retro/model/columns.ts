@@ -33,11 +33,15 @@ export class ColumnAddRequest {
   /**
    *
    * @param id board id
-   * @param name  column name
+   * @param title  column title
    */
-  constructor(public id: string, public name: string) {}
+  constructor(public id: string, public title: string) {}
 }
 
 export class ColumnsUpdateRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number) {}
+}
+
+export class ColumnDeleteRequest {
+  constructor(public boardId: string, public columnId: string) {}
 }

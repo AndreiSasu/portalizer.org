@@ -1,17 +1,33 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Board, RefreshBoardRequest } from '../model/boards';
-import { BoardColumn, BoardColumnVM, ColumnsUpdateRequest } from '../model/columns';
-import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest } from '../model/information-card';
+import { BoardColumn, BoardColumnVM, ColumnsUpdateRequest, ColumnAddRequest, ColumnDeleteRequest } from '../model/columns';
+import { InformationCard, CreateCardRequest, InformationCardVM, UpdateCardRequest, ReorderCardRequest } from '../model/information-card';
 
 import { BoardService } from '../board.service';
 import { ColorsService } from '../colors.service';
 import { InformationCardService } from '../information-card.service';
-import { faPlusCircle, faArrowsAlt, faSync, faPencilAlt, faSearch, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faPlusCircle,
+  faArrowsAlt,
+  faSync,
+  faTrash,
+  faEllipsisH,
+  faPencilAlt,
+  faExchangeAlt,
+  faSort,
+  faPalette,
+  faSearch,
+  faChevronLeft,
+  faChevronRight
+} from '@fortawesome/free-solid-svg-icons';
 import * as uuid from 'uuid';
 import { CardStorageService } from '../card-storage.service';
 import { Subscription } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommunicationService } from 'app/retro/communication.service';
+import { DeleteColumnModalComponent } from './delete-column-modal/delete-column-modal.component';
 
 @Component({
   selector: 'jhi-board-details',
@@ -29,6 +45,11 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
   faSearch = faSearch;
   faPencilAlt = faPencilAlt;
   faArrowsAlt = faArrowsAlt;
+  faEllipsisH = faEllipsisH;
+  faTrash = faTrash;
+  faExchangeAlt = faExchangeAlt;
+  faSort = faSort;
+  faPalette = faPalette;
 
   editMode: boolean;
   search: string;
@@ -44,7 +65,8 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     private informationCardService: InformationCardService,
     private cardStorageService: CardStorageService,
     colorService: ColorsService,
-    private dragulaService: DragulaService
+    private dragulaService: DragulaService,
+    private modalService: NgbModal
   ) {
     this.colorService = colorService;
   }
@@ -79,23 +101,6 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
         })
     );
 
-    // These will get events limited to the VAMPIRES group.
-
-    // this.subs.add(
-    //   this.dragulaService.drag('CARDS').subscribe(({ name, el, source }) => {
-    //     // ...
-    //     console.log('DRAG: ');
-    //     console.log('NAME:' + JSON.stringify(name), 'EL: ' + JSON.stringify(el), 'SOURCE: ' + JSON.stringify(source));
-    //   })
-    // );
-    // this.subs.add(
-    //   this.dragulaService.drop('CARDS').subscribe(({ name, el, target, source, sibling }) => {
-    //     // ...
-    //     console.log('DROP: ');
-    //     console.log(name,el,target,source,sibling);
-    //   })
-    // );
-    // some events have lots of properties, just pick the ones you need
     this.subs.add(
       this.dragulaService
         .dropModel('CARDS')
@@ -103,13 +108,6 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
         // .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item }) => {
         .subscribe(({ name, el, target, source, sibling, sourceModel, targetModel, item, sourceIndex, targetIndex }) => {
           console.log('------- DROPMODEL: ');
-          // console.log(
-          //   'SOURCEMODEL: \n' + JSON.stringify(sourceModel),
-          //   'TARGETMODEL: \n' + JSON.stringify(targetModel),
-          //   'ITEM: \n' + JSON.stringify(item),
-          //   ' SOURCEINDEX: ' + sourceIndex,
-          //   ' TARGETINDEX: ' + targetIndex
-          // );
           console.log(name, el, target, source, sibling, sourceIndex, targetIndex);
           console.log(target.getAttribute('columnKey'));
           const cardId = el.getAttribute('id');
@@ -117,19 +115,25 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
           const sourceBoardColumnVM = this.columnAndCards.get(source.getAttribute('columnKey'));
           const card = sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id === cardId)[0];
           console.log(card);
-          sourceBoardColumnVM.informationCards = [
-            ...sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id != cardId)
-          ];
-          if (targetBoardColumnVM.key === sourceBoardColumnVM.key) {
-            sourceBoardColumnVM.informationCards.splice(targetIndex, 0, card);
-            return;
-          }
 
-          targetBoardColumnVM.informationCards.splice(targetIndex, 0, card);
-          targetBoardColumnVM.informationCards = [...targetBoardColumnVM.informationCards];
+          const reorderCardRequest = new ReorderCardRequest(
+            card.id,
+            sourceIndex,
+            targetIndex,
+            sourceBoardColumnVM.key,
+            targetBoardColumnVM.key
+          );
 
+          this.informationCardService.moveCard(reorderCardRequest).subscribe(success => {
+            sourceBoardColumnVM.informationCards = [
+              ...sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id != cardId)
+            ];
+
+            card.columnKey = targetBoardColumnVM.key;
+            targetBoardColumnVM.informationCards.splice(targetIndex, 0, card);
+            targetBoardColumnVM.informationCards = [...targetBoardColumnVM.informationCards];
+          });
           console.log(targetBoardColumnVM);
-          // this.updateCardColors();
         })
     );
   }
@@ -157,7 +161,8 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
 
   /* eslint-disable */
   buildBoardColumnVMs(boardColumns: Array<BoardColumn>, informationCards: Array<InformationCard>) {
-    this.boardColumnVMs = [...[]];
+    this.boardColumnVMs = [];
+    this.columnAndCards.clear();
     boardColumns.forEach(element => {
       this.columnAndCards.set(element.key, BoardColumnVM.of(element));
     });
@@ -170,6 +175,8 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     this.columnAndCards.forEach((value: BoardColumnVM, key: string) => {
       this.boardColumnVMs.push(value);
     });
+
+    this.boardColumnVMs = [...this.boardColumnVMs];
   }
 
   addBlankCard(boardColumnVM: BoardColumnVM) {
@@ -200,7 +207,6 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
 
     this.informationCardService.removeCard(idToRemove).subscribe(
       response => {
-        // remove previous unsaved card
         boardColumnVM.informationCards = boardColumnVM.informationCards.filter(function(informationCardVM) {
           return informationCardVM.key !== keyToRemove;
         });
@@ -285,6 +291,48 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
 
   onRefresh(event: RefreshBoardRequest) {
     this.refreshBoard();
+  }
+
+  onAddColumn(event: ColumnAddRequest) {
+    console.log(event);
+    event.id = this.board.id;
+    this.boardService.addColumn(this.board.id, event).subscribe(
+      newColumn => {
+        const newBoardColumnVM = BoardColumnVM.of(newColumn);
+        this.columnAndCards.set(newColumn.key, newBoardColumnVM);
+        this.boardColumnVMs.push(newBoardColumnVM);
+        this.boardColumnVMs = [...this.boardColumnVMs];
+      },
+      error => {}
+    );
+  }
+
+  onDeleteColumn(event: any, boardColumnVM: BoardColumnVM) {
+    const submit = new CommunicationService<ColumnDeleteRequest>();
+    this.modalService.open(DeleteColumnModalComponent, {
+      centered: true,
+
+      injector: Injector.create([
+        {
+          provide: CommunicationService,
+          useValue: submit
+        },
+        {
+          provide: BoardColumnVM,
+          useValue: boardColumnVM
+        }
+      ])
+    });
+    submit.subject.subscribe(deleteColumnRequest => {
+      console.log(deleteColumnRequest);
+      deleteColumnRequest.boardId = this.board.id;
+      this.boardService.deleteColumn(deleteColumnRequest).subscribe(success => {
+        this.boardColumnVMs = this.boardColumnVMs.filter(column => {
+          return column.key !== boardColumnVM.key;
+        });
+        this.boardColumnVMs = [...this.boardColumnVMs];
+      });
+    });
   }
 
   ngOnDestroy() {
