@@ -320,16 +320,12 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
         {
           provide: BoardColumnVM,
           useValue: boardColumnVM
-        },
-        {
-          provide: String,
-          useValue: this.board.id
         }
       ])
     });
     submit.subject.subscribe(deleteColumnRequest => {
       console.log(deleteColumnRequest);
-
+      deleteColumnRequest.boardId = this.board.id;
       this.boardService.deleteColumn(deleteColumnRequest).subscribe(success => {
         this.boardColumnVMs = this.boardColumnVMs.filter(column => {
           return column.key !== boardColumnVM.key;

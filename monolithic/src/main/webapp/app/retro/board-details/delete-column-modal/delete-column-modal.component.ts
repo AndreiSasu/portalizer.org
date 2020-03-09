@@ -11,14 +11,13 @@ import { ColumnDeleteRequest, BoardColumnVM } from 'app/retro/model/columns';
 export class DeleteColumnModalComponent implements OnInit {
   constructor(
     public modal: NgbActiveModal,
-    private communicationService: CommunicationService<ColumnDeleteRequest>,
-    private boardColumnVM: BoardColumnVM,
-    private boardId: string
+    public communicationService: CommunicationService<ColumnDeleteRequest>,
+    public boardColumnVM: BoardColumnVM
   ) {}
 
   ngOnInit() {}
 
   onSubmit() {
-    this.communicationService.subject.next(new ColumnDeleteRequest(this.boardId, this.boardColumnVM.key));
+    this.communicationService.subject.next(new ColumnDeleteRequest('', this.boardColumnVM.key));
   }
 }
