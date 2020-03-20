@@ -18,6 +18,7 @@ import { FilterPipe } from './filter.pipe';
 import { AddColumnModalComponent } from './board-details/add-column-modal/add-column-modal.component';
 import { DragulaModule } from 'ng2-dragula';
 import { DeleteColumnModalComponent } from './board-details/delete-column-modal/delete-column-modal.component';
+import { BoardSummaryCardComponent } from './board-summary/board-summary-card/board-summary-card.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DeleteColumnModalComponent } from './board-details/delete-column-modal/
     ToolbarComponent,
     FilterPipe,
     AddColumnModalComponent,
-    DeleteColumnModalComponent
+    DeleteColumnModalComponent,
+    BoardSummaryCardComponent
   ],
   imports: [
     FontAwesomeModule,
