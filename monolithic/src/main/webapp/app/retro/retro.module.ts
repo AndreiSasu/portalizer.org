@@ -13,6 +13,12 @@ import { PortalizerSharedModule } from '../shared/shared.module';
 import { SearchbarComponent } from './searchbar/searchbar.component';
 import { CreateBoardModalComponent } from './create-board-modal/create-board-modal.component';
 import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
+import { ToolbarComponent } from './board-details/toolbar/toolbar.component';
+import { FilterPipe } from './filter.pipe';
+import { AddColumnModalComponent } from './board-details/add-column-modal/add-column-modal.component';
+import { DragulaModule } from 'ng2-dragula';
+import { DeleteColumnModalComponent } from './board-details/delete-column-modal/delete-column-modal.component';
+import { BoardSummaryCardComponent } from './board-summary/board-summary-card/board-summary-card.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +28,22 @@ import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/de
     InformationCardComponent,
     SearchbarComponent,
     CreateBoardModalComponent,
-    DeleteConfirmationModalComponent
+    DeleteConfirmationModalComponent,
+    ToolbarComponent,
+    FilterPipe,
+    AddColumnModalComponent,
+    DeleteColumnModalComponent,
+    BoardSummaryCardComponent
   ],
-  imports: [FontAwesomeModule, NgbPaginationModule, CommonModule, FormsModule, RetroRoutingModule, PortalizerSharedModule],
-  entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent]
+  imports: [
+    FontAwesomeModule,
+    NgbPaginationModule,
+    CommonModule,
+    FormsModule,
+    RetroRoutingModule,
+    PortalizerSharedModule,
+    DragulaModule.forRoot()
+  ],
+  entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent, AddColumnModalComponent, DeleteColumnModalComponent]
 })
 export class RetroModule {}

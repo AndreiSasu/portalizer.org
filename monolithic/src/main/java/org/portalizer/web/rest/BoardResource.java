@@ -2,8 +2,7 @@ package org.portalizer.web.rest;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import org.portalizer.service.BoardService;
-import org.portalizer.service.dto.BoardDTO;
-import org.portalizer.service.dto.BoardSummaryDTO;
+import org.portalizer.service.dto.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,4 +53,35 @@ public class BoardResource {
             false,
             "board", id.toString())).build();
     }
+
+    @PutMapping("/boards/{id}")
+    public ResponseEntity<Void> updateBoard(@PathVariable UUID id, @RequestBody UpdateBoardDTO updateBoardDTO) {
+        boardService.update(id, updateBoardDTO);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert("",
+            false,
+            "board", id.toString())).build();
+    }
+
+    @PutMapping("/boards/{id}/reorder-columns")
+    public ResponseEntity<Void> reorderColumns(@PathVariable UUID id, @RequestBody ReorderColumnsDTO reorderColumnsDTO) {
+        final BoardDTO boardDTO = boardService.reorderColumns(id, reorderColumnsDTO);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert("",
+            false,
+            "board", boardDTO.getId().toString())).build();
+    }
+
+    @PostMapping("/boards/{id}/add-column")
+    public ResponseEntity<ColumnDefinitionDTO> addColumn(@PathVariable UUID id, @RequestBody AddColumnDTO addColumnDTO) {
+        final ColumnDefinitionDTO columnDefinitionDTO = boardService.addColumn(id, addColumnDTO);
+        return new ResponseEntity<>(columnDefinitionDTO, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/boards/{boardId}/delete-column/{columnKey}")
+    public ResponseEntity<Void> deleteColumn(@PathVariable UUID boardId, @PathVariable UUID columnKey) {
+        boardService.removeColumn(boardId, columnKey);
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert("",
+            false,
+            "column", columnKey.toString())).build();
+    }
+
 }

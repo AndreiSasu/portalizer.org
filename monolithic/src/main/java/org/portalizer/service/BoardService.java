@@ -1,8 +1,6 @@
 package org.portalizer.service;
 
-import org.portalizer.service.dto.BoardDTO;
-import org.portalizer.service.dto.BoardProjectionDTO;
-import org.portalizer.service.dto.BoardSummaryDTO;
+import org.portalizer.service.dto.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -18,4 +16,8 @@ public interface BoardService {
     BoardDTO findOne(UUID id);
     BoardDTO save(BoardDTO boardDTO);
     void delete(UUID id);
+    BoardDTO update(UUID id, UpdateBoardDTO updateBoardDTO);
+    BoardDTO reorderColumns(UUID id, ReorderColumnsDTO reorderColumnsDTO);
+    ColumnDefinitionDTO addColumn(UUID id, AddColumnDTO addColumnDTO);
+    void removeColumn(final UUID boardId, final UUID columnKey);
 }

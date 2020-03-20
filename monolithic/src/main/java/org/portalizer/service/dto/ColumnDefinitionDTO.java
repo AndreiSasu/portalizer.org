@@ -1,27 +1,28 @@
 package org.portalizer.service.dto;
 
-import org.portalizer.domain.ColumnType;
-
 import java.io.Serializable;
+import java.util.UUID;
 
 public class ColumnDefinitionDTO implements Serializable {
-    private ColumnType columnType;
+
+    private UUID key;
     private String title;
+    private int priority;
 
-    public ColumnDefinitionDTO() {
-    }
+    public ColumnDefinitionDTO() {}
 
-    public ColumnDefinitionDTO(ColumnType columnType, String title) {
-        this.columnType = columnType;
+    public ColumnDefinitionDTO(UUID key, String title, int priority) {
+        this.key = key;
         this.title = title;
+        this.priority = priority;
     }
 
-    public ColumnType getColumnType() {
-        return columnType;
+    public UUID getKey() {
+        return key;
     }
 
-    public void setColumnType(ColumnType columnType) {
-        this.columnType = columnType;
+    public void setKey(UUID key) {
+        this.key = key;
     }
 
     public String getTitle() {
@@ -32,12 +33,20 @@ public class ColumnDefinitionDTO implements Serializable {
         this.title = title;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
     @Override
     public String toString() {
         return "ColumnDefinitionDTO{" +
-            "columnType=" + columnType +
+            "key=" + key +
             ", title='" + title + '\'' +
+            ", priority=" + priority +
             '}';
     }
-
 }

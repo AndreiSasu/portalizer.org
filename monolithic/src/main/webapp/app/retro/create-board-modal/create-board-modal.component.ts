@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateBoardRequest, BoardColumn, BoardTemplate } from '../model/boards';
+import { CreateBoardRequest, BoardTemplate } from '../model/boards';
+import { BoardColumn } from '../model/columns';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BoardService } from '../board.service';
 import { CommunicationService } from '../communication.service';

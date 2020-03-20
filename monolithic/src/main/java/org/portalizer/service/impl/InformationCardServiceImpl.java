@@ -8,6 +8,7 @@ import org.portalizer.repository.BoardRepository;
 import org.portalizer.repository.InformationCardRepository;
 import org.portalizer.service.InformationCardService;
 import org.portalizer.service.dto.InformationCardDTO;
+import org.portalizer.service.dto.ReorderCardDTO;
 import org.portalizer.service.mapper.InformationCardMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -57,6 +58,13 @@ public class InformationCardServiceImpl implements InformationCardService {
         informationCard.setCreatedAt(beforeUpdate.getCreatedAt());
         informationCard = informationCardRepository.save(informationCard);
         return informationCardMapper.toDto(informationCard);
+    }
+
+    @Override
+    public InformationCardDTO reorder(@Valid ReorderCardDTO reorderCardDTO) {
+        final InformationCard informationCard = informationCardRepository.findById(reorderCardDTO.getId()).get();
+        informationCard.setColumnKey(reorderCardDTO.getNewColumn());
+        return  informationCardMapper.toDto(informationCardRepository.save(informationCard));
     }
 
     @Override

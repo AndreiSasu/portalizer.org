@@ -1,54 +1,48 @@
 <p *ngIf="error">{{ error }} </p>
 <jhi-alert-error></jhi-alert-error>
-<div class="toolbar">
-    <small class="text-muted" style="float: left;">Created at: {{board?.createdAt | date: 'dd/MM/yyyy' }}</small>
-    <br>
-    <h1>
-        {{board?.name}}
-        <div style="float: right">
-            <fa-icon [icon]="faPlusCircle"></fa-icon>
-            <fa-icon [icon]="faSync"></fa-icon>
-            <fa-icon [icon]="faPlusCircle"></fa-icon>
-        </div>
-    </h1>
+
+<jhi-toolbar class="toolbar" [board]="board" (addColumn)="onAddColumn($event)" (searching)="onSearch($event)"
+    (refreshed)="onRefresh($event)"></jhi-toolbar>
+
+<!-- <div *ngIf="boardColumnVMs.length > 4" class="show-prev">
+    <fa-icon [icon]="faChevronLeft" class="fa-2x"></fa-icon>
 </div>
 
-<div class="row" style="margin-top: 3%;height: 100%; flex-wrap: nowrap;">
-    <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs">
-        <div [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.columnType)]">
-            <h4 class="card-header"><b> {{ boardColumnVM.title }}</b>
-            </h4>
-
-            <button type="button" class="btn btn-primary btn-lg btn-block" (click)="addBlankCard(boardColumnVM)">
-                <fa-icon [icon]="faPlusCircle"></fa-icon> Add item
-            </button>
-
-            <div class="card-body" style="padding-left: 1%; padding-right: 1%;">
-                <div
-                    *ngFor="let informationCard of boardColumnVM.informationCards | sortBy:'desc':'updatedAt'; let i = index;">
-
-                    <jhi-information-card [color]="colorService.getColor(boardColumnVM.columnType)"
-                        [informationCard]="informationCard" (removed)="removeCard($event)" (saved)="onSaveCard($event)">
-                    </jhi-information-card>
-
+<div *ngIf="boardColumnVMs.length > 4" class="show-next">
+    <fa-icon [icon]="faChevronRight" class="fa-2x"></fa-icon>
+</div> -->
+<div class="row column-container" dragula="COLUMNS" [(dragulaModel)]="boardColumnVMs">
+    <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs | sortBy:'asc':'priority'">
+        <div column="true" [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.title)]">
+            <div class="card-header">
+                <div style="display: flex;">
+                    <span class="column-drag card-title"> {{ boardColumnVM.title }}
+                    </span>
+                    <div ngbDropdown class="d-inline-block">
+                        <a id="dropdownBasic1" ngbDropdownToggle>
+                            <fa-icon [icon]="faEllipsisH"></fa-icon>
+                        </a>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <button ngbDropdownItem (click)="onDeleteColumn($event, boardColumnVM)"> <fa-icon [icon]="faTrash"></fa-icon> Delete Column</button>
+                            <!-- <button ngbDropdownItem> <fa-icon [icon]="faExchangeAlt"></fa-icon> Move Cards</button>
+                            <button ngbDropdownItem> <fa-icon [icon]="faSort"></fa-icon> Sort Cards</button>
+                            <button ngbDropdownItem> <fa-icon [icon]="faPalette"></fa-icon> Change Column Color</button> -->
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs">
-        <div [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.columnType)]">
-            <h4 class="card-header"><b> {{ boardColumnVM.title }}</b>
-            </h4>
+
 
             <button type="button" class="btn btn-primary btn-lg btn-block" (click)="addBlankCard(boardColumnVM)">
                 <fa-icon [icon]="faPlusCircle"></fa-icon> Add item
             </button>
 
-            <div class="card-body" style="padding-left: 1%; padding-right: 1%;">
-                <div
-                    *ngFor="let informationCard of boardColumnVM.informationCards | sortBy:'desc':'updatedAt'; let i = index;">
-
-                    <jhi-information-card [color]="colorService.getColor(boardColumnVM.columnType)"
+            <div class="card-body cards-drag" [attr.columnKey]="boardColumnVM.key"
+                style="padding-left: 1%; padding-right: 1%;" dragula="CARDS"
+                [dragulaModel]="boardColumnVM.informationCards">
+                <div [attr.id]="informationCard.id"
+                    *ngFor="let informationCard of boardColumnVM?.informationCards | sortBy:'desc':'updatedAt' | filter: search; let i = index;">
+                    <jhi-information-card [color]="colorService.getColor(boardColumnVM.title)"
                         [informationCard]="informationCard" (removed)="removeCard($event)" (saved)="onSaveCard($event)">
                     </jhi-information-card>
 

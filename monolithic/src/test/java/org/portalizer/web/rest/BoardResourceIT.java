@@ -77,9 +77,9 @@ public class BoardResourceIT {
     @Test
     public void testBoardsAreReturnedPageableDefault() throws Exception {
 
-
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
+
         List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setInformationCards(informationCard);
         board.setColumnDefinitions(columnDefinitions);
@@ -99,8 +99,9 @@ public class BoardResourceIT {
 
     @Test
     public void testFullBoardReturnedById() throws Exception {
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
+
         List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setInformationCards(informationCard);
         board.setColumnDefinitions(columnDefinitions);
@@ -119,8 +120,9 @@ public class BoardResourceIT {
 
     @Test
     public void testCreateBoard() throws Exception {
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
+
         board.setColumnDefinitions(columnDefinitions);
         board.setName("Test");
 
@@ -141,15 +143,15 @@ public class BoardResourceIT {
         Assertions.assertThat(savedBoard.getCreatedAt()).isNotNull();
         final List<ColumnDefinition> savedBoardColumnDefinitions = savedBoard.getColumnDefinitions();
         for(int i = 0; i < savedBoard.getColumnDefinitions().size(); i++) {
-            Assertions.assertThat(savedBoardColumnDefinitions.get(i)).isEqualToIgnoringNullFields(columnDefinitions.get(i));
+            Assertions.assertThat(savedBoardColumnDefinitions.get(i)).isEqualToIgnoringGivenFields(columnDefinitions.get(i), "id", "board");
         }
     }
 
     @Test
     public void testDeleteBoard() throws Exception {
-
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
+
         List<InformationCard> informationCard = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setInformationCards(informationCard);
         board.setColumnDefinitions(columnDefinitions);

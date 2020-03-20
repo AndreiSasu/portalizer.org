@@ -1,6 +1,5 @@
 package org.portalizer.service.impl;
 
-import io.swagger.models.auth.In;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -51,14 +50,14 @@ public class InformationCardServiceTest {
         final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.add(informationCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("boardId")
-            .hasMessageContaining("columnType")
+            .hasMessageContaining("columnKey")
             .hasMessageContaining("text");
     }
 
     @Test
     public void testExceptionThrownIfBoardIdNotFoundForCreate() {
         InformationCardDTO informationCardDTO = new InformationCardDTO();
-        informationCardDTO.setColumnType(ColumnType.GLAD);
+        informationCardDTO.setColumnKey(UUID.randomUUID());
         informationCardDTO.setText("Test");
 
         final UUID doesNotExist = UUID.randomUUID();
@@ -73,7 +72,7 @@ public class InformationCardServiceTest {
     public void testExceptionThrownIfCardIdNotFoundForUpdate() {
         InformationCardDTO informationCardDTO = new InformationCardDTO();
         informationCardDTO.setBoardId(savedBoard.getId());
-        informationCardDTO.setColumnType(ColumnType.GLAD);
+        informationCardDTO.setColumnKey(UUID.randomUUID());
         informationCardDTO.setText("Some text");
 
         final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(informationCardDTO));
@@ -85,7 +84,7 @@ public class InformationCardServiceTest {
     @Test
     public void testExceptionThrownIfBoardIdNotFoundForUpdate() {
         InformationCardDTO informationCardDTO = new InformationCardDTO();
-        informationCardDTO.setColumnType(ColumnType.GLAD);
+        informationCardDTO.setColumnKey(UUID.randomUUID());
         informationCardDTO.setText("Some text");
         final UUID doesNotExist = UUID.randomUUID();
         informationCardDTO.setBoardId(doesNotExist);
@@ -97,23 +96,23 @@ public class InformationCardServiceTest {
     }
 
     @Test
-    public void testExceptionThrownAddIfBoardDoesNotHaveColumnType() {
+    public void testExceptionThrownAddIfBoardDoesNotHaveColumnKey() {
         InformationCardDTO informationCardDTO = new InformationCardDTO();
         informationCardDTO.setText("Some text");
         informationCardDTO.setBoardId(savedBoard.getId());
         final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.add(informationCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
-            .hasMessageContaining("columnType");
+            .hasMessageContaining("columnKey");
     }
 
     @Test
-    public void testExceptionThrownUpdateIfBoardDoesNotHaveColumnType() {
+    public void testExceptionThrownUpdateIfBoardDoesNotHaveColumnKey() {
         final InformationCard informationCard = savedBoard.getInformationCards().get(0);
         final InformationCardDTO informationCardDTO = informationCardMapper.toDto(informationCard);
-        informationCardDTO.setColumnType(null);
+        informationCardDTO.setColumnKey(null);
         final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(informationCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
-            .hasMessageContaining("columnType");
+            .hasMessageContaining("columnKey");
     }
 
     @Test
@@ -127,7 +126,7 @@ public class InformationCardServiceTest {
         Assertions.assertThat(afterUpdate.getText()).isEqualTo("This has changed");
         Assertions.assertThat(afterUpdate.getCreatedAt()).isEqualTo(beforeUpdate.getCreatedAt());
         Assertions.assertThat(afterUpdate.getUpdatedAt()).isAfter(beforeUpdate.getUpdatedAt());
-        Assertions.assertThat(afterUpdate.getColumnType()).isEqualTo(beforeUpdate.getColumnType());
+        Assertions.assertThat(afterUpdate.getColumnKey()).isEqualTo(beforeUpdate.getColumnKey());
         Assertions.assertThat(afterUpdate.getBoard().getId()).isEqualTo(beforeUpdate.getBoard().getId());
     }
 
@@ -144,10 +143,11 @@ public class InformationCardServiceTest {
 
     @Test
     public void testAddInformationCardHappyPath() {
+        final UUID columnKey = UUID.randomUUID();
         final InformationCardDTO toAdd = new InformationCardDTO();
         toAdd.setBoardId(savedBoard.getId());
         toAdd.setText("Added text");
-        toAdd.setColumnType(ColumnType.GLAD);
+        toAdd.setColumnKey(columnKey);
 
         final InformationCardDTO added = informationCardService.add(toAdd);
 
@@ -155,14 +155,14 @@ public class InformationCardServiceTest {
         Assertions.assertThat(afterAdd.getText()).isEqualTo("Added text");
         Assertions.assertThat(afterAdd.getCreatedAt()).isNotNull();
         Assertions.assertThat(afterAdd.getUpdatedAt()).isEqualTo(afterAdd.getCreatedAt());
-        Assertions.assertThat(afterAdd.getColumnType()).isEqualTo(ColumnType.GLAD);
+        Assertions.assertThat(afterAdd.getColumnKey()).isEqualTo(columnKey);
         Assertions.assertThat(afterAdd.getBoard().getId()).isEqualTo(savedBoard.getId());
 
 
         Assertions.assertThat(added.getText()).isEqualTo("Added text");
         Assertions.assertThat(added.getCreatedAt()).isNotNull();
         Assertions.assertThat(added.getUpdatedAt()).isEqualTo(afterAdd.getCreatedAt());
-        Assertions.assertThat(added.getColumnType()).isEqualTo(ColumnType.GLAD);
+        Assertions.assertThat(added.getColumnKey()).isEqualTo(afterAdd.getColumnKey());
         Assertions.assertThat(added.getBoardId()).isEqualTo(savedBoard.getId());
     }
 

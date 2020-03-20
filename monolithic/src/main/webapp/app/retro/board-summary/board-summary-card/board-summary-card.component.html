@@ -1,0 +1,35 @@
+<div class="card border-primary mb-3" style="max-width: 20rem;">
+    <h5 class="card-header">{{ boardsummary.name }}</h5>
+    <div class="card-body">
+
+        <p class="card-text">{{ boardsummary.description }} </p>
+
+        <p>
+            <span *ngFor="let columnDefinition of boardsummary.columnDefinitions"
+                [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.title)]">{{columnDefinition.title}}</span>
+        </p>
+
+        <span class="badge badge-primary badge-pill">{{boardsummary.totalCards}} Cards</span>
+
+        <button type="button" class="btn btn-link disabled">
+            <fa-icon [icon]="faClock"></fa-icon>
+            Created {{ boardsummary.createdAt | date: 'short' }}
+        </button>
+
+
+        <div class="btn-group card-actions">
+            <a href="retro/boards/{{boardsummary.id}}" class="btn btn-primary active">
+                <fa-icon [icon]="faEye"></fa-icon> View
+            </a>
+            <button class="btn btn-secondary card-link" data-dismiss="modal"
+                (click)="openDeleteConfirmationModal(boardsummary)">
+                <fa-icon [icon]="faTrash"></fa-icon> Remove
+            </button>
+
+            <!-- <button class="btn btn-info card-link" data-dismiss="modal">
+                <fa-icon [icon]="faArchive"></fa-icon> Archive
+            </button> -->
+
+        </div>
+    </div>
+</div>

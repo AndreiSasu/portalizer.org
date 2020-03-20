@@ -1,36 +1,41 @@
 package org.portalizer.service.impl;
 
 import org.portalizer.domain.Board;
+import org.portalizer.domain.ColumnDefinition;
 import org.portalizer.repository.BoardRepository;
+import org.portalizer.repository.ColumnDefinitionRepository;
 import org.portalizer.repository.InformationCardRepository;
 import org.portalizer.service.BoardService;
-import org.portalizer.service.dto.BoardDTO;
-import org.portalizer.service.dto.BoardProjectionDTO;
-import org.portalizer.service.dto.BoardSummaryDTO;
-import org.portalizer.service.dto.ColumnDefinitionDTO;
+import org.portalizer.service.dto.*;
 import org.portalizer.service.mapper.BoardMapper;
 import org.portalizer.service.mapper.ColumnDefinitionMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class BoardServiceImpl implements BoardService {
 
     private BoardRepository boardRepository;
     private InformationCardRepository informationCardRepository;
     private BoardMapper boardMapper;
     private ColumnDefinitionMapper columnDefinitionMapper;
+    private ColumnDefinitionRepository columnDefinitionRepository;
 
-    public BoardServiceImpl(BoardRepository boardRepository, BoardMapper boardMapper, InformationCardRepository informationCardRepository, ColumnDefinitionMapper columnDefinitionMapper) {
+    public BoardServiceImpl(BoardRepository boardRepository, BoardMapper boardMapper,
+                            ColumnDefinitionRepository columnDefinitionRepository,
+                            InformationCardRepository informationCardRepository, ColumnDefinitionMapper columnDefinitionMapper) {
         this.boardRepository = boardRepository;
         this.boardMapper = boardMapper;
         this.columnDefinitionMapper = columnDefinitionMapper;
         this.informationCardRepository = informationCardRepository;
+        this.columnDefinitionRepository = columnDefinitionRepository;
     }
 
     @Override
@@ -68,13 +73,70 @@ public class BoardServiceImpl implements BoardService {
 
     @Override
     public BoardDTO save(BoardDTO boardDTO) {
-        Board saved = boardRepository.save(boardMapper.toEntity(boardDTO));
+        final Board toSave = boardMapper.toEntity(boardDTO);
+        toSave.getColumnDefinitions().forEach(columnDefinition -> {
+            columnDefinition.setBoard(toSave);
+        });
+        Board saved = boardRepository.save(toSave);
         return boardMapper.toDto(saved);
     }
 
     @Override
     public void delete(UUID id) {
         boardRepository.deleteById(id);
+    }
+
+    @Override
+    public BoardDTO update(UUID id, UpdateBoardDTO updateBoardDTO) {
+        final Board board = boardRepository.findById(id).get();
+        board.setName(updateBoardDTO.getName());
+        boardRepository.save(board);
+        final Board savedBoard = boardRepository.findById(id).get();
+        return boardMapper.toDto(savedBoard);
+    }
+
+    @Override
+    public BoardDTO reorderColumns(UUID id, ReorderColumnsDTO reorderColumnsDTO) {
+        final Board board = boardRepository.findById(id).get();
+        final List<ColumnDefinition> columnDefinitions = board.getColumnDefinitions();
+        final int oldIndex = reorderColumnsDTO.getOldIndex();
+        final int newIndex = reorderColumnsDTO.getNewIndex();
+        final ColumnDefinition columnDefinition = columnDefinitions.remove(oldIndex);
+        columnDefinitions.add(newIndex, columnDefinition);
+        for (int i = 0; i < columnDefinitions.size(); i++) {
+            columnDefinitions.get(i).setPriority(i);
+        }
+        return boardMapper.toDto(boardRepository.save(board));
+    }
+
+    @Override
+    public ColumnDefinitionDTO addColumn(UUID id, AddColumnDTO addColumnDTO) {
+        final Board board = boardRepository.findById(id).get();
+        final List<ColumnDefinition> columnDefinitions = board.getColumnDefinitions();
+        final ColumnDefinition newColumn = new ColumnDefinition();
+        newColumn.setBoard(board);
+        newColumn.setTitle(addColumnDTO.getTitle());
+        newColumn.setKey(UUID.randomUUID());
+        newColumn.setPriority(columnDefinitions.size());
+        columnDefinitions.add(newColumn);
+        final Board savedBoard = boardRepository.save(board);
+        final ColumnDefinition savedColumnDefinition = savedBoard.getColumnDefinitions().stream().filter(columnDefinition -> columnDefinition.getKey().equals(newColumn.getKey())).findFirst().get();
+        return columnDefinitionMapper.toDto(savedColumnDefinition);
+    }
+
+    @Override
+    public void removeColumn(UUID boardId, UUID columnKey) {
+        final Optional<Board> board = boardRepository.findById(boardId);
+        if(board.isPresent()) {
+            final List<ColumnDefinition> columnDefinitions = board.get().getColumnDefinitions();
+            final List<ColumnDefinition> filtered = columnDefinitions.stream().filter(columnDefinition -> columnKey.equals(columnDefinition.getKey())).collect(Collectors.toList());
+            filtered.forEach(columnDefinition -> {
+                columnDefinitionRepository.deleteById(columnDefinition.getId());
+                columnDefinitions.remove(columnDefinition);
+            });
+            boardRepository.save(board.get());
+            informationCardRepository.deleteAllByBoardIdAndColumnKey(board.get().getId(), columnKey);
+        }
     }
 
     private BoardSummaryDTO lazyBoardToDto(final Board board) {

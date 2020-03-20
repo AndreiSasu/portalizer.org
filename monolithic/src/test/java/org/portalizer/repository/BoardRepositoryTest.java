@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.portalizer.PortalizerApp;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
-import org.portalizer.domain.ColumnType;
 import org.portalizer.domain.InformationCard;
 import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,22 +27,29 @@ public class BoardRepositoryTest {
     public void testColumnOrderingPreserved() {
         Board board = new Board();
         board.setName("Test");
+
         List<ColumnDefinition> columnDefinitions = new ArrayList<>();
+
         ColumnDefinition keep = new ColumnDefinition();
-        keep.setColumnType(ColumnType.KEEP);
+        keep.setKey(UUID.randomUUID());
         keep.setTitle("Keep");
+        keep.setBoard(board);
 
         ColumnDefinition add = new ColumnDefinition();
-        add.setColumnType(ColumnType.ADD);
+        add.setKey(UUID.randomUUID());
         add.setTitle("Add");
+        add.setBoard(board);
 
         ColumnDefinition less = new ColumnDefinition();
-        less.setColumnType(ColumnType.LESS);
+        less.setKey(UUID.randomUUID());
         less.setTitle("Less");
+        less.setBoard(board);
 
         ColumnDefinition more = new ColumnDefinition();
-        more.setColumnType(ColumnType.MORE);
+        more.setKey(UUID.randomUUID());
         more.setTitle("More");
+        more.setBoard(board);
+
         columnDefinitions.addAll(Arrays.asList(keep, add, less, more));
         board.setColumnDefinitions(columnDefinitions);
 
@@ -51,15 +57,16 @@ public class BoardRepositoryTest {
         Board lazyBoard = boardRepository.findById(savedBoard.getId()).get();
 
         final List<ColumnDefinition> savedColumnDefinitions = lazyBoard.getColumnDefinitions();
-
-        Assertions.assertThat(savedColumnDefinitions).isEqualTo(columnDefinitions);
+        for(int i = 0; i < savedColumnDefinitions.size(); i++) {
+            Assertions.assertThat(savedColumnDefinitions.get(i)).isEqualToIgnoringGivenFields(columnDefinitions.get(i), "id", "board");
+        }
     }
 
     @Test
     public void testBoardIdLazyLoading() {
         Board board = new Board();
         board.setName("Test");
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
         board.setColumnDefinitions(columnDefinitions);
 
         Board savedBoard = boardRepository.save(board);
@@ -69,14 +76,14 @@ public class BoardRepositoryTest {
 
 
         Board fullBoard = boardRepository.findFullBoardById(savedBoard.getId()).get();
-        Assertions.assertThat(fullBoard.getColumnDefinitions()).isEqualTo(columnDefinitions);
+        Assertions.assertThat(fullBoard.getColumnDefinitions()).containsAll(columnDefinitions);
     }
 
     @Test
     public void testFindFullBoardByIdNullInformationCardsReturnsEmptyList() {
         Board board = new Board();
         board.setName("Test");
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
         board.setColumnDefinitions(columnDefinitions);
 
         Board savedBoard = boardRepository.save(board);
@@ -86,8 +93,8 @@ public class BoardRepositoryTest {
 
     @Test
     public void testCanAddInformationCardToExistingBoard() {
-        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions();
         Board board = new Board();
+        List<ColumnDefinition> columnDefinitions = EntityUtils.buildColumnDefinitions(board);
         List<InformationCard> informationCards = EntityUtils.cardForEachColumn(board, columnDefinitions);
         board.setColumnDefinitions(columnDefinitions);
         board.setInformationCards(informationCards);
@@ -101,7 +108,7 @@ public class BoardRepositoryTest {
 
         InformationCard newCard = new InformationCard();
         newCard.setText("Test Text");
-        newCard.setColumnType(ColumnType.GLAD);
+        newCard.setColumnKey(UUID.randomUUID());
         newCard.setBoard(savedBoard);
         informationCardRepository.save(newCard);
         Assertions.assertThat(informationCardRepository.findAllByBoardId(savedBoard.getId()).get())

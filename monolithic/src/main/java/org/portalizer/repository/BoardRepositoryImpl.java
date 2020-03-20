@@ -30,14 +30,15 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
     @Autowired
     InformationCardRepository informationCardRepository;
 
+    @PersistenceContext
     private final EntityManager entityManager;
 
     private final EntityManagerFactory sessionFactory;
 
     @Autowired
-    public BoardRepositoryImpl(EntityManagerFactory sessionFactory) {
+    public BoardRepositoryImpl(EntityManager entityManager, EntityManagerFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-        this.entityManager = this.sessionFactory.createEntityManager();
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -54,6 +55,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
         TypedQuery<Board> typedQuery = entityManager.createQuery(boardCriteriaQuery);
         Board board = typedQuery.getSingleResult();
+
 
         //get all information cards
         Optional<List<InformationCard>> informationCards = informationCardRepository.findAllByBoardId(board.getId());
