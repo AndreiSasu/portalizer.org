@@ -1,19 +1,33 @@
 .toolbar {
+  top: 6.5%;
+  right: 2%;
   position: fixed;
   width: 100%;
   z-index: 1;
   left: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: groove;
+  border-width: medium;
+  border-color: blueviolet;
+  // background-color: red;
+  padding: 0.2rem 1rem;
 }
+
 div[column='true']:hover {
   border-width: medium;
 }
 
+.column-container {
+  margin-top: 50%;
+  height: 100%;
+}
+
 @media (min-width: 800px) {
   .column-container {
-    margin-top: 10%;
-    height: 100%;
+    margin-top: 8%;
     flex-wrap: nowrap;
   }
+
   .show-prev {
     display: block !important;
     float: left;
