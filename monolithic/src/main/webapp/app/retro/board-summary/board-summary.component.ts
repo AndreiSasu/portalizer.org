@@ -1,6 +1,6 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch, DeleteBoardRequest } from '../model/boards';
+import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch } from '../model/boards';
 import { faEye, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
 import { ColorsService } from '../colors.service';
 import { CommunicationService } from '../communication.service';
@@ -8,7 +8,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { PaginationPage } from '../model/pagination';
 import { CreateBoardModalComponent } from '../create-board-modal/create-board-modal.component';
-import { DeleteConfirmationModalComponent } from '../delete-confirmation-modal/delete-confirmation-modal.component';
 
 @Component({
   selector: 'jhi-board-summary',
@@ -41,9 +40,7 @@ export class BoardSummaryComponent implements OnInit {
 
   currentSearch: TextSearch;
 
-  constructor(private boardService: BoardService, private router: Router, private modalService: NgbModal, colorService: ColorsService) {
-    this.colorService = colorService;
-  }
+  constructor(private boardService: BoardService, private router: Router, private modalService: NgbModal) {}
 
   ngOnInit() {
     this.getBoardPages();
@@ -101,35 +98,6 @@ export class BoardSummaryComponent implements OnInit {
     });
     submit.subject.subscribe(createBoardRequest => {
       this.onSubmit(createBoardRequest);
-    });
-  }
-
-  openDeleteConfirmationModal(boardSummary: BoardSummary) {
-    const ok = new CommunicationService<DeleteBoardRequest>();
-    this.modalService.open(DeleteConfirmationModalComponent, {
-      centered: true,
-
-      injector: Injector.create([
-        {
-          provide: BoardSummary,
-          useValue: boardSummary
-        },
-        {
-          provide: CommunicationService,
-          useValue: ok
-        }
-      ])
-    });
-    ok.subject.subscribe(deleteBoardRequest => {
-      console.log(deleteBoardRequest);
-      this.boardService.deleteBoardById(deleteBoardRequest.id).subscribe(
-        () => {
-          this.getBoardPages();
-        },
-        error => {
-          console.log(error);
-        }
-      );
     });
   }
 
