@@ -1,29 +1,35 @@
+.toolbar {
+  top: 6.5%;
+  right: 2%;
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: groove;
+  border-width: medium;
+  border-color: blueviolet;
+  padding: 0.2rem 1rem;
+}
+
+.toolbar,
+#spacer {
+  height: 15vh;
+  max-height: 35vh;
+}
+
 div[column='true']:hover {
   border-width: medium;
 }
 
+.column-container {
+  height: 100%;
+}
+
 @media (min-width: 800px) {
   .column-container {
-    overflow-x: scroll;
     flex-wrap: nowrap;
   }
-  .show-prev {
-    display: block !important;
-    float: left;
-  }
-
-  .show-next {
-    display: block !important;
-    float: right;
-  }
-}
-
-.show-prev {
-  display: none;
-}
-
-.show-next {
-  display: none;
 }
 
 .column-drag {
