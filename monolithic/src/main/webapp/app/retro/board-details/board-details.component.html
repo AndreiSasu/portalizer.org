@@ -4,14 +4,14 @@
 <jhi-toolbar [board]="board" (addColumn)="onAddColumn($event)" (searching)="onSearch($event)"
     (refreshed)="onRefresh($event)"></jhi-toolbar>
 
-<div *ngIf="boardColumnVMs.length > 4" class="show-prev">
+<a *ngIf="boardColumnVMs.length > 4" class="show-prev" (click)="scrollLeft(columns)">
     <fa-icon [icon]="faChevronLeft" class="fa-2x"></fa-icon>
-</div>
+</a>
 
-<div *ngIf="boardColumnVMs.length > 4" class="show-next">
+<a *ngIf="boardColumnVMs.length > 4" class="show-next" (click)="scrollRight(columns)">
     <fa-icon [icon]="faChevronRight" class="fa-2x"></fa-icon>
-</div>
-<div class="row column-container" dragula="COLUMNS" [(dragulaModel)]="boardColumnVMs">
+</a>
+<div #columns class="row column-container" dragula="COLUMNS" [(dragulaModel)]="boardColumnVMs">
     <div class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs | sortBy:'asc':'priority'">
         <div column="true" [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.title)]">
             <div class="card-header">
