@@ -339,4 +339,12 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     // destroy all the subscriptions at once
     this.subs.unsubscribe();
   }
+
+  scrollLeft(el: Element) {
+    el.scrollBy({ left: -el.querySelector('.col-lg-3').scrollWidth, behavior: 'smooth' });
+  }
+
+  scrollRight(el: Element) {
+    el.scrollBy({ left: el.querySelector('.col-lg-3').scrollWidth, behavior: 'smooth' });
+  }
 }
