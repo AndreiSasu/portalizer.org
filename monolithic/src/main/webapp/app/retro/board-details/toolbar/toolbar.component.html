@@ -32,11 +32,11 @@
 
     <span class="badge badge-primary badge-pill">{{this.board?.informationCards?.length}} Cards</span>
 
-    <a style="float: right;" (click)="onRefresh($event)">
+    <button type="button" class="btn btn-light" style="float: right;" (click)="onRefresh($event)">
         <fa-icon [icon]="faSync" class="fa-2x"></fa-icon> Refresh Board
-    </a>
-    <a style="float: right;" (click)="onAdd($event)">
+    </button> &nbsp; &nbsp;
+    <button type="button" class="btn btn-light" style="float: right;" (click)="onAdd($event)">
         <fa-icon [icon]="faPlusCircle" class="fa-2x"></fa-icon> Add column
-    </a>
+    </button>
 </div>
 <br><br>
