@@ -9,8 +9,13 @@
   border: groove;
   border-width: medium;
   border-color: blueviolet;
-  // background-color: red;
   padding: 0.2rem 1rem;
+}
+
+.toolbar,
+#spacer {
+  height: 15vh;
+  max-height: 35vh;
 }
 
 div[column='true']:hover {
@@ -18,33 +23,13 @@ div[column='true']:hover {
 }
 
 .column-container {
-  margin-top: 50%;
   height: 100%;
 }
 
 @media (min-width: 800px) {
   .column-container {
-    margin-top: 8%;
     flex-wrap: nowrap;
   }
-
-  .show-prev {
-    display: block !important;
-    float: left;
-  }
-
-  .show-next {
-    display: block !important;
-    float: right;
-  }
-}
-
-.show-prev {
-  display: none;
-}
-
-.show-next {
-  display: none;
 }
 
 .column-drag {
