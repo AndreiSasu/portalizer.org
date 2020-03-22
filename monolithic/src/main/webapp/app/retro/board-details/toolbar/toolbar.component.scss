@@ -4,8 +4,20 @@
   grid-gap: 0px;
 }
 
+.board-operations {
+  display: grid;
+  grid-template-columns: auto;
+  > a {
+    margin-right: 1%;
+  }
+  > a:hover {
+    color: #3e8acc;
+  }
+}
+
 @media (min-width: 800px) {
-  .grid-container {
+  .grid-container,
+  .board-operations {
     grid-template-columns: auto 40%;
   }
 
@@ -62,14 +74,6 @@ fa-icon:hover {
 
 a:hover {
   color: #3e8acc;
-}
-
-.board-operations > a:hover {
-  color: #3e8acc;
-}
-
-.board-operations > a {
-  margin-right: 1%;
 }
 
 .success-message {
