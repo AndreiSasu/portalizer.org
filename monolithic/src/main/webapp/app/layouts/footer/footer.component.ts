@@ -3,7 +3,8 @@ import { faLinkedin, faGithub, faAngular, faAws, faJava, faDocker } from '@forta
 
 @Component({
   selector: 'jhi-footer',
-  templateUrl: './footer.component.html'
+  templateUrl: './footer.component.html',
+  styleUrls: ['footer.scss']
 })
 export class FooterComponent {
   faGithub = faGithub;

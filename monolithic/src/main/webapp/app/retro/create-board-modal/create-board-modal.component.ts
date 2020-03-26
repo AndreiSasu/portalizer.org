@@ -18,6 +18,7 @@ export class CreateBoardModalComponent implements OnInit {
   };
 
   boardTemplates: Array<BoardTemplate>;
+  currentDescription: string;
 
   constructor(public modal: NgbActiveModal, public boardService: BoardService, public submit: CommunicationService<CreateBoardRequest>) {
     this.boardService.getBoardTemplates().subscribe(data => (this.boardTemplates = data));
@@ -35,5 +36,12 @@ export class CreateBoardModalComponent implements OnInit {
       return boardTemplate.key === key;
     })[0].boardColumns;
     return new CreateBoardRequest(formModel.boardName, formModel.description, columnDefinitions);
+  }
+
+  onSelect(boardName: string) {
+    const boardTemplate = this.boardTemplates.filter(b => {
+      return b.key === boardName;
+    })[0];
+    this.currentDescription = boardTemplate.description;
   }
 }
