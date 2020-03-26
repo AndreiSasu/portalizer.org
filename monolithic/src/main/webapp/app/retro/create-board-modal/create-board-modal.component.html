@@ -19,7 +19,7 @@
             </div>
 
             <div class="form-group">
-                <select class="custom-select" [(ngModel)]="formModel.templateKey" name="templateKey" required>
+                <select class="custom-select" (change)="onSelect($event.target.value)" [(ngModel)]="formModel.templateKey" name="templateKey" required>
                     <option value="" selected disabled hidden>Choose Board template</option>
                     <option *ngFor="let boardTemplate of boardTemplates">
                         {{boardTemplate.key}} </option>
@@ -27,10 +27,12 @@
             </div>
 
             <div class="form-group">
-                <label for="boardDescription">Board description</label>
-                <textarea class="form-control" id="boardDescription" name="boardDescription"
+                <label class="col-form-label col-form-label-lg" for="boardDescription">Board description</label>
+                <textarea class="form-control" id="boardDescription" name="boardDescription" placeholder="Your description here"
                     [(ngModel)]="formModel.description" rows="3"></textarea>
             </div>
+            <div class="alert alert-light" *ngIf="currentDescription">{{currentDescription}}</div>
+
         </fieldset>
         <button type="submit" class="btn btn-success" [disabled]="!newBoardForm.form.valid">Submit</button>
         <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
