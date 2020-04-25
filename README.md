@@ -59,13 +59,20 @@ By default, the application will use an embedded H2 in memory database.
 
 MySQL is also available with the `mysql` spring profile.
 
+_You might need a mysql container up and running_:
+https://github.com/AndreiSasu/portalizer.org/tree/master/monolithic#using-docker-to-simplify-development-optional
+
 `docker run -e _JAVA_OPTIONS="-Dspring.profiles.active=prod,mysql" -e ADMIN_PASS=<admin_password> -e USER_PASS=<user_password> <container_id>`
+
+You can override the mysql user / password by specifying: `-Dspring.datasource.user=<username> -Dspring.datasource.password=<password>` if you need to.
 
 If you want to have some sample data populated (boards, cards), use the `testdata` spring profile
 
 Ex: 
 
 `docker run -e _JAVA_OPTIONS="-Dspring.profiles.active=prod,h2,testdata" -e ADMIN_PASS=<admin_password> -e USER_PASS=<user_password> <container_id>`
+
+API documentation is available via Swagger, enable it via the `swagger` spring profile.
 
 
 ## Changelog

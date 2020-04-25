@@ -17,6 +17,7 @@ public class ColumnDefinition {
 
     @NotNull
     @Type(type="uuid-char")
+    @Column(name = "column_key")
     private UUID key;
 
     private int priority = 0;

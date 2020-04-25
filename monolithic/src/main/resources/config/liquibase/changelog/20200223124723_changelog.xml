@@ -15,7 +15,7 @@
             <column autoIncrement="true" name="id" type="BIGINT">
                 <constraints primaryKey="true" primaryKeyName="column_definitionPK"/>
             </column>
-            <column name="key" type="VARCHAR(255)"/>
+            <column name="column_key" type="VARCHAR(255)"/>
             <column name="priority" type="INT">
                 <constraints nullable="false"/>
             </column>
