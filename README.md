@@ -19,6 +19,26 @@
   </tr>
  </table>
 
+ <table>
+  <tr>
+     <td>Drag and drop</td>
+     <td>Search</td>
+  </tr>
+  <tr>
+    <td><img src="dragndrop.gif" width=480 height=200></td>
+    <td><img src="search.gif" width=480 height=200></td>
+  </tr>
+ </table>
+
+  <table>
+  <tr>
+     <td>Custom Board</td>
+  </tr>
+  <tr>
+    <td><img src="custom_board.gif" width=480 height=200></td>
+  </tr>
+ </table>
+
 
 ## Tech Stack
 * [JHipster](https://www.jhipster.tech/)
@@ -28,7 +48,7 @@
 * [Angular 8](https://angular.io/)
 
 
-## Installation: 
+## Local Installation: 
 
 ### Docker Hub
 
