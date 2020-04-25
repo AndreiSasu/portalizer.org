@@ -52,7 +52,7 @@ Initial version **1.0.0-RELEASE**
 
    - Support for creating sprint retrospective boards from predefined templates: 
       * Mad, Sad, Glad
-      * Went Well, To Improve, Action Items
+      * What Went Well, What To Improve, Action Items
       * KALM: Keep, Add, Less, More
       * Start, Stop, Continue
       * 4Ls: Liked, Learned, Lacked, Longed For
@@ -69,5 +69,5 @@ Initial version **1.0.0-RELEASE**
  - Add voting and comment system support for cards.
  - Add image preview and file attachment support for cards.
  - Add private boards and invitation system.
- - Enable custom board templates to be saved and reused.
+ - Enable user defined board templates to be saved and reused.
  - Social Login and LDAP / AD integration.
