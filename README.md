@@ -1,9 +1,12 @@
 # <img src="logo.png" width="50"/> Portalizer 
 
-### The project aims to be an open-source alternative to board software like Trello and to be used for sprint retrospective, activity planning and task tracking.
+### The project is an open-source Kanban-style list application and aims to be used for sprint retrospective, activity planning and task tracking.
+
+#### You can check out a live demo here: https://portalizer.org/
 
 
-#### Portalizer Screenshots
+
+## Portalizer Screenshots
 
 <table>
   <tr>
@@ -16,7 +19,27 @@
   </tr>
  </table>
 
-You can check out a live demo here: https://portalizer.org/
+
+ <table>
+  <tr>
+     <td>Drag and drop</td>
+     <td>Search</td>
+  </tr>
+  <tr>
+    <td><img src="dragndrop.gif" width=480 height=200></td>
+    <td><img src="search.gif" width=480 height=200></td>
+  </tr>
+ </table>
+
+  <table>
+  <tr>
+     <td>Custom Board</td>
+  </tr>
+  <tr>
+    <td><img src="custom_board.gif" width=480 height=200></td>
+  </tr>
+ </table>
+
 
 ## Tech Stack
 * [JHipster](https://www.jhipster.tech/)
@@ -26,7 +49,7 @@ You can check out a live demo here: https://portalizer.org/
 * [Angular 8](https://angular.io/)
 
 
-## Installation: 
+## Local Installation: 
 
 ### Docker Hub
 
@@ -50,12 +73,35 @@ Initial version **1.0.0-RELEASE**
 
    - Support for creating sprint retrospective boards from predefined templates: 
       * Mad, Sad, Glad
-      * Went Well, To Improve, Action Items
+
+        ```Mad, Sad, Glad is a popular retrospective technique that encourages team members to think about their emotions. How does the team feel after the last sprint? Mad, Sad, Glad is simple to learn while being easy to explain and run.```
+
+      * What Went Well, What To Improve, Action Items
+
+        ```Focuses on the strengths and weaknesses of the team based on the previous sprint.```
+
       * KALM: Keep, Add, Less, More
+
+        ```KALM (Keep, Add, More, less) is a retrospective activity that fosters the conversation to the current activities and the perceived value. It helps team members to understand each other perceived value on such practices.```
+
       * Start, Stop, Continue
+
+        ```Start, Stop, Continue is an action-oriented retrospective technique that encourages participants to come up with practical ideas for team-based improvement.```
+
       * 4Ls: Liked, Learned, Lacked, Longed For
+
+        ```4Ls stands for Liked Learned Lacked Longed For. The 4Ls technique is a brainstorming technique for collecting feedback on a recently completed project or piece of work. This retrospective highlight the positive (liked & learned) as well as the negative (lacked & longed for). The team have to think mostly from a factual (what happened) perspective, rather than an emotional perspective.```
+
+
       * Lean Coffee: To Discuss, Discussing, Discussed
+
+        ```From the Lean Coffee website, we have that “Lean Coffee is a structured, but agenda-less meeting. Participants gather, build an agenda, and begin talking. Conversations are directed and productive because the agenda for the meeting was democratically generated.”```
+
+
       * DAKI: Drop, Add, Keep, Improve
+
+        ```The DAKI (or Drop Add Keep Improve) retrospective activity is suitable to use after several sprints working with the same team. As your team members are experimenting with different processes, it helps cull out non-value things, keep what is working, and improve by brainstorming on new ways to work.```
+
 
    - Support for creating empty boards
    - Support for adding / removing board columns
@@ -67,5 +113,5 @@ Initial version **1.0.0-RELEASE**
  - Add voting and comment system support for cards.
  - Add image preview and file attachment support for cards.
  - Add private boards and invitation system.
- - Enable custom board templates to be saved and reused.
+ - Enable user defined board templates to be saved and reused.
  - Social Login and LDAP / AD integration.
