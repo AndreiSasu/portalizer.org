@@ -1,9 +1,12 @@
 # <img src="logo.png" width="50"/> Portalizer 
 
-### The project aims to be an open-source alternative to board software like Trello and to be used for sprint retrospective, activity planning and task tracking.
+### The project is an open-source Kanban-style list application and aims to be used for sprint retrospective, activity planning and task tracking.
+
+#### You can check out a live demo here: https://portalizer.org/
 
 
-#### Portalizer Screenshots
+
+## Portalizer Screenshots
 
 <table>
   <tr>
@@ -16,7 +19,6 @@
   </tr>
  </table>
 
-You can check out a live demo here: https://portalizer.org/
 
 ## Tech Stack
 * [JHipster](https://www.jhipster.tech/)
