@@ -1,4 +1,4 @@
-# <img src="images/logo.png" width="50"/> Portalizer 
+# <img src="screenshots/logo.png" width="50"/> Portalizer 
 
 ### The project is an open-source Kanban-style list application and aims to be used for sprint retrospective, activity planning and task tracking.
 
@@ -16,8 +16,8 @@
      <td>Board Details</td>
   </tr>
   <tr>
-    <td><img src="images/screenshot1.png" width=480 height=200></td>
-    <td><img src="images/screenshot2.png" width=480 height=200></td>
+    <td><img src="screenshots/screenshot1.png" width=480 height=200></td>
+    <td><img src="screenshots/screenshot2.png" width=480 height=200></td>
   </tr>
  </table>
 
@@ -28,8 +28,8 @@
      <td>Search</td>
   </tr>
   <tr>
-    <td><img src="images/dragndrop.gif" width=480 height=200></td>
-    <td><img src="images/search.gif" width=480 height=200></td>
+    <td><img src="screenshots/dragndrop.gif" width=480 height=200></td>
+    <td><img src="screenshots/search.gif" width=480 height=200></td>
   </tr>
  </table>
 
@@ -38,7 +38,7 @@
      <td>Custom Board</td>
   </tr>
   <tr>
-    <td><img src="images/custom_board.gif" width=480 height=200></td>
+    <td><img src="screenshots/custom_board.gif" width=480 height=200></td>
   </tr>
  </table>
 
@@ -49,6 +49,8 @@
 * [Spring Boot](https://spring.io/projects/spring-boot)
 
 * [Angular 8](https://angular.io/)
+
+* [Bootstrap 4](https://getbootstrap.com/)
 
 
 ## Local Installation: 
