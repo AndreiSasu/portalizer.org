@@ -59,6 +59,7 @@
 
 `docker pull andreisasu/portalizer:latest`
 
+#### Databases
 By default, the application will use an embedded H2 in memory database.
 
 MySQL is also available with the `mysql` spring profile.
@@ -70,13 +71,19 @@ https://github.com/AndreiSasu/portalizer.org/tree/master/monolithic#using-docker
 
 You can override the mysql user / password by specifying: `-Dspring.datasource.user=<username> -Dspring.datasource.password=<password>` if you need to.
 
+#### Sample Data
 If you want to have some sample data populated (boards, cards), use the `testdata` spring profile
 
 Ex: 
 
 `docker run -e _JAVA_OPTIONS="-Dspring.profiles.active=prod,h2,testdata" -e ADMIN_PASS=<admin_password> -e USER_PASS=<user_password> <container_id>`
 
+#### API Docs
 API documentation is available via Swagger, enable it via the `swagger` spring profile.
+
+#### Authentication
+By default, all boards are publicly accessible. 
+You can require authentication via the `enable-auth` spring profile. 
 
 
 ## Changelog
