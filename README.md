@@ -1,12 +1,14 @@
-# <img src="logo.png" width="50"/> Portalizer 
+# <img src="screenshots/logo.png" width="50"/> Portalizer 
 
 ### The project is an open-source Kanban-style list application and aims to be used for sprint retrospective, activity planning and task tracking.
 
-#### You can check out a live demo here: https://portalizer.org/
+## You can check out a live demo here: https://portalizer.org/
 
 
 
 ## Portalizer Screenshots
+
+
 
 <table>
   <tr>
@@ -14,8 +16,8 @@
      <td>Board Details</td>
   </tr>
   <tr>
-    <td><img src="screenshot1.png" width=480 height=200></td>
-    <td><img src="screenshot2.png" width=480 height=200></td>
+    <td><img src="screenshots/screenshot1.png" width=480 height=200></td>
+    <td><img src="screenshots/screenshot2.png" width=480 height=200></td>
   </tr>
  </table>
 
@@ -26,8 +28,8 @@
      <td>Search</td>
   </tr>
   <tr>
-    <td><img src="dragndrop.gif" width=480 height=200></td>
-    <td><img src="search.gif" width=480 height=200></td>
+    <td><img src="screenshots/dragndrop.gif" width=480 height=200></td>
+    <td><img src="screenshots/search.gif" width=480 height=200></td>
   </tr>
  </table>
 
@@ -36,7 +38,7 @@
      <td>Custom Board</td>
   </tr>
   <tr>
-    <td><img src="custom_board.gif" width=480 height=200></td>
+    <td><img src="screenshots/custom_board.gif" width=480 height=200></td>
   </tr>
  </table>
 
@@ -47,6 +49,8 @@
 * [Spring Boot](https://spring.io/projects/spring-boot)
 
 * [Angular 8](https://angular.io/)
+
+* [Bootstrap 4](https://getbootstrap.com/)
 
 
 ## Local Installation: 
@@ -79,6 +83,7 @@ API documentation is available via Swagger, enable it via the `swagger` spring p
 Initial version **1.0.0-RELEASE**
 
    - Support for creating sprint retrospective boards from predefined templates: 
+   
       * Mad, Sad, Glad
 
         ```Mad, Sad, Glad is a popular retrospective technique that encourages team members to think about their emotions. How does the team feel after the last sprint? Mad, Sad, Glad is simple to learn while being easy to explain and run.```
