@@ -1,4 +1,4 @@
-# <img src="screenshots/logo.png" width="50"/> Portalizer 
+# <img src="screenshots/logo.png" width="50"/> Portalizer
 
 ### The project is an open-source Kanban-style list application and aims to be used for sprint retrospective, activity planning and task tracking.
 
@@ -46,12 +46,11 @@
 ## Tech Stack
 * [JHipster](https://www.jhipster.tech/)
 
-* [Spring Boot](https://spring.io/projects/spring-boot)
+* [Spring Boot](https://spring.io/projects/spring-boot) 
 
 * [Angular 8](https://angular.io/)
 
-* [Bootstrap 4](https://getbootstrap.com/)
-
+* [Bootstrap 4](https://getbootstrap.com/) 
 
 ## Local Installation: 
 
