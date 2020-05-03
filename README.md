@@ -68,7 +68,7 @@ https://github.com/AndreiSasu/portalizer.org/tree/master/monolithic#using-docker
 
 `docker run -e _JAVA_OPTIONS="-Dspring.profiles.active=prod,mysql" -e ADMIN_PASS=<admin_password> -e USER_PASS=<user_password> <container_id>`
 
-You can override the mysql user / password by specifying: `-Dspring.datasource.user=<username> -Dspring.datasource.password=<password>` if you need to.
+You can override the mysql user / password by specifying: `-Dspring.datasource.user=<username> -Dspring.datasource.password=<password>` and the url by specifying `-Dspring.datasource.url=jdbc:mysql://<hostname>:<port>/<schema>?option1=value1&option2=value2` if you need to.
 
 #### Sample Data
 If you want to have some sample data populated (boards, cards), use the `testdata` spring profile
