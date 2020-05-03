@@ -77,6 +77,9 @@ Ex:
 
 `docker run -e _JAVA_OPTIONS="-Dspring.profiles.active=prod,h2,testdata" -e ADMIN_PASS=<admin_password> -e USER_PASS=<user_password> <container_id>`
 
+
+The sample data has been generated using [**Java Faker**](https://github.com/DiUS/java-faker)
+
 #### API Docs
 API documentation is available via Swagger, enable it via the `swagger` spring profile.
 
