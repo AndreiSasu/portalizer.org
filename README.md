@@ -120,6 +120,9 @@ Initial version **1.0.0-RELEASE**
 
         ```The DAKI (or Drop Add Keep Improve) retrospective activity is suitable to use after several sprints working with the same team. As your team members are experimenting with different processes, it helps cull out non-value things, keep what is working, and improve by brainstorming on new ways to work.```
 
+      * Starfish: Keep Doing - Less Of - More Of - Stop Doing - Start Doing
+      
+        ```Starfish is a great data gathering activity to foster the thinking around practices and the value the team get from it. It helps team members to understand each other perceived value on such practices.```
 
    - Support for creating empty boards
    - Support for adding / removing board columns
