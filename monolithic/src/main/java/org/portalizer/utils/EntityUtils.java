@@ -55,7 +55,7 @@ public class EntityUtils {
         final BoardTemplateService boardTemplateService = new BoardTemplateServiceImpl();
         final ColumnDefinitionMapper columnDefinitionMapper = new ColumnDefinitionMapperImpl();
         final int size = boardTemplateService.getBoardTemplates().size();
-        final BoardTemplateDTO boardTemplateDTO = boardTemplateService.getBoardTemplates().get(new Random().nextInt(size - 1));
+        final BoardTemplateDTO boardTemplateDTO = boardTemplateService.getBoardTemplates().get(new Random().nextInt(size));
         final List<ColumnDefinition> columnDefinitions = columnDefinitionMapper.toEntity(boardTemplateDTO.getBoardColumns());
         columnDefinitions.forEach(columnDefinition -> columnDefinition.setBoard(board));
         return columnDefinitions;

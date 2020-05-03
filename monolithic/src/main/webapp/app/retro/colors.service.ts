@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class ColorsService {
   colorMap: Map<string, string> = new Map();
 
+  // TODO: store these in the backend
   constructor() {
     this.colorMap.set('Mad', 'danger');
     this.colorMap.set('Sad', 'info');
@@ -37,6 +38,12 @@ export class ColorsService {
     this.colorMap.set('Drop', 'danger');
     this.colorMap.set('Add', 'info');
     this.colorMap.set('Keep', 'success');
+
+    this.colorMap.set('Keep Doing', 'success');
+    this.colorMap.set('Less Of', 'warning');
+    this.colorMap.set('More Of', 'info');
+    this.colorMap.set('Stop Doing', 'danger');
+    this.colorMap.set('Start Doing', 'primary');
   }
 
   getColor(key: string): string {

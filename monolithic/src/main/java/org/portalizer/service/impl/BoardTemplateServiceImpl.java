@@ -45,7 +45,6 @@ public class BoardTemplateServiceImpl implements BoardTemplateService {
         BoardTemplateDTO startStopContinue = new BoardTemplateDTO("Start - Stop - Continue",  startStopContinueColumns,"Start, Stop, Continue is an action-oriented retrospective technique that encourages participants to come up with practical ideas for team-based improvement.\n");
 
 
-
         List<ColumnDefinitionDTO> likedLearnedLackedLongedForColumns = Arrays.asList(new ColumnDefinitionDTO(UUID.randomUUID(), "Liked", 0),
             new ColumnDefinitionDTO(UUID.randomUUID(), "Learned", 1),
             new ColumnDefinitionDTO(UUID.randomUUID(), "Lacked", 2),
@@ -68,6 +67,16 @@ public class BoardTemplateServiceImpl implements BoardTemplateService {
         BoardTemplateDTO daki = new BoardTemplateDTO("DAKI: Drop - Add - Keep - Improve", dakiColumns, "The DAKI (or Drop Add Keep Improve) retrospective activity is suitable to use after several sprints working with the same team. " +
             "As your team members are experimenting with different processes, it helps cull out non-value things, keep what is working, and improve by brainstorming on new ways to work.\n");
 
+
+        List<ColumnDefinitionDTO> starFishColumns = Arrays.asList(new ColumnDefinitionDTO(UUID.randomUUID(), "Keep Doing", 0),
+            new ColumnDefinitionDTO(UUID.randomUUID(), "Less Of", 1),
+            new ColumnDefinitionDTO(UUID.randomUUID(), "More Of", 2),
+            new ColumnDefinitionDTO(UUID.randomUUID(), "Stop Doing", 3),
+            new ColumnDefinitionDTO(UUID.randomUUID(), "Start Doing", 4));
+        BoardTemplateDTO starfish = new BoardTemplateDTO("Starfish: Keep Doing - Less Of - More Of - Stop Doing - Start Doing", starFishColumns,
+            "Starfish is a great data gathering activity to foster the thinking around practices and the value the team get from it. It helps team members to understand each other perceived value on such practices.\n");
+
+
         boardTemplateDTOS.add(emptyBoard);
         boardTemplateDTOS.add(madSadGlad);
         boardTemplateDTOS.add(wentWellToImproveActionItems);
@@ -76,6 +85,7 @@ public class BoardTemplateServiceImpl implements BoardTemplateService {
         boardTemplateDTOS.add(likedLearnedLackedLongedFor);
         boardTemplateDTOS.add(leanCoffee);
         boardTemplateDTOS.add(daki);
+        boardTemplateDTOS.add(starfish);
 
     }
 
