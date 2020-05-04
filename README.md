@@ -58,6 +58,8 @@
 
 `docker pull andreisasu/portalizer:latest`
 
+`docker run -e ADMIN_PASS=<admin_password> -e USER_PASS=<user_password> <container_id>`
+
 #### Databases
 By default, the application will use an embedded H2 in memory database.
 
