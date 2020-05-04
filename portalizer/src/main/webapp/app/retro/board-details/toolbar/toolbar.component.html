@@ -1,0 +1,47 @@
+<div class="grid-container">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <a (click)="this.editMode=!this.editMode">
+                <fa-icon [icon]="faPencilAlt" class="fa-2x"></fa-icon>
+                <span class="board-title" *ngIf="!this.editMode">{{board?.name}}</span>
+            </a>
+        </div>
+        <input type="text" *ngIf="this.editMode" [(ngModel)]="board.name"></input>
+
+        <div *ngIf="this.editMode" class="input-group-append">
+            <button class="btn btn-success" type="button" id="button-addon2" (click)="onSave($event)">
+                <fa-icon [icon]="faSave"></fa-icon> Save
+            </button>
+        </div>
+        <small class="success-message" *ngIf="!this.editMode && this.edited" style="float: right;">
+            <fa-icon [icon]="faSave"></fa-icon>Board saved
+            successfully.
+        </small>
+    </div>
+
+    <div class="board-search">
+        <input (ngModelChange)="onSearch($event)" type="search" class="form-control" name="cards"
+            [(ngModel)]="searchModel" placeholder="Search cards..."></input>
+    </div>
+
+</div>
+<div class="board-operations">
+    <div>
+        <small class="text-muted" style="float: left;">
+            <fa-icon [icon]="faClock"></fa-icon>
+            Created at: {{ board?.createdAt | date: 'short' }}
+        </small>
+
+        <span class="badge badge-primary badge-pill">{{this.board?.informationCards?.length}} Cards</span>
+    </div>
+
+    <div>
+        <button type="button" class="btn btn-light" style="float: right; margin-right: 0.2em;" (click)="onRefresh($event)">
+            <fa-icon [icon]="faSync" class="fa-2x"></fa-icon> Refresh Board
+        </button> &nbsp; &nbsp;
+        <button type="button" class="btn btn-light" style="float: right; margin-right: 0.2em;" (click)="onAdd($event)">
+            <fa-icon [icon]="faPlusCircle" class="fa-2x"></fa-icon> Add column
+        </button>
+    </div>
+</div>
+<br>
