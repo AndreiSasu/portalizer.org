@@ -139,3 +139,9 @@ Initial version **1.0.0-RELEASE**
  - Add private boards and invitation system.
  - Enable user defined board templates to be saved and reused.
  - Social Login and LDAP / AD integration.
+
+## License and Copyright
+
+Copyright (c) 2020 Andrei Sasu
+
+[GNU General Public License V3](LICENSE)
