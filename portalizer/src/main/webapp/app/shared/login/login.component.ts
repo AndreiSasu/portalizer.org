@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, Renderer2, ElementRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -25,14 +25,17 @@ export class JhiLoginModalComponent implements AfterViewInit {
     private loginService: LoginService,
     private stateStorageService: StateStorageService,
     private elementRef: ElementRef,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private router: Router,
     public activeModal: NgbActiveModal,
     private fb: FormBuilder
   ) {}
 
   ngAfterViewInit() {
-    setTimeout(() => this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#username'), 'focus', []), 0);
+    setTimeout(() => {
+      const renderElement = this.elementRef.nativeElement.querySelector('#username');
+      (renderElement)['focus'].apply(renderElement, []);
+    }, 0);
   }
 
   cancel() {

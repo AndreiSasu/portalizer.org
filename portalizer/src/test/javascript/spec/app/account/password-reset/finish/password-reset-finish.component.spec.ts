@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, inject, tick, fakeAsync } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { of, throwError } from 'rxjs';
-import { Renderer, ElementRef } from '@angular/core';
+import { Renderer2, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { PortalizerTestModule } from '../../../../test.module';
@@ -25,7 +25,7 @@ describe('Component Tests', () => {
             useValue: new MockActivatedRoute({ key: 'XYZPDQ' })
           },
           {
-            provide: Renderer,
+            provide: Renderer2,
             useValue: {
               invokeElementMethod(renderElement: any, methodName: string, args?: any[]) {}
             }
