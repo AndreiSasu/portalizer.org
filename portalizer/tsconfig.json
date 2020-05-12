@@ -20,6 +20,6 @@
     "importHelpers": true,
     "allowJs": true
   },
-  "include": ["src/main/webapp/app", "src/test/javascript/"],
-  "exclude": ["node_modules"]
+  "include": ["src/main/webapp/app"],
+  "exclude": ["node_modules", "src/test/javascript/", "**/*.spec.ts"]
 }

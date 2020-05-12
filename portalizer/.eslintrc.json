@@ -2,7 +2,7 @@
   "plugins": ["@typescript-eslint/tslint"],
   "extends": ["jhipster"],
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig.eslint.json"
   },
   "rules": {
     "@typescript-eslint/tslint/config": [
