@@ -91,7 +91,10 @@ You can require authentication via the `enable-auth` spring profile.
 
 
 ## Changelog
-Initial version **1.0.0-RELEASE**
+**1.0.1-RELEASE** 
+This is a maintenance version, upgrading to Angular 9. 
+
+**1.0.0-RELEASE** Initial version 
 
    - Support for creating sprint retrospective boards from predefined templates: 
    
