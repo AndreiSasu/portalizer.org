@@ -18,7 +18,7 @@ const sass = require('sass');
 module.exports = webpackMerge(commonConfig({ env: ENV }), {
     // Enable source maps. Please note that this will slow down the build.
     // You have to enable it in Terser config below and in tsconfig-aot.json as well
-    devtool: 'source-map',
+    // devtool: 'source-map',
     entry: {
         polyfills: './src/main/webapp/app/polyfills',
         global: './src/main/webapp/content/scss/global.scss',
@@ -84,7 +84,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
             new TerserPlugin({
                 parallel: true,
                 cache: true,
-                sourceMap: true, // Enable source maps. Please note that this will slow down the build
+                // sourceMap: true, // Enable source maps. Please note that this will slow down the build
                 terserOptions: {
                     ecma: 6,
                     ie8: false,
