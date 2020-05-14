@@ -3,31 +3,39 @@
         <span class="hipster img-fluid rounded"></span>
     </div>
     <div class="col-md-9">
+
         <h1 class="display-4">Welcome to Portalizer!</h1>
         <p class="lead">
-            The project is an open-source Kanban-style list application and aims to be used for sprint retrospective, activity planning and task tracking.
+            The project is an open-source Kanban-style list application and aims to be used for sprint retrospective,
+            activity planning and task tracking.
         </p>
 
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
-                <span id="home-logged-message" *ngIf="account"
-                   > You are logged in as user "{{account.login}}". </span>
+                <span id="home-logged-message" *ngIf="account"> You are logged in as user "{{account.login}}". </span>
             </div>
 
             <div class="alert alert-light">
-                <strong>To start</strong>,  <a class="alert-link" routerLink="retro/boards">open the boards</a> and feel free to poke around .
+                <strong>To start</strong>, <a routerLink="retro/boards">open the boards </a> and feel
+                free to poke around .
             </div>
 
-            <div class="alert alert-info" *ngSwitchCase="false">
+            <div class="alert alert-info">
                 <span><b>Note: </b> <br>
-                    This is a demo version and contains generated boards to showcase all features. <br>
-                    If you are looking for a Docker container which you can deploy on your local network, have a look at <a class="alert-link" 
-                    href="https://hub.docker.com/repository/docker/andreisasu/portalizer">Docker Hub</a>.
+                    This is a demo version and contains randomly generated boards to showcase all features. <br>
+
+                    The boards are all wiped out and new ones generated every day at 23:00 PM GMT. <br><br>
+
+                    If you are looking for a Docker container which you can deploy on your local network, have a look at
+                    <a class="alert-link" href="https://hub.docker.com/repository/docker/andreisasu/portalizer">Docker
+                        Hub</a>.
                 </span>&nbsp;
             </div>
         </div>
         <p>
-            <span>If you like Portalizer, don't forget to give it a star on</span> <a href="https://github.com/AndreiSasu/portalizer.org" target="_blank" rel="noopener noreferrer">GitHub</a>!
+            <span>If you like Portalizer, don't forget to give it a star on</span> <a
+                href="https://github.com/AndreiSasu/portalizer.org" target="_blank"
+                rel="noopener noreferrer">GitHub</a>!
         </p>
     </div>
 </div>
