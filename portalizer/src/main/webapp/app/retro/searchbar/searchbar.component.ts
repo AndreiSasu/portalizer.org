@@ -18,8 +18,8 @@ export class SearchbarComponent implements OnInit {
   searching = false;
   searchFailed = false;
 
-  @Output() searchEvent = new EventEmitter<TextSearch>();
-  @Output() clearEvent = new EventEmitter<ClearSearch>();
+  @Output() searchButtonClicked = new EventEmitter<TextSearch>();
+  @Output() inputCleared = new EventEmitter<ClearSearch>();
 
   constructor(private boardService: BoardService, private router: Router) {}
 
@@ -62,14 +62,14 @@ export class SearchbarComponent implements OnInit {
       this.doEmit();
     } else if ('search' === event.type) {
       console.log('is clear search');
-      this.clearEvent.emit(new ClearSearch());
+      this.inputCleared.emit(new ClearSearch());
     }
   }
 
   doEmit() {
     if (this.searchValue) {
       let event = new TextSearch(this.selection.toLowerCase(), this.searchValue);
-      this.searchEvent.emit(event);
+      this.searchButtonClicked.emit(event);
     }
   }
 }
