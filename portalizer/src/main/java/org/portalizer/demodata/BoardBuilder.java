@@ -10,6 +10,11 @@ public class BoardBuilder {
         this.board = new Board();
     }
 
+    public BoardBuilder withCreatedAtStep(final DateStep dateStep) {
+        board.setCreatedAt(dateStep.apply());
+        return this;
+    }
+
     public BoardBuilder withNameStep(final NameStep nameStep) {
         board.setName(nameStep.apply());
         return this;
