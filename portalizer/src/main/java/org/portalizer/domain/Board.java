@@ -41,7 +41,6 @@ public class Board implements Serializable {
     @Column(columnDefinition = "VARCHAR(2048)")
     private String description;
 
-    @CreationTimestamp
     private LocalDateTime createdAt;
 
     @NotNull
@@ -89,7 +88,17 @@ public class Board implements Serializable {
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        if(null == this.createdAt) this.createdAt = createdAt;
+    }
+
+    /**
+     * Can't use the hibernate @CreationTimestamp annotation because demo data generation
+     * needs to set 'createdAt' field
+     */
+    @PrePersist
+    protected void onCreate() {
+        if (null == this.createdAt)
+            this.createdAt = LocalDateTime.now();
     }
 
     public String getDescription() {

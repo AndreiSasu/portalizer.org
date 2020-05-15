@@ -45,6 +45,7 @@ public class SetupDemoBoards implements ApplicationRunner {
             Board board = new BoardBuilder()
                 .withNameStep(nameStep)
                 .withDescriptionStep(descriptionStep)
+                .withCreatedAtStep(dateStep)
                 .withColumnsStep(columnsStep)
                 .withCardsStep(cardsStep)
                 .build();
