@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { faListUl, faSortAmountDown, faSortAmountUp, faTh, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { defaultBoardsFilter, ClearSearch, TextSearch, BoardsFilterEvent } from '../model/boards';
+import { ClearSearch, TextSearch, BoardsFilterEvent } from '../model/boards';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -21,11 +21,19 @@ export class BoardSummmaryControlsComponent implements OnInit {
 
   currentBoardsFilter: BoardsFilterEvent;
 
-  clearInput = new Subject<any>();
+  inputSubject = new Subject<any>();
+
+  defaultSearchValue: string;
+  defaultSearchField: string = 'name';
+
   constructor() {}
 
   ngOnInit() {
-    this.currentBoardsFilter = undefined === this.savedFilter ? defaultBoardsFilter() : this.savedFilter;
+    this.currentBoardsFilter = undefined === this.savedFilter ? BoardsFilterEvent.default() : this.savedFilter;
+    if (this.currentBoardsFilter.textBoxState instanceof TextSearch) {
+      this.defaultSearchValue = this.currentBoardsFilter.textBoxState.search;
+      this.defaultSearchField = this.currentBoardsFilter.textBoxState.fieldName;
+    }
     console.log(this.currentBoardsFilter);
   }
 
@@ -40,8 +48,8 @@ export class BoardSummmaryControlsComponent implements OnInit {
   }
 
   clearAll() {
-    this.currentBoardsFilter = defaultBoardsFilter();
-    this.clearInput.next('');
+    this.currentBoardsFilter = BoardsFilterEvent.default();
+    this.inputSubject.next(TextSearch.default());
     this.doEmit();
   }
 }

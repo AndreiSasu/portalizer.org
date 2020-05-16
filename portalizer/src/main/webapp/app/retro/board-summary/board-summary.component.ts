@@ -1,6 +1,14 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch, BoardsView, BoardsFilterEvent } from '../model/boards';
+import {
+  BoardSummary,
+  CreateBoardRequest,
+  BoardTemplate,
+  TextSearch,
+  ClearSearch,
+  BoardsView,
+  BoardsFilterEvent as BoardsFilter
+} from '../model/boards';
 import { faEye, faListUl, faTh, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
 import { CommunicationService } from '../communication.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -8,7 +16,7 @@ import { PaginationPage } from '../model/pagination';
 import { CreateBoardModalComponent } from '../create-board-modal/create-board-modal.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { defaultBoardsFilter, filterToLocation } from '../model/boards';
+import { filterToLocation } from '../model/boards';
 
 @Component({
   selector: 'jhi-board-summary',
@@ -30,7 +38,7 @@ export class BoardSummaryComponent implements OnInit {
   boardTemplates: Array<BoardTemplate>;
 
   view = BoardsView.GRID;
-  savedFilter = defaultBoardsFilter();
+  savedFilter = BoardsFilter.default();
 
   formModel = {
     boardName: '',
@@ -67,7 +75,7 @@ export class BoardSummaryComponent implements OnInit {
     });
   }
 
-  onFilterChange(event: BoardsFilterEvent) {
+  onFilterChange(event: BoardsFilter) {
     this.savedFilter = event;
     this.updateLocation();
   }
@@ -86,6 +94,10 @@ export class BoardSummaryComponent implements OnInit {
     }
     if (params.has('itemsPerPage')) {
       this.savedFilter.itemsPerPage = params.get('itemsPerPage');
+    }
+    if (params.has('searchField') && params.has('searchPhrase')) {
+      let textSearch = new TextSearch(params.get('searchField'), params.get('searchPhrase'));
+      this.savedFilter.textBoxState = textSearch;
     }
   }
 

@@ -49,6 +49,9 @@ export class SaveBoardRequest {
 
 export class TextSearch {
   constructor(public fieldName: string, public search: string) {}
+  static default() {
+    return new TextSearch('name', '');
+  }
 }
 
 export class ClearSearch {}
@@ -77,16 +80,20 @@ export class BoardsFilterEvent {
     public itemsPerPage: number,
     public textBoxState: TextSearch | ClearSearch
   ) {}
+
+  static default() {
+    return new BoardsFilterEvent(BoardsView.GRID, 'createdAt', SortDirection.DESC, 25, new ClearSearch());
+  }
 }
 
 export class InformationCardReorderRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number, public oldColumn: string, public newColumn: string) {}
 }
 
-export function defaultBoardsFilter(): BoardsFilterEvent {
-  return new BoardsFilterEvent(BoardsView.GRID, 'createdAt', SortDirection.DESC, 25, new ClearSearch());
-}
-
 export function filterToLocation(basePath: string, view: BoardsView, filter: BoardsFilterEvent): string {
-  return `${basePath}?view=${view}&sortBy=${filter.sortByFieldName}&sortDirection=${filter.sortDirection}&itemsPerPage=${filter.itemsPerPage}`;
+  let url = `${basePath}?view=${view}&sortBy=${filter.sortByFieldName}&sortDirection=${filter.sortDirection}&itemsPerPage=${filter.itemsPerPage}`;
+  if (filter.textBoxState instanceof TextSearch) {
+    url += `&searchField=${filter.textBoxState.fieldName}&searchPhrase=${filter.textBoxState.search}`;
+  }
+  return url;
 }

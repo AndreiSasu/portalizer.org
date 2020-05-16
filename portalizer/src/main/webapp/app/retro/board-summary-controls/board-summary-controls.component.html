@@ -1,10 +1,9 @@
 <div id="container">
 
-
-
-
     <div class="grow2">
-        <jhi-searchbar [inputSubject]="clearInput" (inputCleared)="onSearchInputChange($event)" (searchButtonClicked)="onSearchInputChange($event)"></jhi-searchbar>
+        <jhi-searchbar [selection]="defaultSearchField" [searchValue]="defaultSearchValue" [inputSubject]="inputSubject"
+            (inputCleared)="onSearchInputChange($event)" (searchButtonClicked)="onSearchInputChange($event)">
+        </jhi-searchbar>
     </div>
 
     <div class="btn-toolbar">
@@ -17,10 +16,9 @@
                 class="btn btn-outline-secondary dropdown-toggle-split unified-with-input no-right-border no-left-border"
                 ngbDropdownToggle></button>
             <div class="dropdown-menu" ngbDropdownMenu>
-                <button ngbDropdownItem
-                    (click)="currentBoardsFilter.sortByFieldName='createdAt'; doEmit()">Created at</button>
-                <button ngbDropdownItem
-                    (click)="currentBoardsFilter.sortByFieldName='totalCards'; doEmit()">Total
+                <button ngbDropdownItem (click)="currentBoardsFilter.sortByFieldName='createdAt'; doEmit()">Created
+                    at</button>
+                <button ngbDropdownItem (click)="currentBoardsFilter.sortByFieldName='totalCards'; doEmit()">Total
                     cards</button>
             </div>
         </div>
@@ -61,7 +59,8 @@
             </div>
         </div>
     </div>
-    <button class="btn btn-outline-info dropdown-toggle-split unified-with-input no-right-border no-left-border" (click)="clearAll(); doEmit()">
+    <button class="btn btn-outline-info dropdown-toggle-split unified-with-input no-right-border no-left-border"
+        (click)="clearAll(); doEmit()">
         <fa-icon [icon]="faTimesCircle"></fa-icon> Clear All
     </button>
 </div>

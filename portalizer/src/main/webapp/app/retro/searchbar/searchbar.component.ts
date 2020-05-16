@@ -1,28 +1,33 @@
-import { EventEmitter, Output, Component, OnInit, Input } from '@angular/core';
+import { EventEmitter, Output, Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { BoardService } from '../board.service';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 import { BoardSummary, TextSearch, ClearSearch } from '../model/boards';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'jhi-searchbar',
   templateUrl: './searchbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./searchbar.component.scss']
 })
+/* eslint-disable */
 export class SearchbarComponent implements OnInit {
   faSearch = faSearch;
-  selection = 'name';
-  searchValue: string;
+
   searching = false;
   searchFailed = false;
+  searchControl = new FormControl();
 
-  @Input() inputSubject = new Subject<string>();
+  @Input() selection = 'name';
+  @Input() searchValue: string;
+  @Input() inputSubject = new Subject<TextSearch>();
   @Output() searchButtonClicked = new EventEmitter<TextSearch>();
   @Output() inputCleared = new EventEmitter<ClearSearch>();
 
-  constructor(private boardService: BoardService, private router: Router) {}
+  constructor(private boardService: BoardService, private router: Router, private changeDetectorRef: ChangeDetectorRef) {}
 
   searchBoards = (text$: Observable<string>) =>
     text$.pipe(
@@ -43,13 +48,20 @@ export class SearchbarComponent implements OnInit {
 
   ngOnInit() {
     this.inputSubject.subscribe(event => {
-      this.searchValue = event;
+      this.searchValue = event.search;
+      this.selection = event.fieldName;
+      this.searchControl.setValue(this.searchValue);
     });
+
+    this.searchControl.setValue(this.searchValue);
   }
 
   formatter = x => x;
   inputFormatter = (boardSummary: BoardSummary) => boardSummary.name;
 
+  inputChange(event: any) {
+    console.log('----- input change', event);
+  }
   changeSelection(selection: string) {
     this.selection = selection;
   }
@@ -67,6 +79,7 @@ export class SearchbarComponent implements OnInit {
       this.doEmit();
     } else if ('search' === event.type) {
       console.log('is clear search');
+      this.searchValue = '';
       this.inputCleared.emit(new ClearSearch());
     }
   }
