@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { faListUl, faSortAmountDown, faSortAmountUp, faTh, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { defaultBoardsFilter, ClearSearch, TextSearch } from '../model/boards';
+import { defaultBoardsFilter, ClearSearch, TextSearch, BoardsFilterEvent } from '../model/boards';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -15,7 +15,12 @@ export class BoardSummmaryControlsComponent implements OnInit {
   faSortUp = faSortAmountUp;
   faSortDown = faSortAmountDown;
   faTimesCircle = faTimesCircle;
-  currentBoardsFilter = defaultBoardsFilter();
+
+  @Input() savedFilter: BoardsFilterEvent;
+  @Output() filtersChanged = new EventEmitter<BoardsFilterEvent>();
+
+  currentBoardsFilter = undefined == this.savedFilter ? defaultBoardsFilter() : this.savedFilter;
+
   clearInput = new Subject<any>();
   constructor() {}
 
@@ -30,11 +35,12 @@ export class BoardSummmaryControlsComponent implements OnInit {
 
   doEmit() {
     console.log(this.currentBoardsFilter);
+    this.filtersChanged.emit(this.currentBoardsFilter);
   }
 
   clearAll() {
     this.currentBoardsFilter = defaultBoardsFilter();
     this.clearInput.next('');
-    console.log(this.currentBoardsFilter);
+    this.doEmit();
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch } from '../model/boards';
-import { faEye, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
+import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch, BoardsView } from '../model/boards';
+import { faEye, faListUl, faTh, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
 import { CommunicationService } from '../communication.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -21,9 +21,13 @@ export class BoardSummaryComponent implements OnInit {
   faTrash = faTrash;
   faArchive = faArchive;
   faClock = faClock;
+  faListUl = faListUl;
+  faTh = faTh;
   faPlusSquare = faPlusSquare;
   closeResult: string;
   boardTemplates: Array<BoardTemplate>;
+
+  view = BoardsView.GRID;
 
   formModel = {
     boardName: '',

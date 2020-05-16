@@ -51,3 +51,21 @@
 .summary-toolbar {
   background-color: rgb(125, 140, 146);
 }
+
+#container {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
+.grow1 {
+  flex-grow: 1;
+}
+
+.grow3 {
+  flex-grow: 3;
+}
+
+.grow2 {
+  flex-grow: 2;
+}
