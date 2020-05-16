@@ -1,0 +1,64 @@
+<div id="container">
+
+    <div class="grow1">
+        <button class="btn btn-outline-secondary active" type="button" id="button-addon2">
+            Card View <fa-icon [icon]="faTh"></fa-icon>
+        </button>
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+            List View <fa-icon [icon]="faListUl"></fa-icon>
+        </button>
+    </div>
+
+
+    <div class="grow2">
+        <jhi-searchbar (inputCleared)="onClear($event)" (searchButtonClicked)="onSearch($event)"></jhi-searchbar>
+    </div>
+
+    <div>
+        <button type="button" class="btn btn-outline-secondary no-hover unified-with-input no-right-border">Sort by:
+            <span class="badge badge-info">{{currentBoardsFilter.sortBy}}</span>
+        </button>
+        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+            <button
+                class="btn btn-outline-secondary dropdown-toggle-split unified-with-input no-right-border no-left-border"
+                ngbDropdownToggle></button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button ngbDropdownItem>Created Date</button>
+                <button ngbDropdownItem>Total Cards</button>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button class="btn btn-outline-secondary active" type="button" id="button-addon2">
+            Descending <fa-icon [icon]="faSortDown"></fa-icon>
+        </button>
+
+        <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+            Ascending <fa-icon [icon]="faSortUp"></fa-icon>
+        </button>
+    </div>
+
+
+    <div class="grow1">
+        <button type="button" class="btn btn-outline-secondary no-hover unified-with-input no-right-border">Items per
+            page: <span class="badge badge-info">{{currentBoardsFilter.itemsPerPage}}</span>
+
+        </button>
+        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+            <button
+                class="btn btn-outline-secondary dropdown-toggle-split unified-with-input no-right-border no-left-border"
+                ngbDropdownToggle></button>
+            <div class="dropdown-menu" ngbDropdownMenu>
+                <button ngbDropdownItem>10</button>
+                <button ngbDropdownItem>25</button>
+                <button ngbDropdownItem>50</button>
+                <button ngbDropdownItem>100</button>
+                <button ngbDropdownItem>500</button>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-outline-info dropdown-toggle-split unified-with-input no-right-border no-left-border">
+        <fa-icon [icon]="faTimesCircle"></fa-icon> Clear All
+    </button>
+</div>
