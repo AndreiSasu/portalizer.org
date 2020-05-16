@@ -73,7 +73,6 @@ export class BoardsFilterEvent {
   constructor(
     public view: BoardsView,
     public sortByFieldName: string,
-    public sortByDisplayName: string,
     public sortDirection: SortDirection,
     public itemsPerPage: number,
     public textBoxState: TextSearch | ClearSearch
@@ -85,5 +84,9 @@ export class InformationCardReorderRequest {
 }
 
 export function defaultBoardsFilter(): BoardsFilterEvent {
-  return new BoardsFilterEvent(BoardsView.GRID, 'createdAt', 'Date created', SortDirection.DESC, 25, new ClearSearch());
+  return new BoardsFilterEvent(BoardsView.GRID, 'createdAt', SortDirection.DESC, 25, new ClearSearch());
+}
+
+export function filterToLocation(basePath: string, view: BoardsView, filter: BoardsFilterEvent): string {
+  return `${basePath}?view=${view}&sortBy=${filter.sortByFieldName}&sortDirection=${filter.sortDirection}&itemsPerPage=${filter.itemsPerPage}`;
 }

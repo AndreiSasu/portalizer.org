@@ -17,14 +17,15 @@ export class BoardSummmaryControlsComponent implements OnInit {
   faTimesCircle = faTimesCircle;
 
   @Input() savedFilter: BoardsFilterEvent;
-  @Output() filtersChanged = new EventEmitter<BoardsFilterEvent>();
+  @Output() filterChanged = new EventEmitter<BoardsFilterEvent>();
 
-  currentBoardsFilter = undefined == this.savedFilter ? defaultBoardsFilter() : this.savedFilter;
+  currentBoardsFilter: BoardsFilterEvent;
 
   clearInput = new Subject<any>();
   constructor() {}
 
   ngOnInit() {
+    this.currentBoardsFilter = undefined === this.savedFilter ? defaultBoardsFilter() : this.savedFilter;
     console.log(this.currentBoardsFilter);
   }
 
@@ -35,7 +36,7 @@ export class BoardSummmaryControlsComponent implements OnInit {
 
   doEmit() {
     console.log(this.currentBoardsFilter);
-    this.filtersChanged.emit(this.currentBoardsFilter);
+    this.filterChanged.emit(this.currentBoardsFilter);
   }
 
   clearAll() {

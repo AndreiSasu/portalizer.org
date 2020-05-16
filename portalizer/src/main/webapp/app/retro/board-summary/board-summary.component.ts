@@ -1,12 +1,14 @@
 import { Component, OnInit, Injector } from '@angular/core';
 import { BoardService } from '../board.service';
-import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch, BoardsView } from '../model/boards';
+import { BoardSummary, CreateBoardRequest, BoardTemplate, TextSearch, ClearSearch, BoardsView, BoardsFilterEvent } from '../model/boards';
 import { faEye, faListUl, faTh, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
 import { CommunicationService } from '../communication.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Router } from '@angular/router';
 import { PaginationPage } from '../model/pagination';
 import { CreateBoardModalComponent } from '../create-board-modal/create-board-modal.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { defaultBoardsFilter, filterToLocation } from '../model/boards';
 
 @Component({
   selector: 'jhi-board-summary',
@@ -28,6 +30,7 @@ export class BoardSummaryComponent implements OnInit {
   boardTemplates: Array<BoardTemplate>;
 
   view = BoardsView.GRID;
+  savedFilter = defaultBoardsFilter();
 
   formModel = {
     boardName: '',
@@ -42,13 +45,48 @@ export class BoardSummaryComponent implements OnInit {
 
   currentSearch: TextSearch;
 
-  constructor(private boardService: BoardService, private router: Router, private modalService: NgbModal) {}
+  constructor(
+    private boardService: BoardService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private location: Location,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit() {
+    this.route.queryParamMap.subscribe(params => {
+      if (params.keys.length > 0) {
+        this.restoreState(params);
+      }
+      this.updateLocation();
+    });
+
     this.getBoardPages();
     this.boardService.getBoardTemplates().subscribe(boardTemplates => {
       this.boardTemplates = [...boardTemplates];
     });
+  }
+
+  onFilterChange(event: BoardsFilterEvent) {
+    this.savedFilter = event;
+    this.updateLocation();
+  }
+
+  updateLocation() {
+    this.location.go(filterToLocation('/retro/boards', this.view, this.savedFilter));
+  }
+
+  restoreState(params: any) {
+    this.view = params.has('view') && params.get('view') == 'LIST' ? BoardsView.LIST : BoardsView.GRID;
+    if (params.has('sortBy')) {
+      this.savedFilter.sortByFieldName = params.get('sortBy');
+    }
+    if (params.has('sortDirection')) {
+      this.savedFilter.sortDirection = params.get('sortDirection');
+    }
+    if (params.has('itemsPerPage')) {
+      this.savedFilter.itemsPerPage = params.get('itemsPerPage');
+    }
   }
 
   getBoardPages() {

@@ -11,17 +11,16 @@
         <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
 
             <button type="button" class="btn btn-outline-secondary no-hover unified-with-input no-right-border">Sort by:
-                <span class="badge badge-info">{{currentBoardsFilter.sortByDisplayName}}</span>
+                <span class="badge badge-info">{{currentBoardsFilter.sortByFieldName | humanize }}</span>
             </button>
             <button
                 class="btn btn-outline-secondary dropdown-toggle-split unified-with-input no-right-border no-left-border"
                 ngbDropdownToggle></button>
             <div class="dropdown-menu" ngbDropdownMenu>
                 <button ngbDropdownItem
-                    (click)="currentBoardsFilter.sortByFieldName='createdAt'; currentBoardsFilter.sortByDisplayName='Date created'; doEmit()">Date
-                    created</button>
+                    (click)="currentBoardsFilter.sortByFieldName='createdAt'; doEmit()">Created at</button>
                 <button ngbDropdownItem
-                    (click)="currentBoardsFilter.sortByFieldName='totalCards'; currentBoardsFilter.sortByDisplayName='Total cards'; doEmit()">Total
+                    (click)="currentBoardsFilter.sortByFieldName='totalCards'; doEmit()">Total
                     cards</button>
             </div>
         </div>

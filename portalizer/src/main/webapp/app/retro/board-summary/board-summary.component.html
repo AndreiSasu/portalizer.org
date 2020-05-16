@@ -1,16 +1,16 @@
 <div id="container">
     <div class="grow1 btn-toolbar">
-        <button class="btn btn-outline-secondary" [class.active]="view=='GRID'" (click)="view='GRID'" type="button"
+        <button class="btn btn-outline-secondary" [class.active]="view=='GRID'" (click)="view='GRID'; updateLocation()" type="button"
             id="button-addon2">
             Card View <fa-icon [icon]="faTh"></fa-icon>
         </button>
-        <button class="btn btn-outline-secondary" [class.active]="view=='LIST'" (click)="view='LIST'" type="button"
+        <button class="btn btn-outline-secondary" [class.active]="view=='LIST'" (click)="view='LIST'; updateLocation()" type="button"
             id="button-addon2">
             List View <fa-icon [icon]="faListUl"></fa-icon>
         </button>
     </div>
 
-    <jhi-board-summary-controls class="grow3"></jhi-board-summary-controls>
+    <jhi-board-summary-controls class="grow3" [savedFilter]="savedFilter" (filterChanged)="onFilterChange($event)"></jhi-board-summary-controls>
 
 </div>
 
