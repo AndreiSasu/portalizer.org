@@ -57,10 +57,6 @@ export class ColumnReorderRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number) {}
 }
 
-export class BoardsCardView {}
-
-export class BoardsListView {}
-
 export class BoardsClearAllFiltersEvent {}
 
 export enum SortDirection {
@@ -68,9 +64,16 @@ export enum SortDirection {
   ASC = 'ASC'
 }
 
+export enum BoardsView {
+  LIST = 'LIST',
+  GRID = 'GRID'
+}
+
 export class BoardsFilterEvent {
   constructor(
-    public sortBy: string,
+    public view: BoardsView,
+    public sortByFieldName: string,
+    public sortByDisplayName: string,
     public sortDirection: SortDirection,
     public itemsPerPage: number,
     public textBoxState: TextSearch | ClearSearch
@@ -81,4 +84,6 @@ export class InformationCardReorderRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number, public oldColumn: string, public newColumn: string) {}
 }
 
-export const defaultBoardsFilter = new BoardsFilterEvent('createdAt', SortDirection.DESC, 25, new ClearSearch());
+export function defaultBoardsFilter(): BoardsFilterEvent {
+  return new BoardsFilterEvent(BoardsView.GRID, 'createdAt', 'Date created', SortDirection.DESC, 25, new ClearSearch());
+}

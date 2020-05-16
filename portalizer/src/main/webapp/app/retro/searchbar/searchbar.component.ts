@@ -1,7 +1,7 @@
-import { EventEmitter, Output, Component, OnInit } from '@angular/core';
+import { EventEmitter, Output, Component, OnInit, Input } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { BoardService } from '../board.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 import { BoardSummary, TextSearch, ClearSearch } from '../model/boards';
 import { Router } from '@angular/router';
@@ -18,6 +18,7 @@ export class SearchbarComponent implements OnInit {
   searching = false;
   searchFailed = false;
 
+  @Input() inputSubject = new Subject<string>();
   @Output() searchButtonClicked = new EventEmitter<TextSearch>();
   @Output() inputCleared = new EventEmitter<ClearSearch>();
 
@@ -40,7 +41,11 @@ export class SearchbarComponent implements OnInit {
       tap(() => (this.searching = false))
     );
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.inputSubject.subscribe(event => {
+      this.searchValue = event;
+    });
+  }
 
   formatter = x => x;
   inputFormatter = (boardSummary: BoardSummary) => boardSummary.name;
