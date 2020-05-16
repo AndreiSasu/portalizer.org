@@ -11,17 +11,17 @@
 <div class="container">
     <div class="input-group mb-3">
         <div class="input-group-prepend">
-            <button type="button" class="btn btn-outline-secondary no-hover unified-with-input no-right-border">By {{selection}}: </button>
+            <button type="button" class="btn btn-outline-secondary no-hover unified-with-input no-right-border">Search by {{selection}}: </button>
             <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                 <button class="btn btn-outline-secondary dropdown-toggle-split unified-with-input no-right-border no-left-border" ngbDropdownToggle></button>
                 <div class="dropdown-menu" ngbDropdownMenu>
-                    <button ngbDropdownItem (click)="changeSelection('Name')">Name</button>
-                    <button ngbDropdownItem (click)="changeSelection('Description')">Description</button>
+                    <button ngbDropdownItem (click)="changeSelection('name')">Name</button>
+                    <button ngbDropdownItem (click)="changeSelection('description')">Description</button>
                 </div>
             </div>
         </div>
 
-        <input type="search" class="form-control no-left-border" placeholder="Search..." aria-label="Search"
+        <input type="search" class="form-control no-left-border" aria-label="Search"
             aria-describedby="button-addon2" [(ngModel)]="searchValue" (selectItem)="onItemSelect($event)"
             [ngbTypeahead]="searchBoards" [resultTemplate]="rt" [inputFormatter]="inputFormatter"
             [resultFormatter]="formatter" (search)="onEvent($event)" (keyup.enter)="onEvent($event)">

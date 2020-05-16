@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class SearchbarComponent implements OnInit {
   faSearch = faSearch;
-  selection = 'Name';
+  selection = 'name';
   searchValue: string;
   searching = false;
   searchFailed = false;

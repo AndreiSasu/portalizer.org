@@ -57,6 +57,28 @@ export class ColumnReorderRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number) {}
 }
 
+export class BoardsCardView {}
+
+export class BoardsListView {}
+
+export class BoardsClearAllFiltersEvent {}
+
+export enum SortDirection {
+  DESC = 'DESC',
+  ASC = 'ASC'
+}
+
+export class BoardsFilterEvent {
+  constructor(
+    public sortBy: string,
+    public sortDirection: SortDirection,
+    public itemsPerPage: number,
+    public textBoxState: TextSearch | ClearSearch
+  ) {}
+}
+
 export class InformationCardReorderRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number, public oldColumn: string, public newColumn: string) {}
 }
+
+export const defaultBoardsFilter = new BoardsFilterEvent('createdAt', SortDirection.DESC, 25, new ClearSearch());
