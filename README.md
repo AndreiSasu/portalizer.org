@@ -93,7 +93,7 @@ You can require authentication via the `enable-auth` spring profile.
 ## Changelog
 **1.0.1-RELEASE** 
 
- Improved boards page with sorting and added list view.
+ Improved boards page with sorting, location URL for bookmarking and added list view.
 
 **1.0.0-RELEASE** 
 
