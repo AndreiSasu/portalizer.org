@@ -1,6 +1,7 @@
 package org.portalizer.domain;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Field;
@@ -42,6 +43,17 @@ public class Board implements Serializable {
     private String description;
 
     private LocalDateTime createdAt;
+
+    public int getTotalCards() {
+        return totalCards;
+    }
+
+    public void setTotalCards(int totalCards) {
+        this.totalCards = totalCards;
+    }
+
+    @Formula("(select count(*) from information_card i where i.board_id = id)")
+    private int totalCards;
 
     @NotNull
     @OneToMany(targetEntity = ColumnDefinition.class, mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.EAGER)

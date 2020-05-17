@@ -91,7 +91,7 @@ export class InformationCardReorderRequest {
 }
 
 export function filterToQueryString(page: number, view: BoardsView, filter: BoardsFilterEvent): string {
-  let url = `?view=${view}&sort=${filter.sortByFieldName};${filter.sortDirection}&size=${filter.itemsPerPage}&page=${page}`;
+  let url = `?view=${view}&sort=${filter.sortByFieldName},${filter.sortDirection}&size=${filter.itemsPerPage}&page=${page}`;
   if (filter.textBoxState instanceof TextSearch) {
     url += `&searchField=${filter.textBoxState.fieldName}&searchPhrase=${filter.textBoxState.search}`;
   }

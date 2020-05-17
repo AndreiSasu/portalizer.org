@@ -67,9 +67,9 @@ export class BoardSummaryComponent implements OnInit {
         this.restoreState(params);
       }
       this.updateLocation();
+      this.getBoardPages();
     });
 
-    this.getBoardPages();
     this.boardService.getBoardTemplates().subscribe(boardTemplates => {
       this.boardTemplates = [...boardTemplates];
     });
@@ -78,6 +78,7 @@ export class BoardSummaryComponent implements OnInit {
   onFilterChange(event: BoardsFilter) {
     this.savedFilter = event;
     this.updateLocation();
+    this.getBoardPages();
   }
 
   updateLocation() {
@@ -87,8 +88,8 @@ export class BoardSummaryComponent implements OnInit {
   restoreState(params: any) {
     this.view = params.has('view') && params.get('view') == 'LIST' ? BoardsView.LIST : BoardsView.GRID;
     if (params.has('sort')) {
-      this.savedFilter.sortByFieldName = params.get('sort').split(';')[0];
-      this.savedFilter.sortDirection = params.get('sort').split(';')[1];
+      this.savedFilter.sortByFieldName = params.get('sort').split(',')[0];
+      this.savedFilter.sortDirection = params.get('sort').split(',')[1];
     }
     if (params.has('size')) {
       this.savedFilter.itemsPerPage = params.get('size');
@@ -100,9 +101,9 @@ export class BoardSummaryComponent implements OnInit {
   }
 
   getBoardPages() {
-    this.boardService.getBoardsPage(this.currentPage - 1).subscribe(data => {
+    this.boardService.getBoardsPage(this.currentPage - 1, this.savedFilter).subscribe(data => {
       this.pageObject = data;
-      console.log(this.pageObject);
+      this.pageSize = this.pageObject.size;
       this.boardSummaries = this.pageObject['content'];
     });
   }

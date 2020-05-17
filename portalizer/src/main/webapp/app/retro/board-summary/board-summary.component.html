@@ -35,7 +35,7 @@
                     <br>Add New Board
                 </button>
 
-                <div *ngFor="let boardsummary of boardSummaries | sortBy:'desc':'createdAt'">
+                <div *ngFor="let boardsummary of boardSummaries">
                     <jhi-board-summary-card [boardsummary]="boardsummary" (delete)="this.getBoardPages()">
                     </jhi-board-summary-card>
                 </div>
