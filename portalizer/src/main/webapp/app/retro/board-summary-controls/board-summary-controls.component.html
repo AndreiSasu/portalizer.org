@@ -7,14 +7,12 @@
     </div>
 
     <div class="btn-toolbar">
-        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+        <div class="btn-group spaced-out" ngbDropdown role="group" aria-label="Button group with nested dropdown">
 
-            <button type="button" class="btn btn-outline-secondary no-hover unified-with-input no-right-border">Sort by:
+            <button type="button" class="btn btn-outline-secondary button-control">Sort by:
                 <span class="badge badge-info">{{currentBoardsFilter.sortByFieldName | humanize }}</span>
             </button>
-            <button
-                class="btn btn-outline-secondary dropdown-toggle-split unified-with-input no-right-border no-left-border"
-                ngbDropdownToggle></button>
+            <button class="btn btn-outline-secondary dropdown-toggle-split" ngbDropdownToggle></button>
             <div class="dropdown-menu" ngbDropdownMenu>
 
                 <button ngbDropdownItem (click)="currentBoardsFilter.sortByFieldName='createdAt'; doEmit()">Created
@@ -28,7 +26,7 @@
         </div>
 
         <div class="btn-toolbar">
-            <div class="btn-group">
+            <div class="btn-group spaced-out">
                 <button class="btn btn-outline-secondary" [class.active]="currentBoardsFilter.sortDirection===DESC"
                     type="button" id="button-addon2" (click)="currentBoardsFilter.sortDirection=DESC; doEmit()">
                     Descending <fa-icon [icon]="faSortDown"></fa-icon>
@@ -43,10 +41,9 @@
 
 
         <div class="grow1 btn-toolbar">
-            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+            <div class="btn-group spaced-out" ngbDropdown role="group" aria-label="Button group with nested dropdown">
 
-                <button type="button"
-                    class="btn btn-outline-secondary no-hover unified-with-input no-right-border">Items
+                <button type="button" class="btn btn-outline-secondary button-control">Items
                     per
                     page: <span class="badge badge-info">{{currentBoardsFilter.itemsPerPage}}</span>
 
