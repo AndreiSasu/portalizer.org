@@ -30,11 +30,6 @@
             (selectItem)="onItemSelect($event)" [resultFormatter]="formatter" (search)="onEvent($event)"
             (keyup.enter)="onEvent($event)">
 
-        <!-- <input id="searchbox" type="search" class="form-control no-left-border" aria-label="Search"
-            aria-describedby="button-addon2" [formControl]="searchControl" [(ngModel)]="searchValue" (selectItem)="onItemSelect($event)"
-            [ngbTypeahead]="searchBoards" [resultTemplate]="rt" [inputFormatter]="inputFormatter"
-            [resultFormatter]="formatter" (search)="onEvent($event)" (keyup.enter)="onEvent($event)"> -->
-
         <div class="input-group-append">
             <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="doEmit()">
                 <fa-icon [icon]="faSearch"></fa-icon>
