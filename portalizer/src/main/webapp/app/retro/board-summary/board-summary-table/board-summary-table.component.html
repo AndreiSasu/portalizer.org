@@ -1,0 +1,36 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Board Name</th>
+            <th scope="col">Board Description</th>
+            <th scope="col">Board Columns</th>
+            <th scope="col">Total Cards</th>
+            <th scope="col">
+                <fa-icon [icon]="faClock"></fa-icon> Created At
+            </th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="table-light" *ngFor="let boardsummary of boardSummaries">
+            <th scope="row">{{boardsummary.name}}</th>
+            <td>{{boardsummary.description}}</td>
+            <td><span *ngFor="let columnDefinition of boardsummary.columnDefinitions"
+                    [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.title)]">{{columnDefinition.title}}</span>
+            </td>
+            <td><span class="badge badge-primary badge-pill">{{boardsummary.totalCards}} Cards</span></td>
+            <td> <button type="button" class="btn btn-link disabled">
+
+                    {{ boardsummary.createdAt | date: 'short' }}
+                </button></td>
+            <td><a href="retro/boards/{{boardsummary.id}}" class="btn btn-primary active">
+                    <fa-icon [icon]="faEye"></fa-icon> View
+                </a>
+                <button class="btn btn-secondary card-link" data-dismiss="modal"
+                    (click)="this.delete.emit(boardsummary)">
+                    <fa-icon [icon]="faTrash"></fa-icon> Remove
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

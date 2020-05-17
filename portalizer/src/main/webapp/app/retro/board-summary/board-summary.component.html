@@ -1,16 +1,17 @@
 <div id="container">
     <div class="grow1 btn-toolbar">
-        <button class="btn btn-outline-secondary" [class.active]="view=='GRID'" (click)="view='GRID'; updateLocation()" type="button"
-            id="button-addon2">
+        <button class="btn btn-outline-secondary" [class.active]="view=='GRID'" (click)="view='GRID'; updateLocation()"
+            type="button" id="button-addon2">
             Card View <fa-icon [icon]="faTh"></fa-icon>
         </button>
-        <button class="btn btn-outline-secondary" [class.active]="view=='LIST'" (click)="view='LIST'; updateLocation()" type="button"
-            id="button-addon2">
-            List View <fa-icon [icon]="faListUl"></fa-icon>
+        <button class="btn btn-outline-secondary" [class.active]="view=='LIST'" (click)="view='LIST'; updateLocation()"
+            type="button" id="button-addon2">
+            Table View <fa-icon [icon]="faListUl"></fa-icon>
         </button>
     </div>
 
-    <jhi-board-summary-controls class="grow3" [savedFilter]="savedFilter" (filterChanged)="onFilterChange($event)"></jhi-board-summary-controls>
+    <jhi-board-summary-controls class="grow3" [savedFilter]="savedFilter" (filterChanged)="onFilterChange($event)">
+    </jhi-board-summary-controls>
 
 </div>
 
@@ -24,100 +25,7 @@
         [ellipses]="false" [boundaryLinks]="true" size="lg"></ngb-pagination>
 </div>
 
-<div *ngIf="view=='GRID'">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="cardList">
-
-                <button class="btn btn-outline-primary mb-3" style="max-width: 20rem; vertical-align:middle;"
-                    (click)="openCreateBoardModal()">
-                    <fa-icon [icon]="faPlusSquare" style="size: 9x;" class="fa-10x"></fa-icon>
-                    <br>Add New Board
-                </button>
-
-                <div *ngFor="let boardsummary of boardSummaries">
-                    <jhi-board-summary-card [boardsummary]="boardsummary" (delete)="this.getBoardPages()">
-                    </jhi-board-summary-card>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div *ngIf="view=='LIST'">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Type</th>
-                <th scope="col">Column heading</th>
-                <th scope="col">Column heading</th>
-                <th scope="col">Column heading</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="table-active">
-                <th scope="row">Active</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr>
-                <th scope="row">Default</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="table-primary">
-                <th scope="row">Primary</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="table-secondary">
-                <th scope="row">Secondary</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="table-success">
-                <th scope="row">Success</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="table-danger">
-                <th scope="row">Danger</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="table-warning">
-                <th scope="row">Warning</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="table-info">
-                <th scope="row">Info</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="table-light">
-                <th scope="row">Light</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="table-dark">
-                <th scope="row">Dark</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+<jhi-board-display-container [view]="view" (delete)="this.getBoardPages()" [boardSummaries]="boardSummaries"></jhi-board-display-container>
 
 <div class="container">
     <ngb-pagination class="desktop-pagination" [collectionSize]="pageObject?.totalElements"

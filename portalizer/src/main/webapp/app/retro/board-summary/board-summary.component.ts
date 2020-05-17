@@ -1,20 +1,9 @@
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BoardService } from '../board.service';
-import {
-  BoardSummary,
-  CreateBoardRequest,
-  BoardTemplate,
-  TextSearch,
-  ClearSearch,
-  BoardsView,
-  BoardsFilterEvent as BoardsFilter
-} from '../model/boards';
+import { BoardSummary, BoardTemplate, TextSearch, BoardsView, BoardsFilterEvent as BoardsFilter } from '../model/boards';
 import { faEye, faListUl, faTh, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
-import { CommunicationService } from '../communication.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PaginationPage } from '../model/pagination';
-import { CreateBoardModalComponent } from '../create-board-modal/create-board-modal.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { filterToLocation } from '../model/boards';
 
@@ -51,15 +40,7 @@ export class BoardSummaryComponent implements OnInit {
   paginationSize = 'lg';
   pageSize = 25;
 
-  // currentSearch: TextSearch;
-
-  constructor(
-    private boardService: BoardService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private location: Location,
-    private modalService: NgbModal
-  ) {}
+  constructor(private boardService: BoardService, private route: ActivatedRoute, private location: Location) {}
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
@@ -113,40 +94,5 @@ export class BoardSummaryComponent implements OnInit {
     this.currentPage = event;
     this.getBoardPages();
     this.updateLocation();
-  }
-
-  openCreateBoardModal() {
-    const submit = new CommunicationService<CreateBoardRequest>();
-    this.modalService.open(CreateBoardModalComponent, {
-      centered: true,
-
-      injector: Injector.create([
-        {
-          provide: BoardService,
-          useValue: this.boardService
-        },
-        {
-          provide: CommunicationService,
-          useValue: submit
-        }
-      ])
-    });
-    submit.subject.subscribe(createBoardRequest => {
-      this.onSubmit(createBoardRequest);
-    });
-  }
-
-  onSubmit(request: CreateBoardRequest) {
-    console.log(request);
-    this.boardService.createBoard(request).subscribe(
-      board => {
-        console.log(board);
-        console.log(this.router.url);
-        this.router.navigateByUrl('retro/boards/' + board.id);
-      },
-      error => {
-        console.log(error);
-      }
-    );
   }
 }

@@ -1,0 +1,26 @@
+<div *ngIf="view=='GRID'">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="cardList">
+
+                <button class="btn btn-outline-primary mb-3" style="max-width: 20rem; vertical-align:middle;"
+                    (click)="openCreateBoardModal()">
+                    <fa-icon [icon]="faPlusSquare" style="size: 9x;" class="fa-10x"></fa-icon>
+                    <br>Add New Board
+                </button>
+
+                <div *ngFor="let boardsummary of boardSummaries">
+                    <jhi-board-summary-card [boardsummary]="boardsummary" (delete)="openDeleteConfirmationModal($event)">
+                    </jhi-board-summary-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="view=='LIST'">
+    <button class="btn btn-outline-primary mb-3" (click)="openCreateBoardModal()">
+        <fa-icon [icon]="faPlusSquare"></fa-icon> Add New Board
+    </button>
+    <jhi-board-summary-table [boardSummaries]="boardSummaries" (delete)="openDeleteConfirmationModal($event)"></jhi-board-summary-table>
+</div>
