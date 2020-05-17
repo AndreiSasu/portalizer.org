@@ -51,7 +51,7 @@ export class BoardSummaryComponent implements OnInit {
   paginationSize = 'lg';
   pageSize = 25;
 
-  currentSearch: TextSearch;
+  // currentSearch: TextSearch;
 
   constructor(
     private boardService: BoardService,
@@ -111,25 +111,8 @@ export class BoardSummaryComponent implements OnInit {
   onPageChange(event: number) {
     console.log(event);
     this.currentPage = event;
-    if (this.currentSearch === undefined) {
-      this.getBoardPages();
-    } else {
-      this.onSearch(this.currentSearch, this.currentPage - 1);
-    }
-    this.updateLocation();
-  }
-
-  onSearch(event: TextSearch, currentPage?: number) {
-    this.currentSearch = event;
-    this.boardService.searchHeavy(event.fieldName, event.search, currentPage).subscribe(data => {
-      this.pageObject = data;
-      this.boardSummaries = this.pageObject['content'];
-    });
-  }
-
-  onClear(event: ClearSearch) {
-    this.currentSearch = undefined;
     this.getBoardPages();
+    this.updateLocation();
   }
 
   openCreateBoardModal() {

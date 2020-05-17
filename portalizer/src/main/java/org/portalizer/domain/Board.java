@@ -44,14 +44,6 @@ public class Board implements Serializable {
 
     private LocalDateTime createdAt;
 
-    public int getTotalCards() {
-        return totalCards;
-    }
-
-    public void setTotalCards(int totalCards) {
-        this.totalCards = totalCards;
-    }
-
     @Formula("(select count(*) from information_card i where i.board_id = id)")
     private int totalCards;
 
@@ -62,6 +54,14 @@ public class Board implements Serializable {
 
     @OneToMany(targetEntity = InformationCard.class, mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<InformationCard> informationCards;
+
+    public int getTotalCards() {
+        return totalCards;
+    }
+
+    public void setTotalCards(int totalCards) {
+        this.totalCards = totalCards;
+    }
 
     public UUID getId() {
         return id;

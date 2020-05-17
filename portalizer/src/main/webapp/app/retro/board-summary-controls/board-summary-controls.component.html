@@ -16,51 +16,55 @@
                 class="btn btn-outline-secondary dropdown-toggle-split unified-with-input no-right-border no-left-border"
                 ngbDropdownToggle></button>
             <div class="dropdown-menu" ngbDropdownMenu>
+
                 <button ngbDropdownItem (click)="currentBoardsFilter.sortByFieldName='createdAt'; doEmit()">Created
                     at</button>
                 <button ngbDropdownItem (click)="currentBoardsFilter.sortByFieldName='totalCards'; doEmit()">Total
                     cards</button>
+
+                <button ngbDropdownItem *ngIf="enableRelevance"
+                    (click)="currentBoardsFilter.sortByFieldName='relevance'; doEmit()">Relevance
             </div>
         </div>
-    </div>
 
-    <div class="btn-toolbar">
-        <div class="btn-group">
-            <button class="btn btn-outline-secondary" [class.active]="currentBoardsFilter.sortDirection=='DESC'"
-                type="button" id="button-addon2" (click)="currentBoardsFilter.sortDirection='DESC'; doEmit()">
-                Descending <fa-icon [icon]="faSortDown"></fa-icon>
-            </button>
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <button class="btn btn-outline-secondary" [class.active]="currentBoardsFilter.sortDirection=='DESC'"
+                    type="button" id="button-addon2" (click)="currentBoardsFilter.sortDirection='DESC'; doEmit()">
+                    Descending <fa-icon [icon]="faSortDown"></fa-icon>
+                </button>
 
-            <button class="btn btn-outline-secondary" [class.active]="currentBoardsFilter.sortDirection=='ASC'"
-                type="button" id="button-addon2" (click)="currentBoardsFilter.sortDirection='ASC'; doEmit()">
-                Ascending <fa-icon [icon]="faSortUp"></fa-icon>
-            </button>
-        </div>
-    </div>
-
-
-    <div class="grow1 btn-toolbar">
-        <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
-
-            <button type="button" class="btn btn-outline-secondary no-hover unified-with-input no-right-border">Items
-                per
-                page: <span class="badge badge-info">{{currentBoardsFilter.itemsPerPage}}</span>
-
-            </button>
-            <button
-                class="btn btn-outline-secondary dropdown-toggle-split unified-with-input no-right-border no-left-border"
-                ngbDropdownToggle></button>
-            <div class="dropdown-menu" ngbDropdownMenu>
-                <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=10; doEmit()">10</button>
-                <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=25; doEmit()">25</button>
-                <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=50; doEmit()">50</button>
-                <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=100; doEmit()">100</button>
-                <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=500; doEmit()">500</button>
+                <button class="btn btn-outline-secondary" [class.active]="currentBoardsFilter.sortDirection=='ASC'"
+                    type="button" id="button-addon2" (click)="currentBoardsFilter.sortDirection='ASC'; doEmit()">
+                    Ascending <fa-icon [icon]="faSortUp"></fa-icon>
+                </button>
             </div>
         </div>
+
+
+        <div class="grow1 btn-toolbar">
+            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+
+                <button type="button"
+                    class="btn btn-outline-secondary no-hover unified-with-input no-right-border">Items
+                    per
+                    page: <span class="badge badge-info">{{currentBoardsFilter.itemsPerPage}}</span>
+
+                </button>
+                <button
+                    class="btn btn-outline-secondary dropdown-toggle-split unified-with-input no-right-border no-left-border"
+                    ngbDropdownToggle></button>
+                <div class="dropdown-menu" ngbDropdownMenu>
+                    <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=10; doEmit()">10</button>
+                    <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=25; doEmit()">25</button>
+                    <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=50; doEmit()">50</button>
+                    <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=100; doEmit()">100</button>
+                    <button ngbDropdownItem (click)="currentBoardsFilter.itemsPerPage=500; doEmit()">500</button>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-outline-info dropdown-toggle-split unified-with-input no-right-border no-left-border"
+            (click)="clearAll(); doEmit()">
+            <fa-icon [icon]="faTimesCircle"></fa-icon> Clear All
+        </button>
     </div>
-    <button class="btn btn-outline-info dropdown-toggle-split unified-with-input no-right-border no-left-border"
-        (click)="clearAll(); doEmit()">
-        <fa-icon [icon]="faTimesCircle"></fa-icon> Clear All
-    </button>
-</div>

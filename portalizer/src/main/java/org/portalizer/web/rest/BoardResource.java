@@ -1,6 +1,7 @@
 package org.portalizer.web.rest;
 
 import io.github.jhipster.web.util.HeaderUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.*;
 import org.slf4j.Logger;
@@ -32,8 +33,12 @@ public class BoardResource {
     }
 
     @GetMapping("/boards")
-    public ResponseEntity<Page<BoardSummaryDTO>> getAllBoards(@PageableDefault(size = 25, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        return new ResponseEntity<>(boardService.findAll(pageable), HttpStatus.OK);
+    public ResponseEntity<Page<BoardSummaryDTO>> getAllBoards(
+        @RequestParam(required = false) final String searchField, @RequestParam(required = false) final String searchPhrase,
+        @PageableDefault(size = 25, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        return StringUtils.isNotEmpty(searchField) && StringUtils.isNotEmpty(searchPhrase) ?
+            new ResponseEntity<>(boardService.searchAll(searchField, searchPhrase, pageable), HttpStatus.OK) :
+            new ResponseEntity<>(boardService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/boards/{id}")

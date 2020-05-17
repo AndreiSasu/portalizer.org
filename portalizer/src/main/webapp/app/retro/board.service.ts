@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { BoardSummary, Board, CreateBoardRequest, BoardTemplate, SaveBoardRequest, BoardsFilterEvent } from './model/boards';
+import { BoardSummary, Board, CreateBoardRequest, BoardTemplate, SaveBoardRequest, BoardsFilterEvent, TextSearch } from './model/boards';
 import { PaginationPage } from './model/pagination';
 import { SERVER_API_URL } from '../app.constants';
 import { ColumnsUpdateRequest, ColumnAddRequest, BoardColumn, ColumnDeleteRequest } from './model/columns';
@@ -30,15 +30,6 @@ export class BoardService {
     return this.http.get<Array<BoardSummary>>(this.BOARDS_SEARCH_LIGHT_URL + '?fieldName=' + field + '&search=' + search);
   }
 
-  searchHeavy(field: string, search: string, page?: number): Observable<PaginationPage<BoardSummary>> {
-    let url = this.BOARDS_SEARCH_HEAVY_URL + '?fieldName=' + field + '&search=' + search;
-    if (page !== undefined) {
-      url += '&page=' + page;
-    }
-    console.log(url);
-    return this.http.get<PaginationPage<BoardSummary>>(url);
-  }
-
   deleteColumn(columnDeleteRequest: ColumnDeleteRequest): Observable<any> {
     return this.http.delete<any>(`${this.BOARDS_URL}${columnDeleteRequest.boardId}/delete-column/${columnDeleteRequest.columnId}`).pipe(
       tap(_ => console.log(`deleted column  ${columnDeleteRequest.boardId}/delete-column/${columnDeleteRequest.columnId}`)),
@@ -61,9 +52,14 @@ export class BoardService {
   }
 
   getBoardsPage(page: number, savedFilter: BoardsFilterEvent): Observable<PaginationPage<BoardSummary>> {
-    return this.http.get<PaginationPage<BoardSummary>>(
-      `${this.BOARDS_PAGING_URL}?sort=${savedFilter.sortByFieldName},${savedFilter.sortDirection}&page=${page}&size=${savedFilter.itemsPerPage}`
-    );
+    let url = `${this.BOARDS_PAGING_URL}?sort=${savedFilter.sortByFieldName},${savedFilter.sortDirection}&page=${page}&size=${savedFilter.itemsPerPage}`;
+    if (savedFilter.textBoxState instanceof TextSearch) {
+      let asTextSearch = savedFilter.textBoxState as TextSearch;
+      if (asTextSearch.fieldName.length > 0 && asTextSearch.search.length > 0) {
+        url += `&searchField=${asTextSearch.fieldName}&searchPhrase=${asTextSearch.search}`;
+      }
+    }
+    return this.http.get<PaginationPage<BoardSummary>>(url);
   }
 
   getBoardTemplates(): Observable<Array<BoardTemplate>> {

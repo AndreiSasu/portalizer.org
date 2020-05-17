@@ -26,6 +26,8 @@ export class BoardSummmaryControlsComponent implements OnInit {
   defaultSearchValue: string;
   defaultSearchField: string = 'name';
 
+  enableRelevance: boolean;
+
   constructor() {}
 
   ngOnInit() {
@@ -38,7 +40,17 @@ export class BoardSummmaryControlsComponent implements OnInit {
   }
 
   onSearchInputChange(event: ClearSearch | TextSearch) {
+    const previousState = this.currentBoardsFilter.textBoxState;
     this.currentBoardsFilter.textBoxState = event;
+
+    if (previousState instanceof ClearSearch && event instanceof TextSearch) {
+      this.enableRelevance = true;
+      this.currentBoardsFilter.sortByFieldName = 'relevance';
+    } else if (event instanceof ClearSearch) {
+      this.enableRelevance = false;
+      this.currentBoardsFilter = BoardsFilterEvent.default();
+    }
+
     this.doEmit();
   }
 
@@ -48,6 +60,7 @@ export class BoardSummmaryControlsComponent implements OnInit {
   }
 
   clearAll() {
+    this.enableRelevance = false;
     this.currentBoardsFilter = BoardsFilterEvent.default();
     this.inputSubject.next(TextSearch.default());
     this.doEmit();
