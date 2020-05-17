@@ -32,10 +32,4 @@ public class BoardSearchResource {
     public ResponseEntity<List<BoardProjectionDTO>> getBoardProjections(@RequestParam(required = true) final String fieldName, @RequestParam(required = true) final String search) {
         return new ResponseEntity<>(boardService.search(fieldName, search), HttpStatus.OK);
     }
-
-    @GetMapping("/heavy")
-    public ResponseEntity<Page<BoardSummaryDTO>> getBoards(@RequestParam(required = true) final String fieldName, @RequestParam(required = true) final String search,
-                                                           @PageableDefault(size = 25, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        return new ResponseEntity<>(boardService.searchAll(fieldName, search, pageable), HttpStatus.OK);
-    }
 }
