@@ -22,14 +22,9 @@
                 <fa-icon [icon]="faEye"></fa-icon> View
             </a>
             <button class="btn btn-secondary card-link" data-dismiss="modal"
-                (click)="openDeleteConfirmationModal(boardsummary)">
+                (click)="this.delete.emit(boardsummary)">
                 <fa-icon [icon]="faTrash"></fa-icon> Remove
             </button>
-
-            <!-- <button class="btn btn-info card-link" data-dismiss="modal">
-                <fa-icon [icon]="faArchive"></fa-icon> Archive
-            </button> -->
-
         </div>
     </div>
 </div>

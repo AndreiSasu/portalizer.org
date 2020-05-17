@@ -19,6 +19,10 @@ import { AddColumnModalComponent } from './board-details/add-column-modal/add-co
 import { DragulaModule } from 'ng2-dragula';
 import { DeleteColumnModalComponent } from './board-details/delete-column-modal/delete-column-modal.component';
 import { BoardSummaryCardComponent } from './board-summary/board-summary-card/board-summary-card.component';
+import { BoardSummmaryControlsComponent } from './board-summary-controls/board-summary-controls.component';
+import { HumanizePipe } from './humanize.pipe';
+import { BoardSummaryTableComponent } from './board-summary/board-summary-table/board-summary-table.component';
+import { BoardDisplayContainerComponent } from './board-summary/board-display-container/board-display-container.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { BoardSummaryCardComponent } from './board-summary/board-summary-card/bo
     FilterPipe,
     AddColumnModalComponent,
     DeleteColumnModalComponent,
-    BoardSummaryCardComponent
+    BoardSummaryCardComponent,
+    BoardSummmaryControlsComponent,
+    HumanizePipe,
+    BoardSummaryTableComponent,
+    BoardDisplayContainerComponent
   ],
   imports: [
     FontAwesomeModule,

@@ -91,7 +91,13 @@ You can require authentication via the `enable-auth` spring profile.
 
 
 ## Changelog
-Initial version **1.0.0-RELEASE**
+**1.0.1-RELEASE** 
+
+ Improved boards page with sorting and added list view.
+
+**1.0.0-RELEASE** 
+
+Initial version 
 
    - Support for creating sprint retrospective boards from predefined templates: 
    

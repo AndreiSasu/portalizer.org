@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
-import { BoardSummary, Board, CreateBoardRequest, BoardTemplate, SaveBoardRequest } from './model/boards';
+import { BoardSummary, Board, CreateBoardRequest, BoardTemplate, SaveBoardRequest, BoardsFilterEvent, TextSearch } from './model/boards';
 import { PaginationPage } from './model/pagination';
 import { SERVER_API_URL } from '../app.constants';
 import { ColumnsUpdateRequest, ColumnAddRequest, BoardColumn, ColumnDeleteRequest } from './model/columns';
@@ -19,7 +19,7 @@ export class BoardService {
   };
 
   BOARDS_URL = SERVER_API_URL + '/api/retro/boards/';
-  BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards?page=';
+  BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards';
   BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/retro/boardtemplates/';
   BOARDS_SEARCH_LIGHT_URL = SERVER_API_URL + '/api/retro/boards/search/light';
   BOARDS_SEARCH_HEAVY_URL = SERVER_API_URL + '/api/retro/boards/search/heavy';
@@ -28,15 +28,6 @@ export class BoardService {
 
   searchLight(field: string, search: string): Observable<Array<BoardSummary>> {
     return this.http.get<Array<BoardSummary>>(this.BOARDS_SEARCH_LIGHT_URL + '?fieldName=' + field + '&search=' + search);
-  }
-
-  searchHeavy(field: string, search: string, page?: number): Observable<PaginationPage<BoardSummary>> {
-    let url = this.BOARDS_SEARCH_HEAVY_URL + '?fieldName=' + field + '&search=' + search;
-    if (page !== undefined) {
-      url += '&page=' + page;
-    }
-    console.log(url);
-    return this.http.get<PaginationPage<BoardSummary>>(url);
   }
 
   deleteColumn(columnDeleteRequest: ColumnDeleteRequest): Observable<any> {
@@ -60,8 +51,15 @@ export class BoardService {
     );
   }
 
-  getBoardsPage(page: number): Observable<PaginationPage<BoardSummary>> {
-    return this.http.get<PaginationPage<BoardSummary>>(this.BOARDS_PAGING_URL + page);
+  getBoardsPage(page: number, savedFilter: BoardsFilterEvent): Observable<PaginationPage<BoardSummary>> {
+    let url = `${this.BOARDS_PAGING_URL}?sort=${savedFilter.sortByFieldName},${savedFilter.sortDirection}&page=${page}&size=${savedFilter.itemsPerPage}`;
+    if (savedFilter.textBoxState instanceof TextSearch) {
+      let asTextSearch = savedFilter.textBoxState as TextSearch;
+      if (asTextSearch.fieldName.length > 0 && asTextSearch.search.length > 0) {
+        url += `&searchField=${asTextSearch.fieldName}&searchPhrase=${asTextSearch.search}`;
+      }
+    }
+    return this.http.get<PaginationPage<BoardSummary>>(url);
   }
 
   getBoardTemplates(): Observable<Array<BoardTemplate>> {

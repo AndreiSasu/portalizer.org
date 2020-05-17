@@ -12,6 +12,7 @@ import org.portalizer.service.mapper.ColumnDefinitionMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +48,8 @@ public class BoardServiceImpl implements BoardService {
     public Page<BoardSummaryDTO> searchAll(String field, String search, Pageable pageable) {
         final Page<Board> boardPage = boardRepository.searchFuzzy(field, search, pageable);
         final List<Board> lazyBoards = boardPage.getContent();
-        final List<BoardSummaryDTO> boardDTOS = lazyBoards.stream().map(this::lazyBoardToDto).collect(Collectors.toList());
+        final List<BoardSummaryDTO> boardDTOS = lazyBoards.stream().map(this::lazyBoardToDto)
+            .collect(Collectors.toList());
         final Page<BoardSummaryDTO> boardDTOsPage = new PageImpl<>(boardDTOS, pageable, boardPage.getTotalElements());
         return boardDTOsPage;
     }
@@ -153,4 +155,5 @@ public class BoardServiceImpl implements BoardService {
         boardDTO.setColumnDefinitions(columnDefinitionDTOS);
         return boardDTO;
     }
+
 }

@@ -1,25 +1,30 @@
-import { EventEmitter, Output, Component, OnInit } from '@angular/core';
+import { EventEmitter, Output, Component, OnInit, Input } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { BoardService } from '../board.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, debounceTime, distinctUntilChanged, tap, switchMap } from 'rxjs/operators';
 import { BoardSummary, TextSearch, ClearSearch } from '../model/boards';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'jhi-searchbar',
   templateUrl: './searchbar.component.html',
   styleUrls: ['./searchbar.component.scss']
 })
+/* eslint-disable */
 export class SearchbarComponent implements OnInit {
   faSearch = faSearch;
-  selection = 'Name';
-  searchValue: string;
+
   searching = false;
   searchFailed = false;
+  searchControl = new FormControl();
 
-  @Output() searchEvent = new EventEmitter<TextSearch>();
-  @Output() clearEvent = new EventEmitter<ClearSearch>();
+  @Input() selection = 'name';
+  @Input() searchValue: string;
+  @Input() inputSubject = new Subject<TextSearch>();
+  @Output() searchButtonClicked = new EventEmitter<TextSearch>();
+  @Output() inputCleared = new EventEmitter<ClearSearch>();
 
   constructor(private boardService: BoardService, private router: Router) {}
 
@@ -40,7 +45,15 @@ export class SearchbarComponent implements OnInit {
       tap(() => (this.searching = false))
     );
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.inputSubject.subscribe(event => {
+      this.searchValue = event.search;
+      this.selection = event.fieldName;
+      this.searchControl.setValue(this.searchValue);
+    });
+
+    this.searchControl.setValue(this.searchValue);
+  }
 
   formatter = x => x;
   inputFormatter = (boardSummary: BoardSummary) => boardSummary.name;
@@ -62,14 +75,15 @@ export class SearchbarComponent implements OnInit {
       this.doEmit();
     } else if ('search' === event.type) {
       console.log('is clear search');
-      this.clearEvent.emit(new ClearSearch());
+      this.searchValue = '';
+      this.inputCleared.emit(new ClearSearch());
     }
   }
 
   doEmit() {
     if (this.searchValue) {
       let event = new TextSearch(this.selection.toLowerCase(), this.searchValue);
-      this.searchEvent.emit(event);
+      this.searchButtonClicked.emit(event);
     }
   }
 }
