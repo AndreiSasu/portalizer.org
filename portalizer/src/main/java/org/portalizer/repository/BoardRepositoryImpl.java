@@ -147,8 +147,12 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
 
         // true if natural order should be reversed
         final boolean descending = so.getDirection().isDescending();
-        //this is still relevance
-        final Sort sorter = new Sort(new SortField(null, SortField.Type.SCORE, descending));
+
+        /**
+         * !descending means do not reverse natural ordering in this case
+         * because most relevant score search results should show at the top.
+         **/
+        final Sort sorter = new Sort(new SortField(null, SortField.Type.SCORE, !descending));
 
         final String fieldName = so.getProperty();
 
