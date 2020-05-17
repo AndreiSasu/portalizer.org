@@ -26,7 +26,11 @@ export class BoardSummaryComponent implements OnInit {
   closeResult: string;
   boardTemplates: Array<BoardTemplate>;
 
+  GRID = BoardsView.GRID;
+  LIST = BoardsView.LIST;
+
   view = BoardsView.GRID;
+
   savedFilter = BoardsFilter.default();
 
   formModel = {

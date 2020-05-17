@@ -29,13 +29,13 @@
 
         <div class="btn-toolbar">
             <div class="btn-group">
-                <button class="btn btn-outline-secondary" [class.active]="currentBoardsFilter.sortDirection=='DESC'"
-                    type="button" id="button-addon2" (click)="currentBoardsFilter.sortDirection='DESC'; doEmit()">
+                <button class="btn btn-outline-secondary" [class.active]="currentBoardsFilter.sortDirection===DESC"
+                    type="button" id="button-addon2" (click)="currentBoardsFilter.sortDirection=DESC; doEmit()">
                     Descending <fa-icon [icon]="faSortDown"></fa-icon>
                 </button>
 
-                <button class="btn btn-outline-secondary" [class.active]="currentBoardsFilter.sortDirection=='ASC'"
-                    type="button" id="button-addon2" (click)="currentBoardsFilter.sortDirection='ASC'; doEmit()">
+                <button class="btn btn-outline-secondary" [class.active]="currentBoardsFilter.sortDirection===ASC"
+                    type="button" id="button-addon2" (click)="currentBoardsFilter.sortDirection=ASC; doEmit()">
                     Ascending <fa-icon [icon]="faSortUp"></fa-icon>
                 </button>
             </div>

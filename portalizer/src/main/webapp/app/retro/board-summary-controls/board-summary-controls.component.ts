@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { faListUl, faSortAmountDown, faSortAmountUp, faTh, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import { ClearSearch, TextSearch, BoardsFilterEvent } from '../model/boards';
+import { ClearSearch, TextSearch, BoardsFilterEvent, SortDirection } from '../model/boards';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -15,6 +15,9 @@ export class BoardSummmaryControlsComponent implements OnInit {
   faSortUp = faSortAmountUp;
   faSortDown = faSortAmountDown;
   faTimesCircle = faTimesCircle;
+
+  DESC = SortDirection.DESC;
+  ASC = SortDirection.ASC;
 
   @Input() savedFilter: BoardsFilterEvent;
   @Output() filterChanged = new EventEmitter<BoardsFilterEvent>();
