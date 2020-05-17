@@ -81,19 +81,17 @@ export class BoardSummaryComponent implements OnInit {
   }
 
   updateLocation() {
-    this.location.go(filterToLocation('/retro/boards', this.view, this.savedFilter));
+    this.location.go(filterToLocation('/retro/boards', this.currentPage - 1, this.view, this.savedFilter));
   }
 
   restoreState(params: any) {
     this.view = params.has('view') && params.get('view') == 'LIST' ? BoardsView.LIST : BoardsView.GRID;
-    if (params.has('sortBy')) {
-      this.savedFilter.sortByFieldName = params.get('sortBy');
+    if (params.has('sort')) {
+      this.savedFilter.sortByFieldName = params.get('sort').split(';')[0];
+      this.savedFilter.sortDirection = params.get('sort').split(';')[1];
     }
-    if (params.has('sortDirection')) {
-      this.savedFilter.sortDirection = params.get('sortDirection');
-    }
-    if (params.has('itemsPerPage')) {
-      this.savedFilter.itemsPerPage = params.get('itemsPerPage');
+    if (params.has('size')) {
+      this.savedFilter.itemsPerPage = params.get('size');
     }
     if (params.has('searchField') && params.has('searchPhrase')) {
       let textSearch = new TextSearch(params.get('searchField'), params.get('searchPhrase'));
@@ -117,6 +115,7 @@ export class BoardSummaryComponent implements OnInit {
     } else {
       this.onSearch(this.currentSearch, this.currentPage - 1);
     }
+    this.updateLocation();
   }
 
   onSearch(event: TextSearch, currentPage?: number) {

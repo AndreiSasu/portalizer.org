@@ -1,4 +1,4 @@
-import { EventEmitter, Output, Component, OnInit, Input, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import { EventEmitter, Output, Component, OnInit, Input } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { BoardService } from '../board.service';
 import { Observable, of, Subject } from 'rxjs';
@@ -10,7 +10,6 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'jhi-searchbar',
   templateUrl: './searchbar.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./searchbar.component.scss']
 })
 /* eslint-disable */
@@ -27,7 +26,7 @@ export class SearchbarComponent implements OnInit {
   @Output() searchButtonClicked = new EventEmitter<TextSearch>();
   @Output() inputCleared = new EventEmitter<ClearSearch>();
 
-  constructor(private boardService: BoardService, private router: Router, private changeDetectorRef: ChangeDetectorRef) {}
+  constructor(private boardService: BoardService, private router: Router) {}
 
   searchBoards = (text$: Observable<string>) =>
     text$.pipe(
@@ -59,9 +58,6 @@ export class SearchbarComponent implements OnInit {
   formatter = x => x;
   inputFormatter = (boardSummary: BoardSummary) => boardSummary.name;
 
-  inputChange(event: any) {
-    console.log('----- input change', event);
-  }
   changeSelection(selection: string) {
     this.selection = selection;
   }

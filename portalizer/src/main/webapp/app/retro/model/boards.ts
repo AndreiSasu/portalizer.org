@@ -90,10 +90,14 @@ export class InformationCardReorderRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number, public oldColumn: string, public newColumn: string) {}
 }
 
-export function filterToLocation(basePath: string, view: BoardsView, filter: BoardsFilterEvent): string {
-  let url = `${basePath}?view=${view}&sortBy=${filter.sortByFieldName}&sortDirection=${filter.sortDirection}&itemsPerPage=${filter.itemsPerPage}`;
+export function filterToQueryString(page: number, view: BoardsView, filter: BoardsFilterEvent): string {
+  let url = `?view=${view}&sort=${filter.sortByFieldName};${filter.sortDirection}&size=${filter.itemsPerPage}&page=${page}`;
   if (filter.textBoxState instanceof TextSearch) {
     url += `&searchField=${filter.textBoxState.fieldName}&searchPhrase=${filter.textBoxState.search}`;
   }
   return url;
+}
+
+export function filterToLocation(basePath: string, page: number, view: BoardsView, filter: BoardsFilterEvent): string {
+  return `${basePath}${filterToQueryString(page, view, filter)}`;
 }
