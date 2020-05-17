@@ -38,6 +38,9 @@ export class BoardSummmaryControlsComponent implements OnInit {
     if (this.currentBoardsFilter.textBoxState instanceof TextSearch) {
       this.defaultSearchValue = this.currentBoardsFilter.textBoxState.search;
       this.defaultSearchField = this.currentBoardsFilter.textBoxState.fieldName;
+      if (this.defaultSearchValue.length > 0) {
+        this.enableRelevance = true;
+      }
     }
     console.log(this.currentBoardsFilter);
   }

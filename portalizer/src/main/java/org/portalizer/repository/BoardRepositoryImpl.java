@@ -1,5 +1,7 @@
 package org.portalizer.repository;
 
+import org.apache.lucene.index.LeafReaderContext;
+import org.apache.lucene.search.*;
 import org.apache.lucene.search.Query;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
@@ -19,6 +21,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -85,7 +89,7 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .keyword()
             .wildcard()
             .onField(fieldName)
-            .matching(searchText+"*")
+            .matching(searchText + "*")
             .createQuery();
 
         List<BoardProjectionDTO> results = getJpaQuery(wildcardQuery, true).getResultList();
@@ -125,17 +129,45 @@ public class BoardRepositoryImpl implements BoardRepositoryCustom {
             .setFirstResult(firstResult)
             .setMaxResults(pageable.getPageSize());
 
+        jpaQuery.setSort(getSort(pageable));
+
         final int totalResults = jpaQuery.getResultSize();
         final List<Board> boards = jpaQuery.getResultList();
 
         return new PageImpl<>(boards, pageable, totalResults);
     }
 
+    private Sort getSort(final Pageable pageable) {
+        Optional<org.springframework.data.domain.Sort.Order> sortOrder = pageable.getSort().get().findFirst();
+
+        if (!sortOrder.isPresent()) {
+            return new Sort(SortField.FIELD_SCORE);
+        }
+        org.springframework.data.domain.Sort.Order so = sortOrder.get();
+
+        // true if natural order should be reversed
+        final boolean descending = so.getDirection().isDescending();
+        //this is still relevance
+        final Sort sorter = new Sort(new SortField(null, SortField.Type.SCORE, descending));
+
+        final String fieldName = so.getProperty();
+
+        if ("totalCards".equalsIgnoreCase(fieldName)) {
+            sorter.setSort(new SortField(fieldName, SortField.Type.INT, descending));
+        }
+
+        if ("createdAt".equalsIgnoreCase(fieldName)) {
+            sorter.setSort(new SortField(fieldName, SortField.Type.STRING, descending));
+        }
+
+        return sorter;
+    }
+
     private FullTextQuery getJpaQuery(org.apache.lucene.search.Query luceneQuery, boolean projection) {
 
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
         final FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Board.class);
-        if(projection) {
+        if (projection) {
             fullTextQuery.setProjection("id", "name", "description")
                 .setResultTransformer(new BoardToBoardProjectionTransformer())
                 .setMaxResults(10); //projections should only be used for typeahead fields with autocomplete

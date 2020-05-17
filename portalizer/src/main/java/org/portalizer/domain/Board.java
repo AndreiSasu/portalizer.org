@@ -1,13 +1,10 @@
 package org.portalizer.domain;
 
-import org.hibernate.annotations.CreationTimestamp;
+
 import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
-import org.hibernate.search.annotations.TermVector;
+import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -42,8 +39,13 @@ public class Board implements Serializable {
     @Column(columnDefinition = "VARCHAR(2048)")
     private String description;
 
+    @Field
+    @DateBridge(resolution=Resolution.MINUTE)
+    @SortableField
     private LocalDateTime createdAt;
 
+    @Field
+    @SortableField
     @Formula("(select count(*) from information_card i where i.board_id = id)")
     private int totalCards;
 
