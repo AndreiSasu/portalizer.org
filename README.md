@@ -91,6 +91,11 @@ You can require authentication via the `enable-auth` spring profile.
 
 
 ## Changelog
+
+**1.0.2-RELEASE**
+
+Maintenance release, upgrading to Angular 9
+
 **1.0.1-RELEASE** 
 
  Improved boards page with sorting, location URL for bookmarking and added list view.
