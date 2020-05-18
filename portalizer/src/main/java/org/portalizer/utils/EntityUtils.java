@@ -61,16 +61,6 @@ public class EntityUtils {
         return columnDefinitions;
     }
 
-    public static List<ColumnDefinition> buildRandomColumnDefinitions(final Board board, final int maxColumns) {
-        final BoardTemplateService boardTemplateService = new BoardTemplateServiceImpl();
-        final ColumnDefinitionMapper columnDefinitionMapper = new ColumnDefinitionMapperImpl();
-        final int size = boardTemplateService.getBoardTemplates().size();
-        final BoardTemplateDTO boardTemplateDTO = boardTemplateService.getBoardTemplates().get(new Random().nextInt(size - 1));
-        final List<ColumnDefinition> columnDefinitions = columnDefinitionMapper.toEntity(boardTemplateDTO.getBoardColumns());
-        columnDefinitions.forEach(columnDefinition -> columnDefinition.setBoard(board));
-        return columnDefinitions;
-    }
-
     public static List<ColumnDefinition> buildColumnDefinitions(final Board board) {
         ColumnDefinition mad = new ColumnDefinition();
         mad.setKey(UUID.randomUUID());

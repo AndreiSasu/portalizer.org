@@ -154,3 +154,11 @@ jhipster:
 # ===================================================================
 
 # application:
+portalizer:
+  demo:
+    max-boards: 500
+    max-random-columns: 10
+    max-cards-per-column: 10
+    boards:
+      # every day at 23:00
+      refresh-cron: 0 0 23 * * ?

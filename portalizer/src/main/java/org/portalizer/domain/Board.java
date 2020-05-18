@@ -1,12 +1,10 @@
 package org.portalizer.domain;
 
-import org.hibernate.annotations.CreationTimestamp;
+
+import org.hibernate.annotations.Formula;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
-import org.hibernate.search.annotations.TermVector;
+import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -41,8 +39,15 @@ public class Board implements Serializable {
     @Column(columnDefinition = "VARCHAR(2048)")
     private String description;
 
-    @CreationTimestamp
+    @Field
+    @DateBridge(resolution=Resolution.MINUTE)
+    @SortableField
     private LocalDateTime createdAt;
+
+    @Field
+    @SortableField
+    @Formula("(select count(*) from information_card i where i.board_id = id)")
+    private int totalCards;
 
     @NotNull
     @OneToMany(targetEntity = ColumnDefinition.class, mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -51,6 +56,14 @@ public class Board implements Serializable {
 
     @OneToMany(targetEntity = InformationCard.class, mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<InformationCard> informationCards;
+
+    public int getTotalCards() {
+        return totalCards;
+    }
+
+    public void setTotalCards(int totalCards) {
+        this.totalCards = totalCards;
+    }
 
     public UUID getId() {
         return id;
@@ -89,7 +102,17 @@ public class Board implements Serializable {
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+        if(null == this.createdAt) this.createdAt = createdAt;
+    }
+
+    /**
+     * Can't use the hibernate @CreationTimestamp annotation because demo data generation
+     * needs to set 'createdAt' field
+     */
+    @PrePersist
+    protected void onCreate() {
+        if (null == this.createdAt)
+            this.createdAt = LocalDateTime.now();
     }
 
     public String getDescription() {

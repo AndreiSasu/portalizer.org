@@ -49,6 +49,9 @@ export class SaveBoardRequest {
 
 export class TextSearch {
   constructor(public fieldName: string, public search: string) {}
+  static default() {
+    return new TextSearch('name', '');
+  }
 }
 
 export class ClearSearch {}
@@ -57,6 +60,44 @@ export class ColumnReorderRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number) {}
 }
 
+export class BoardsClearAllFiltersEvent {}
+
+export enum SortDirection {
+  DESC = 'DESC',
+  ASC = 'ASC'
+}
+
+export enum BoardsView {
+  LIST = 'LIST',
+  GRID = 'GRID'
+}
+
+export class BoardsFilterEvent {
+  constructor(
+    public view: BoardsView,
+    public sortByFieldName: string,
+    public sortDirection: SortDirection,
+    public itemsPerPage: number,
+    public textBoxState: TextSearch | ClearSearch
+  ) {}
+
+  static default() {
+    return new BoardsFilterEvent(BoardsView.GRID, 'createdAt', SortDirection.DESC, 25, new ClearSearch());
+  }
+}
+
 export class InformationCardReorderRequest {
   constructor(public id: string, public oldIndex: number, public newIndex: number, public oldColumn: string, public newColumn: string) {}
+}
+
+export function filterToQueryString(page: number, view: BoardsView, filter: BoardsFilterEvent): string {
+  let url = `?view=${view}&sort=${filter.sortByFieldName},${filter.sortDirection}&size=${filter.itemsPerPage}&page=${page}`;
+  if (filter.textBoxState instanceof TextSearch) {
+    url += `&searchField=${filter.textBoxState.fieldName}&searchPhrase=${filter.textBoxState.search}`;
+  }
+  return url;
+}
+
+export function filterToLocation(basePath: string, page: number, view: BoardsView, filter: BoardsFilterEvent): string {
+  return `${basePath}${filterToQueryString(page, view, filter)}`;
 }

@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { BoardSummary } from 'app/retro/model/boards';
-import { ColorsService } from 'app/retro/colors.service';
 import { faEye, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
+import { ColorsService } from 'app/retro/colors.service';
+import { BoardSummary } from 'app/retro/model/boards';
 
 @Component({
-  selector: 'jhi-board-summary-card',
-  templateUrl: './board-summary-card.component.html',
-  styleUrls: ['./board-summary-card.component.scss']
+  selector: 'jhi-board-summary-table',
+  templateUrl: './board-summary-table.component.html',
+  styleUrls: ['./board-summary-table.component.scss']
 })
-export class BoardSummaryCardComponent implements OnInit {
-  @Input() boardsummary: BoardSummary;
+export class BoardSummaryTableComponent implements OnInit {
+  @Input() boardSummaries: BoardSummary[];
   @Output() delete = new EventEmitter<BoardSummary>();
 
   faEye = faEye;

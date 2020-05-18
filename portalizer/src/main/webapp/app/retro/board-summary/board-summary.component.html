@@ -1,37 +1,38 @@
-<jhi-searchbar (clearEvent)="onClear($event)" (searchEvent)="onSearch($event)"></jhi-searchbar>
-
-<div class="container">
-    <ngb-pagination class="desktop-pagination" [collectionSize]="pageObject?.totalElements" (pageChange)="onPageChange($event)"
-        [(pageSize)]="pageSize" [(page)]="currentPage" [maxSize]="10" [rotate]="true" [ellipses]="true"
-        [boundaryLinks]="true" size="lg"></ngb-pagination>
-    
-    <ngb-pagination class="mobile-pagination" [collectionSize]="pageObject?.totalElements" (pageChange)="onPageChange($event)"
-        [(pageSize)]="pageSize" [(page)]="currentPage" [maxSize]="2" [rotate]="true" [ellipses]="false"
-        [boundaryLinks]="true" size="lg"></ngb-pagination>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="cardList">
-
-            <button class="btn btn-outline-primary mb-3" style="max-width: 20rem; vertical-align:middle;"
-                (click)="openCreateBoardModal()">
-                <fa-icon [icon]="faPlusSquare" style="size: 9x;" class="fa-10x"></fa-icon>
-                <br>Add New Board
-            </button>
-
-            <div *ngFor="let boardsummary of boardSummaries | sortBy:'desc':'createdAt'">
-                <jhi-board-summary-card [boardsummary]="boardsummary" (delete)="this.getBoardPages()"></jhi-board-summary-card>
-            </div>
-        </div>
+<div id="container">
+    <div class="grow1 btn-toolbar">
+        <button class="btn btn-outline-secondary" [class.active]="view===GRID" (click)="view=GRID; updateLocation()"
+            type="button" id="button-addon2">
+            Card View <fa-icon [icon]="faTh"></fa-icon>
+        </button>
+        <button class="btn btn-outline-secondary" [class.active]="view===LIST" (click)="view=LIST; updateLocation()"
+            type="button" id="button-addon2">
+            Table View <fa-icon [icon]="faListUl"></fa-icon>
+        </button>
     </div>
+
+    <jhi-board-summary-controls class="grow3" [savedFilter]="savedFilter" (filterChanged)="onFilterChange($event)">
+    </jhi-board-summary-controls>
+
 </div>
 
 <div class="container">
-    <ngb-pagination class="desktop-pagination" [collectionSize]="pageObject?.totalElements" (pageChange)="onPageChange($event)"
-        [(pageSize)]="pageSize" [(page)]="currentPage" [maxSize]="10" [rotate]="true" [ellipses]="true"
-        [boundaryLinks]="true" size="lg"></ngb-pagination>
-    
-    <ngb-pagination class="mobile-pagination" [collectionSize]="pageObject?.totalElements" (pageChange)="onPageChange($event)"
-        [(pageSize)]="pageSize" [(page)]="currentPage" [maxSize]="2" [rotate]="true" [ellipses]="false"
-        [boundaryLinks]="true" size="lg"></ngb-pagination>
+    <ngb-pagination class="desktop-pagination" [collectionSize]="pageObject?.totalElements"
+        (pageChange)="onPageChange($event)" [(pageSize)]="pageSize" [(page)]="currentPage" [maxSize]="10"
+        [rotate]="true" [ellipses]="true" [boundaryLinks]="true" size="lg"></ngb-pagination>
+
+    <ngb-pagination class="mobile-pagination" [collectionSize]="pageObject?.totalElements"
+        (pageChange)="onPageChange($event)" [(pageSize)]="pageSize" [(page)]="currentPage" [maxSize]="2" [rotate]="true"
+        [ellipses]="false" [boundaryLinks]="true" size="lg"></ngb-pagination>
+</div>
+
+<jhi-board-display-container [view]="view" (delete)="this.getBoardPages()" [boardSummaries]="boardSummaries"></jhi-board-display-container>
+
+<div class="container">
+    <ngb-pagination class="desktop-pagination" [collectionSize]="pageObject?.totalElements"
+        (pageChange)="onPageChange($event)" [(pageSize)]="pageSize" [(page)]="currentPage" [maxSize]="10"
+        [rotate]="true" [ellipses]="true" [boundaryLinks]="true" size="lg"></ngb-pagination>
+
+    <ngb-pagination class="mobile-pagination" [collectionSize]="pageObject?.totalElements"
+        (pageChange)="onPageChange($event)" [(pageSize)]="pageSize" [(page)]="currentPage" [maxSize]="2" [rotate]="true"
+        [ellipses]="false" [boundaryLinks]="true" size="lg"></ngb-pagination>
 </div>
