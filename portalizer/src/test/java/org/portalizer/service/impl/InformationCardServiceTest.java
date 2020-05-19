@@ -154,14 +154,14 @@ public class InformationCardServiceTest {
         final InformationCard afterAdd = informationCardRepository.findById(added.getId()).get();
         Assertions.assertThat(afterAdd.getText()).isEqualTo("Added text");
         Assertions.assertThat(afterAdd.getCreatedAt()).isNotNull();
-        Assertions.assertThat(afterAdd.getUpdatedAt()).isEqualTo(afterAdd.getCreatedAt());
+        Assertions.assertThat(afterAdd.getUpdatedAt()).isEqualToIgnoringNanos(afterAdd.getCreatedAt());
         Assertions.assertThat(afterAdd.getColumnKey()).isEqualTo(columnKey);
         Assertions.assertThat(afterAdd.getBoard().getId()).isEqualTo(savedBoard.getId());
 
 
         Assertions.assertThat(added.getText()).isEqualTo("Added text");
         Assertions.assertThat(added.getCreatedAt()).isNotNull();
-        Assertions.assertThat(added.getUpdatedAt()).isEqualTo(afterAdd.getCreatedAt());
+        Assertions.assertThat(added.getUpdatedAt()).isEqualToIgnoringNanos(afterAdd.getCreatedAt());
         Assertions.assertThat(added.getColumnKey()).isEqualTo(afterAdd.getColumnKey());
         Assertions.assertThat(added.getBoardId()).isEqualTo(savedBoard.getId());
     }
