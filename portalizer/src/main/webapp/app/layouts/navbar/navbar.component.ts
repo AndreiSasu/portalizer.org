@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
   isNavbarCollapsed: boolean;
   languages: any[];
   swaggerEnabled: boolean;
+  registrationEnabled: boolean;
   modalRef: NgbModalRef;
   version: string;
 
@@ -36,6 +37,7 @@ export class NavbarComponent implements OnInit {
     this.profileService.getProfileInfo().then(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
+      this.registrationEnabled = profileInfo.registrationEnabled;
     });
   }
 
