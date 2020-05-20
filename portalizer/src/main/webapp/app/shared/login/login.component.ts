@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, Renderer, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -6,12 +6,13 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
+import { ProfileService } from 'app/layouts/profiles/profile.service';
 
 @Component({
   selector: 'jhi-login-modal',
   templateUrl: './login.component.html'
 })
-export class JhiLoginModalComponent implements AfterViewInit {
+export class JhiLoginModalComponent implements OnInit, AfterViewInit {
   authenticationError: boolean;
 
   loginForm = this.fb.group({
@@ -19,6 +20,8 @@ export class JhiLoginModalComponent implements AfterViewInit {
     password: [''],
     rememberMe: [false]
   });
+
+  registrationEnabled: boolean;
 
   constructor(
     private eventManager: JhiEventManager,
@@ -28,8 +31,15 @@ export class JhiLoginModalComponent implements AfterViewInit {
     private renderer: Renderer,
     private router: Router,
     public activeModal: NgbActiveModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private profileService: ProfileService
   ) {}
+
+  ngOnInit() {
+    this.profileService.getProfileInfo().then(profileInfo => {
+      this.registrationEnabled = profileInfo.registrationEnabled;
+    });
+  }
 
   ngAfterViewInit() {
     setTimeout(() => this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#username'), 'focus', []), 0);
