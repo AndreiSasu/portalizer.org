@@ -11,7 +11,7 @@
 <button *ngIf="boardColumnVMs.length > 4" class="show-next btn btn-light" (click)="scrollRight(columns)">
     <fa-icon [icon]="faChevronRight" class="fa-2x"></fa-icon>
 </button>
-<div #columns class="row column-container" dragula="COLUMNS" [(dragulaModel)]="boardColumnVMs">
+<div #columns class="row column-container scrollable" dragula="COLUMNS" [(dragulaModel)]="boardColumnVMs">
     <div id="{{boardColumnVM.key}}" class="col-lg-3" *ngFor="let boardColumnVM of boardColumnVMs | sortBy:'asc':'priority'">
         <div column="true" [ngClass]="['card', 'border-'+colorService.getColor(boardColumnVM.title)]">
             <div class="card-header">
