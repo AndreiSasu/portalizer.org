@@ -80,8 +80,11 @@ public class WebOAuth2ConfigHelper {
 
         final UserDTO userDTO = new UserDTO();
         if (requestURI.equals(DemoSecurityConfiguration.GITHUB_LOGIN_URL)) {
-            userDTO.setLogin(map.get("login").toString().toLowerCase());
-            userDTO.setEmail(map.get("email").toString());
+            final String id = String.valueOf(map.get("id"));
+            final String loginName = map.get("login").toString().toLowerCase();
+            userDTO.setLogin(id + "_" + loginName);
+            userDTO.setFirstName(map.get("name").toString());
+            userDTO.setImageUrl(map.get("avatar_url").toString());
         }
 
         userDTO.setAuthorities(new HashSet<>(Arrays.asList("ROLE_USER")));
