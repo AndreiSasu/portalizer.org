@@ -1,6 +1,7 @@
 <div class="modal-header">
     <h4 class="modal-title">Sign in</h4>
-    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="activeModal.dismiss('closed')"><span aria-hidden="true">x</span>
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button"
+        (click)="activeModal.dismiss('closed')"><span aria-hidden="true">x</span>
     </button>
 </div>
 <div class="modal-body">
@@ -15,16 +16,17 @@
                 <div class="form-group">
                     <label class="username-label" for="username">Login</label>
                     <input type="text" class="form-control" name="username" id="username" placeholder="Your username"
-                           formControlName="username">
+                        formControlName="username">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" id="password" placeholder="Your password"
-                           formControlName="password">
+                    <input type="password" class="form-control" name="password" id="password"
+                        placeholder="Your password" formControlName="password">
                 </div>
                 <div class="form-check">
                     <label class="form-check-label" for="rememberMe">
-                        <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe">
+                        <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe"
+                            formControlName="rememberMe">
                         <span>Remember me</span>
                     </label>
                 </div>
@@ -39,5 +41,14 @@
                 <a class="alert-link" (click)="register()">Register a new account</a>
             </div>
         </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <a href="/login/github" type="button" class="btn btn-primary btn-lg btn-block social-button">
+            <fa-icon [icon]="faGithub" class="fa-2x"> </fa-icon>GitHub Login
+        </a>
+        <button type="button" class="btn btn-danger btn-lg btn-block social-button">
+            <fa-icon [icon]="faGoogle" class="fa-2x"> </fa-icon>Google Login
+        </button>
     </div>
 </div>

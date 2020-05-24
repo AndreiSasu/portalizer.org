@@ -7,12 +7,16 @@ import { JhiEventManager } from 'ng-jhipster';
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
-
+import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'jhi-login-modal',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login-component.scss']
 })
 export class JhiLoginModalComponent implements OnInit, AfterViewInit {
+  faGithub = faGithub;
+  faGoogle = faGoogle;
+
   authenticationError: boolean;
 
   loginForm = this.fb.group({
