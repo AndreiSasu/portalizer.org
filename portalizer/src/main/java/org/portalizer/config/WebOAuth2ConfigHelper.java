@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -54,25 +53,6 @@ public class WebOAuth2ConfigHelper {
         return webOAuth2AuthSuccessHandler;
     }
 
-    private static String getUserId(Map<String, Object> map) {
-        HttpServletRequest currentRequest =
-            ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        String requestURI = currentRequest.getRequestURI();
-        String userId = null;
-
-        if (requestURI.equals(DemoSecurityConfiguration.GOOGLE_LOGIN_URL)) {
-            userId = String.valueOf(map.get("sub"));
-        } else if (requestURI.equals(DemoSecurityConfiguration.GITHUB_LOGIN_URL)) {
-            userId = String.valueOf(map.get("id"));
-        }
-
-        if (userId == null) {
-            throw new BadCredentialsException("User-Id could not be determined.");
-        }
-
-        return userId;
-    }
-
     private static UserDTO getUserDTO(Map<String, Object> map) {
         HttpServletRequest currentRequest =
             ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
@@ -82,17 +62,21 @@ public class WebOAuth2ConfigHelper {
         if (requestURI.equals(DemoSecurityConfiguration.GITHUB_LOGIN_URL)) {
             final String id = String.valueOf(map.get("id"));
             final String loginName = map.get("login").toString().toLowerCase();
+            final String email = map.getOrDefault("email", "").toString().toLowerCase();
             userDTO.setLogin(id + "_" + loginName);
             userDTO.setFirstName(map.get("name").toString());
             userDTO.setImageUrl(map.get("avatar_url").toString());
+            userDTO.setEmail(email);
         }
         if(requestURI.equalsIgnoreCase(DemoSecurityConfiguration.GOOGLE_LOGIN_URL)) {
             final String id = String.valueOf(map.get("sub"));
             final String loginName = map.get("given_name").toString().toLowerCase();
+            final String email = map.getOrDefault("email", "").toString().toLowerCase();
             userDTO.setLogin(id + "_" + loginName);
             userDTO.setFirstName(String.valueOf(map.get("given_name")));
             userDTO.setLastName(String.valueOf(map.get("family_name")));
             userDTO.setImageUrl(String.valueOf(map.get("picture")));
+            userDTO.setEmail(email);
         }
 
         userDTO.setAuthorities(new HashSet<>(Arrays.asList("ROLE_USER")));

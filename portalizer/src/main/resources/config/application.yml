@@ -175,7 +175,7 @@ google:
   client:
     access-token-uri: https://www.googleapis.com/oauth2/v4/token
     client-authentication-scheme: form
-    scope: https://www.googleapis.com/auth/userinfo.profile
+    scope: https://www.googleapis.com/auth/userinfo.profile,https://www.googleapis.com/auth/userinfo.email
     user-authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
   resource:
     user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
