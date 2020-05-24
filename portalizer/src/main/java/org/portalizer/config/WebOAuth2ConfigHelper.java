@@ -86,6 +86,14 @@ public class WebOAuth2ConfigHelper {
             userDTO.setFirstName(map.get("name").toString());
             userDTO.setImageUrl(map.get("avatar_url").toString());
         }
+        if(requestURI.equalsIgnoreCase(DemoSecurityConfiguration.GOOGLE_LOGIN_URL)) {
+            final String id = String.valueOf(map.get("sub"));
+            final String loginName = map.get("given_name").toString().toLowerCase();
+            userDTO.setLogin(id + "_" + loginName);
+            userDTO.setFirstName(String.valueOf(map.get("given_name")));
+            userDTO.setLastName(String.valueOf(map.get("family_name")));
+            userDTO.setImageUrl(String.valueOf(map.get("picture")));
+        }
 
         userDTO.setAuthorities(new HashSet<>(Arrays.asList("ROLE_USER")));
         return userDTO;
