@@ -40,6 +40,8 @@ public class UserDTO {
 
     private boolean activated = false;
 
+    private boolean socialLogin = false;
+
     @Size(min = 2, max = 10)
     private String langKey;
 
@@ -70,9 +72,18 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
+        this.socialLogin = user.isSocialLogin();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+    }
+
+    public boolean isSocialLogin() {
+        return socialLogin;
+    }
+
+    public void setSocialLogin(boolean socialLogin) {
+        this.socialLogin = socialLogin;
     }
 
     public Long getId() {

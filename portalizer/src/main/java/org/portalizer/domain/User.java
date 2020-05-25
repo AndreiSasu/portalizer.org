@@ -90,6 +90,18 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
 
+    @NotNull
+    @Column(nullable = false)
+    private boolean socialLogin = false;
+
+    public boolean isSocialLogin() {
+        return socialLogin;
+    }
+
+    public void setSocialLogin(boolean socialLogin) {
+        this.socialLogin = socialLogin;
+    }
+
     public Long getId() {
         return id;
     }
