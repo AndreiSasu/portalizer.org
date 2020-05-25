@@ -26,6 +26,8 @@ export class JhiLoginModalComponent implements OnInit, AfterViewInit {
   });
 
   registrationEnabled: boolean;
+  googleLoginEnabled: boolean;
+  githubLoginEnabled: boolean;
 
   constructor(
     private eventManager: JhiEventManager,
@@ -42,6 +44,8 @@ export class JhiLoginModalComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.profileService.getProfileInfo().then(profileInfo => {
       this.registrationEnabled = profileInfo.registrationEnabled;
+      this.googleLoginEnabled = profileInfo.googleLoginEnabled;
+      this.githubLoginEnabled = profileInfo.githubLoginEnabled;
     });
   }
 
