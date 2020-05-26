@@ -25,20 +25,6 @@
                     </span>
                 </a>
             </li>
-            <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
-                    <span>
-                        <fa-icon icon="th-list"></fa-icon>
-                        <span>
-                            Entities
-                        </span>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-                </ul>
-            </li>
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
                     <span>
@@ -123,7 +109,7 @@
                             <span>Settings</span>
                         </a>
                     </li>
-                    <li *ngSwitchCase="true">
+                    <li *ngIf="isAuthenticated() && !account?.socialLogin">
                         <a class="dropdown-item" routerLink="account/password" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon icon="lock" fixedWidth="true"></fa-icon>
                             <span>Password</span>

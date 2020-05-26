@@ -128,7 +128,7 @@ public class UserService {
         user.setLogin(userDTO.getLogin().toLowerCase());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail().toLowerCase());
+        if(null != userDTO.getEmail()) user.setEmail(userDTO.getEmail().toLowerCase());
         user.setImageUrl(userDTO.getImageUrl());
         if (userDTO.getLangKey() == null) {
             user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
@@ -140,6 +140,7 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
+        user.setSocialLogin(userDTO.isSocialLogin());
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO.getAuthorities().stream()
                 .map(authorityRepository::findById)

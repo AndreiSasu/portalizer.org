@@ -1,9 +1,9 @@
 {
   "name": "portalizer",
-  "version": "1.0.1-RELEASE",
+  "version": "1.0.2-RELEASE",
   "description": "Description for portalizer",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "GPL V3",
   "cacheDirectories": [
     "node_modules"
   ],

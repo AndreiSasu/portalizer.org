@@ -4,4 +4,6 @@ export class ProfileInfo {
   inProduction: boolean;
   swaggerEnabled: boolean;
   registrationEnabled: boolean;
+  googleLoginEnabled: boolean;
+  githubLoginEnabled: boolean;
 }

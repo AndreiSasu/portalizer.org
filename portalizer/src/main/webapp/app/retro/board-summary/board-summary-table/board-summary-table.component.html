@@ -23,7 +23,7 @@
 
                     {{ boardsummary.createdAt | date: 'short' }}
                 </button></td>
-            <td><a href="retro/boards/{{boardsummary.id}}" class="btn btn-primary active">
+            <td><a routerLink="{{boardsummary.id}}" class="btn btn-primary active">
                     <fa-icon [icon]="faEye"></fa-icon> View
                 </a>
                 <button class="btn btn-secondary card-link" data-dismiss="modal"
