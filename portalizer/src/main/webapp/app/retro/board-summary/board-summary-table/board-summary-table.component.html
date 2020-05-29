@@ -20,7 +20,7 @@
                     [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.title)]">{{columnDefinition.title}}</span>
             </td>
             <td><span class="badge badge-primary badge-pill">{{boardsummary.totalCards}} Cards</span></td>
-            <td> <button type="button" class="btn btn-link disabled">
+            <td><button type="button" class="btn btn-link disabled">
 
                     {{ boardsummary.createdAt | date: 'short' }}
                 </button></td>
