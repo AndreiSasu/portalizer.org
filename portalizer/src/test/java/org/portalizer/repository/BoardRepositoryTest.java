@@ -124,4 +124,10 @@ public class BoardRepositoryTest {
     }
 
 
+    @Test
+    public void testBoardOwnerEagerlyFetched() {
+
+    }
+
+
 }

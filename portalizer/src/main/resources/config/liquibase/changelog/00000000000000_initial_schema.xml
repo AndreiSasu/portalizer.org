@@ -30,7 +30,7 @@
             <column name="activated" type="boolean" valueBoolean="false">
                 <constraints nullable="false" />
             </column>
-            <column name="social_login" type="boolean" valueBoolean="false">
+            <column name="social_login" type="boolean"  valueBoolean="false">
                 <constraints nullable="false" />
             </column>
             <column name="lang_key" type="varchar(10)"/>

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * support is still in beta, and requires a manual step with an IDE.
  */
 @Service
-public class UserMapper {
+public class UserMapper implements EntityMapper<UserDTO, User> {
 
     public List<UserDTO> usersToUserDTOs(List<User> users) {
         return users.stream()
@@ -78,5 +78,25 @@ public class UserMapper {
         User user = new User();
         user.setId(id);
         return user;
+    }
+
+    @Override
+    public User toEntity(UserDTO dto) {
+        return userDTOToUser(dto);
+    }
+
+    @Override
+    public UserDTO toDto(User entity) {
+        return userToUserDTO(entity);
+    }
+
+    @Override
+    public List<User> toEntity(List<UserDTO> dtoList) {
+        return userDTOsToUsers(dtoList);
+    }
+
+    @Override
+    public List<UserDTO> toDto(List<User> entityList) {
+        return usersToUserDTOs(entityList);
     }
 }

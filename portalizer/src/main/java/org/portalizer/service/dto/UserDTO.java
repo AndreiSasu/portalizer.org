@@ -207,4 +207,118 @@ public class UserDTO {
             ", authorities=" + authorities +
             "}";
     }
+
+
+    public static final class UserDTOBuilder {
+        private Long id;
+        private String login;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String imageUrl;
+        private boolean activated = false;
+        private boolean socialLogin = false;
+        private String langKey;
+        private String createdBy;
+        private Instant createdDate;
+        private String lastModifiedBy;
+        private Instant lastModifiedDate;
+        private Set<String> authorities;
+
+        private UserDTOBuilder() {
+        }
+
+        public static UserDTOBuilder anUserDTO() {
+            return new UserDTOBuilder();
+        }
+
+        public UserDTOBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserDTOBuilder withLogin(String login) {
+            this.login = login;
+            return this;
+        }
+
+        public UserDTOBuilder withFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserDTOBuilder withLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public UserDTOBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserDTOBuilder withImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
+        public UserDTOBuilder withActivated(boolean activated) {
+            this.activated = activated;
+            return this;
+        }
+
+        public UserDTOBuilder withSocialLogin(boolean socialLogin) {
+            this.socialLogin = socialLogin;
+            return this;
+        }
+
+        public UserDTOBuilder withLangKey(String langKey) {
+            this.langKey = langKey;
+            return this;
+        }
+
+        public UserDTOBuilder withCreatedBy(String createdBy) {
+            this.createdBy = createdBy;
+            return this;
+        }
+
+        public UserDTOBuilder withCreatedDate(Instant createdDate) {
+            this.createdDate = createdDate;
+            return this;
+        }
+
+        public UserDTOBuilder withLastModifiedBy(String lastModifiedBy) {
+            this.lastModifiedBy = lastModifiedBy;
+            return this;
+        }
+
+        public UserDTOBuilder withLastModifiedDate(Instant lastModifiedDate) {
+            this.lastModifiedDate = lastModifiedDate;
+            return this;
+        }
+
+        public UserDTOBuilder withAuthorities(Set<String> authorities) {
+            this.authorities = authorities;
+            return this;
+        }
+
+        public UserDTO build() {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(id);
+            userDTO.setLogin(login);
+            userDTO.setFirstName(firstName);
+            userDTO.setLastName(lastName);
+            userDTO.setEmail(email);
+            userDTO.setImageUrl(imageUrl);
+            userDTO.setActivated(activated);
+            userDTO.setSocialLogin(socialLogin);
+            userDTO.setLangKey(langKey);
+            userDTO.setCreatedBy(createdBy);
+            userDTO.setCreatedDate(createdDate);
+            userDTO.setLastModifiedBy(lastModifiedBy);
+            userDTO.setLastModifiedDate(lastModifiedDate);
+            userDTO.setAuthorities(authorities);
+            return userDTO;
+        }
+    }
 }
