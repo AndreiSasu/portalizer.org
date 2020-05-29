@@ -141,5 +141,18 @@ public class BoardRepositoryTest {
         Assertions.assertThat(foundBoard.getOwner()).isEqualTo(user);
     }
 
+    @Test
+    public void testFindBoardsByOwnerId() {
+        final User user = userFactory.newUser();
+        final Board board = EntityUtils.validBoard();
+        board.setOwner(user);
+        boardRepository.save(board);
+        boardRepository.save(EntityUtils.validBoard());
+        final List<Board> boards = boardRepository.findBoardsByOwnerId(user.getId());
+        Assertions.assertThat(boards).allSatisfy(b -> {
+            Assertions.assertThat(b.getId()).isEqualTo(board.getId());
+        });
+    }
+
 
 }
