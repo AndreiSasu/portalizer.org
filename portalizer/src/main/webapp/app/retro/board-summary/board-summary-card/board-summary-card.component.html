@@ -1,5 +1,5 @@
 <div class="card border-primary mb-3" style="max-width: 20rem;">
-    <h5 class="card-header">{{ boardsummary.name }} <img src="{{boardsummary.owner?.imageUrl}}" class="profile-image rounded-circle"></h5>
+    <h5 class="card-header">{{ boardsummary.name }} <img *ngIf="boardsummary.owner?.imageUrl" src="{{boardsummary.owner?.imageUrl}}" class="profile-image rounded-circle round-avatar"></h5>
     <div class="card-body">
 
         <p class="card-text">{{ boardsummary.description }} </p>

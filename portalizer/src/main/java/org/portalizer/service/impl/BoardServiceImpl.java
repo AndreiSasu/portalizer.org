@@ -2,10 +2,12 @@ package org.portalizer.service.impl;
 
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
+import org.portalizer.domain.User;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.repository.ColumnDefinitionRepository;
 import org.portalizer.repository.InformationCardRepository;
 import org.portalizer.service.BoardService;
+import org.portalizer.service.UserService;
 import org.portalizer.service.dto.*;
 import org.portalizer.service.mapper.BoardMapper;
 import org.portalizer.service.mapper.ColumnDefinitionMapper;
@@ -24,23 +26,28 @@ import java.util.stream.Collectors;
 @Transactional
 public class BoardServiceImpl implements BoardService {
 
-    private BoardRepository boardRepository;
-    private InformationCardRepository informationCardRepository;
-    private BoardMapper boardMapper;
-    private UserMapper userMapper;
-    private ColumnDefinitionMapper columnDefinitionMapper;
-    private ColumnDefinitionRepository columnDefinitionRepository;
+    private final BoardRepository boardRepository;
+    private final InformationCardRepository informationCardRepository;
+    private final BoardMapper boardMapper;
+    private final UserMapper userMapper;
+    private final ColumnDefinitionMapper columnDefinitionMapper;
+    private final ColumnDefinitionRepository columnDefinitionRepository;
+    private final UserService userService;
 
-    public BoardServiceImpl(BoardRepository boardRepository, BoardMapper boardMapper,
+    public BoardServiceImpl(BoardRepository boardRepository,
+                            BoardMapper boardMapper,
                             ColumnDefinitionRepository columnDefinitionRepository,
-                            InformationCardRepository informationCardRepository, ColumnDefinitionMapper columnDefinitionMapper,
-                            UserMapper userMapper) {
+                            InformationCardRepository informationCardRepository,
+                            ColumnDefinitionMapper columnDefinitionMapper,
+                            UserMapper userMapper,
+                            UserService userService) {
         this.boardRepository = boardRepository;
         this.boardMapper = boardMapper;
         this.columnDefinitionMapper = columnDefinitionMapper;
         this.informationCardRepository = informationCardRepository;
         this.columnDefinitionRepository = columnDefinitionRepository;
         this.userMapper = userMapper;
+        this.userService = userService;
     }
 
     @Override
@@ -80,6 +87,10 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public BoardDTO save(BoardDTO boardDTO) {
         final Board toSave = boardMapper.toEntity(boardDTO);
+        final Optional<User> maybeLoggedInUser = userService.getUserWithAuthorities();
+        if(maybeLoggedInUser.isPresent()) {
+            toSave.setOwner(maybeLoggedInUser.get());
+        }
         toSave.getColumnDefinitions().forEach(columnDefinition -> {
             columnDefinition.setBoard(toSave);
         });

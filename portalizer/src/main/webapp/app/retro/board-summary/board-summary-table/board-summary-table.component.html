@@ -26,7 +26,7 @@
                 </button></td>
             <td>
                 <small>{{boardsummary.owner?.firstName}} {{boardsummary.owner?.lastName}}</small>
-                <img src="{{boardsummary.owner?.imageUrl}}" class="profile-image rounded-circle">
+                <img *ngIf="boardsummary.owner?.imageUrl" src="{{boardsummary.owner?.imageUrl}}" class="profile-image rounded-circle round-avatar">
             </td>
             <td><a routerLink="{{boardsummary.id}}" class="btn btn-primary active">
                     <fa-icon [icon]="faEye"></fa-icon> View
