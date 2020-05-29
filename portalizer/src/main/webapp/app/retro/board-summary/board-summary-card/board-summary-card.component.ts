@@ -22,5 +22,8 @@ export class BoardSummaryCardComponent implements OnInit {
     this.colorService = colorService;
   }
 
-  ngOnInit() {}
+  /* eslint-disable */
+  ngOnInit() {
+    console.log(this.boardsummary);
+  }
 }

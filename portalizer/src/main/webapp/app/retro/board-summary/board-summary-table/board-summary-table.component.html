@@ -8,6 +8,7 @@
             <th scope="col">
                 <fa-icon [icon]="faClock"></fa-icon> Created At
             </th>
+            <th scope="col">Created By</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -23,6 +24,10 @@
 
                     {{ boardsummary.createdAt | date: 'short' }}
                 </button></td>
+            <td>
+                <small>{{boardsummary.owner?.firstName}} {{boardsummary.owner?.lastName}}</small>
+                <img src="{{boardsummary.owner?.imageUrl}}" class="profile-image rounded-circle">
+            </td>
             <td><a routerLink="{{boardsummary.id}}" class="btn btn-primary active">
                     <fa-icon [icon]="faEye"></fa-icon> View
                 </a>

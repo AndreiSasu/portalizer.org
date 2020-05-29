@@ -9,6 +9,7 @@ import org.portalizer.service.BoardService;
 import org.portalizer.service.dto.*;
 import org.portalizer.service.mapper.BoardMapper;
 import org.portalizer.service.mapper.ColumnDefinitionMapper;
+import org.portalizer.service.mapper.UserMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,17 +27,20 @@ public class BoardServiceImpl implements BoardService {
     private BoardRepository boardRepository;
     private InformationCardRepository informationCardRepository;
     private BoardMapper boardMapper;
+    private UserMapper userMapper;
     private ColumnDefinitionMapper columnDefinitionMapper;
     private ColumnDefinitionRepository columnDefinitionRepository;
 
     public BoardServiceImpl(BoardRepository boardRepository, BoardMapper boardMapper,
                             ColumnDefinitionRepository columnDefinitionRepository,
-                            InformationCardRepository informationCardRepository, ColumnDefinitionMapper columnDefinitionMapper) {
+                            InformationCardRepository informationCardRepository, ColumnDefinitionMapper columnDefinitionMapper,
+                            UserMapper userMapper) {
         this.boardRepository = boardRepository;
         this.boardMapper = boardMapper;
         this.columnDefinitionMapper = columnDefinitionMapper;
         this.informationCardRepository = informationCardRepository;
         this.columnDefinitionRepository = columnDefinitionRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -147,6 +151,7 @@ public class BoardServiceImpl implements BoardService {
         boardDTO.setName(board.getName());
         boardDTO.setDescription(board.getDescription());
         boardDTO.setCreatedAt(board.getCreatedAt());
+        boardDTO.setOwner(userMapper.toDto(board.getOwner()));
         boardDTO.setTotalCards(informationCardRepository.countByBoardId(board.getId()));
         List<ColumnDefinitionDTO> columnDefinitionDTOS = new ArrayList<>();
         board.getColumnDefinitions().forEach(columnDefinition -> {
