@@ -119,6 +119,7 @@ jhipster:
 # application:
 portalizer:
   demo:
+    max-users: 0
     max-boards: 500
     max-random-columns: 10
     max-cards-per-column: 10

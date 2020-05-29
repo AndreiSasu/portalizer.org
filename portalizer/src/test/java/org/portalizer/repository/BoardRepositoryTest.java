@@ -3,9 +3,11 @@ package org.portalizer.repository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.portalizer.PortalizerApp;
+import org.portalizer.demodata.UserFactory;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
 import org.portalizer.domain.InformationCard;
+import org.portalizer.domain.User;
 import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,12 +18,16 @@ import java.util.*;
 @SpringBootTest(classes = PortalizerApp.class)
 public class BoardRepositoryTest {
 
-    @Autowired
     private BoardRepository boardRepository;
+    private InformationCardRepository informationCardRepository;
+    private UserFactory userFactory;
 
     @Autowired
-    private InformationCardRepository informationCardRepository;
-
+    public BoardRepositoryTest(BoardRepository boardRepository, InformationCardRepository informationCardRepository, UserFactory userFactory) {
+        this.boardRepository = boardRepository;
+        this.informationCardRepository = informationCardRepository;
+        this.userFactory = userFactory;
+    }
 
     @Test
     public void testColumnOrderingPreserved() {
@@ -126,7 +132,13 @@ public class BoardRepositoryTest {
 
     @Test
     public void testBoardOwnerEagerlyFetched() {
+        final User user = userFactory.newUser();
+        final Board board = EntityUtils.validBoard();
+        board.setOwner(user);
+        boardRepository.save(board);
 
+        final Board foundBoard = boardRepository.findById(board.getId()).orElseThrow(() -> new IllegalStateException("Board not found!"));
+        Assertions.assertThat(foundBoard.getOwner()).isEqualTo(user);
     }
 
 
