@@ -18,42 +18,26 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper implements EntityMapper<UserDTO, User> {
 
-    public List<UserDTO> usersToUserDTOs(List<User> users) {
+    @Override
+    public List<UserDTO> toDto(List<User> users) {
         return users.stream()
             .filter(Objects::nonNull)
-            .map(this::userToUserDTO)
+            .map(this::toDto)
             .collect(Collectors.toList());
     }
 
-    public UserDTO userToUserDTO(User user) {
+    @Override
+    public UserDTO toDto(User user) {
+        if(null == user) return null;
         return new UserDTO(user);
     }
 
-    public List<User> userDTOsToUsers(List<UserDTO> userDTOs) {
+    @Override
+    public List<User> toEntity(List<UserDTO> userDTOs) {
         return userDTOs.stream()
             .filter(Objects::nonNull)
-            .map(this::userDTOToUser)
+            .map(this::toEntity)
             .collect(Collectors.toList());
-    }
-
-    public User userDTOToUser(UserDTO userDTO) {
-        if (userDTO == null) {
-            return null;
-        } else {
-            User user = new User();
-            user.setId(userDTO.getId());
-            user.setLogin(userDTO.getLogin());
-            user.setFirstName(userDTO.getFirstName());
-            user.setLastName(userDTO.getLastName());
-            user.setEmail(userDTO.getEmail());
-            user.setImageUrl(userDTO.getImageUrl());
-            user.setActivated(userDTO.isActivated());
-            user.setLangKey(userDTO.getLangKey());
-            user.setSocialLogin(userDTO.isSocialLogin());
-            Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
-            user.setAuthorities(authorities);
-            return user;
-        }
     }
 
 
@@ -81,22 +65,23 @@ public class UserMapper implements EntityMapper<UserDTO, User> {
     }
 
     @Override
-    public User toEntity(UserDTO dto) {
-        return userDTOToUser(dto);
-    }
-
-    @Override
-    public UserDTO toDto(User entity) {
-        return userToUserDTO(entity);
-    }
-
-    @Override
-    public List<User> toEntity(List<UserDTO> dtoList) {
-        return userDTOsToUsers(dtoList);
-    }
-
-    @Override
-    public List<UserDTO> toDto(List<User> entityList) {
-        return usersToUserDTOs(entityList);
+    public User toEntity(UserDTO userDTO) {
+        if (userDTO == null) {
+            return null;
+        } else {
+            User user = new User();
+            user.setId(userDTO.getId());
+            user.setLogin(userDTO.getLogin());
+            user.setFirstName(userDTO.getFirstName());
+            user.setLastName(userDTO.getLastName());
+            user.setEmail(userDTO.getEmail());
+            user.setImageUrl(userDTO.getImageUrl());
+            user.setActivated(userDTO.isActivated());
+            user.setLangKey(userDTO.getLangKey());
+            user.setSocialLogin(userDTO.isSocialLogin());
+            Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
+            user.setAuthorities(authorities);
+            return user;
+        }
     }
 }

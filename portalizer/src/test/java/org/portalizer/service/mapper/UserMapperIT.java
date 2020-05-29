@@ -53,7 +53,7 @@ public class UserMapperIT {
         users.add(user);
         users.add(null);
 
-        List<UserDTO> userDTOS = userMapper.usersToUserDTOs(users);
+        List<UserDTO> userDTOS = userMapper.toDto(users);
 
         assertThat(userDTOS).isNotEmpty();
         assertThat(userDTOS).size().isEqualTo(1);
@@ -65,7 +65,7 @@ public class UserMapperIT {
         usersDto.add(userDto);
         usersDto.add(null);
 
-        List<User> users = userMapper.userDTOsToUsers(usersDto);
+        List<User> users = userMapper.toEntity(usersDto);
 
         assertThat(users).isNotEmpty();
         assertThat(users).size().isEqualTo(1);
@@ -80,7 +80,7 @@ public class UserMapperIT {
         List<UserDTO> usersDto = new ArrayList<>();
         usersDto.add(userDto);
 
-        List<User> users = userMapper.userDTOsToUsers(usersDto);
+        List<User> users = userMapper.toEntity(usersDto);
 
         assertThat(users).isNotEmpty();
         assertThat(users).size().isEqualTo(1);
@@ -96,7 +96,7 @@ public class UserMapperIT {
         List<UserDTO> usersDto = new ArrayList<>();
         usersDto.add(userDto);
 
-        List<User> users = userMapper.userDTOsToUsers(usersDto);
+        List<User> users = userMapper.toEntity(usersDto);
 
         assertThat(users).isNotEmpty();
         assertThat(users).size().isEqualTo(1);
@@ -110,7 +110,7 @@ public class UserMapperIT {
         authoritiesAsString.add("ADMIN");
         userDto.setAuthorities(authoritiesAsString);
 
-        User user = userMapper.userDTOToUser(userDto);
+        User user = userMapper.toEntity(userDto);
 
         assertThat(user).isNotNull();
         assertThat(user.getAuthorities()).isNotNull();
@@ -122,16 +122,11 @@ public class UserMapperIT {
     public void userDTOToUserMapWithNullAuthoritiesStringShouldReturnUserWithEmptyAuthorities() {
         userDto.setAuthorities(null);
 
-        User user = userMapper.userDTOToUser(userDto);
+        User user = userMapper.toEntity(userDto);
 
         assertThat(user).isNotNull();
         assertThat(user.getAuthorities()).isNotNull();
         assertThat(user.getAuthorities()).isEmpty();
-    }
-
-    @Test
-    public void userDTOToUserMapWithNullUserShouldReturnNull() {
-        assertThat(userMapper.userDTOToUser(null)).isNull();
     }
 
     @Test
