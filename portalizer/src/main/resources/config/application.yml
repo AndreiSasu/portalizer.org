@@ -157,8 +157,32 @@ jhipster:
 portalizer:
   demo:
     max-boards: 500
+    max-users: 80
     max-random-columns: 10
     max-cards-per-column: 10
     boards:
       # every day at 23:00
       refresh-cron: 0 0 23 * * ?
+    avatars:
+      base-url: https://portalizerorg.s3.eu-west-1.amazonaws.com/avatars/
+
+github:
+  client:
+    access-token-uri: https://github.com/login/oauth/access_token
+    client-authentication-scheme: form
+    user-authorization-uri: https://github.com/login/oauth/authorize
+    client-id: ${GITHUB_CLIENT_ID}
+    client-secret: ${GITHUB_CLIENT_SECRET}
+  resource:
+    user-info-uri: https://api.github.com/user
+
+google:
+  client:
+    access-token-uri: https://www.googleapis.com/oauth2/v4/token
+    client-authentication-scheme: form
+    scope: https://www.googleapis.com/auth/userinfo.profile,https://www.googleapis.com/auth/userinfo.email
+    user-authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+    client-id: ${GOOGLE_CLIENT_ID}
+    client-secret: ${GOOGLE_CLIENT_SECRET}
+  resource:
+    user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo

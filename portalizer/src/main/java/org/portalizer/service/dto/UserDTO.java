@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.*;
 import java.time.Instant;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,8 @@ public class UserDTO {
     private String imageUrl;
 
     private boolean activated = false;
+
+    private boolean socialLogin = false;
 
     @Size(min = 2, max = 10)
     private String langKey;
@@ -70,9 +73,18 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
+        this.socialLogin = user.isSocialLogin();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+    }
+
+    public boolean isSocialLogin() {
+        return socialLogin;
+    }
+
+    public void setSocialLogin(boolean socialLogin) {
+        this.socialLogin = socialLogin;
     }
 
     public Long getId() {
@@ -180,6 +192,32 @@ public class UserDTO {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return isActivated() == userDTO.isActivated() &&
+            isSocialLogin() == userDTO.isSocialLogin() &&
+            Objects.equals(getId(), userDTO.getId()) &&
+            Objects.equals(getLogin(), userDTO.getLogin()) &&
+            Objects.equals(getFirstName(), userDTO.getFirstName()) &&
+            Objects.equals(getLastName(), userDTO.getLastName()) &&
+            Objects.equals(getEmail(), userDTO.getEmail()) &&
+            Objects.equals(getImageUrl(), userDTO.getImageUrl()) &&
+            Objects.equals(getLangKey(), userDTO.getLangKey()) &&
+            Objects.equals(getCreatedBy(), userDTO.getCreatedBy()) &&
+            Objects.equals(getCreatedDate(), userDTO.getCreatedDate()) &&
+            Objects.equals(getLastModifiedBy(), userDTO.getLastModifiedBy()) &&
+            Objects.equals(getLastModifiedDate(), userDTO.getLastModifiedDate()) &&
+            Objects.equals(getAuthorities(), userDTO.getAuthorities());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getLogin(), getFirstName(), getLastName(), getEmail(), getImageUrl(), isActivated(), isSocialLogin(), getLangKey(), getCreatedBy(), getCreatedDate(), getLastModifiedBy(), getLastModifiedDate(), getAuthorities());
+    }
+
+    @Override
     public String toString() {
         return "UserDTO{" +
             "login='" + login + '\'' +
@@ -195,5 +233,119 @@ public class UserDTO {
             ", lastModifiedDate=" + lastModifiedDate +
             ", authorities=" + authorities +
             "}";
+    }
+
+
+    public static final class UserDTOBuilder {
+        private Long id;
+        private String login;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String imageUrl;
+        private boolean activated = false;
+        private boolean socialLogin = false;
+        private String langKey;
+        private String createdBy;
+        private Instant createdDate;
+        private String lastModifiedBy;
+        private Instant lastModifiedDate;
+        private Set<String> authorities;
+
+        private UserDTOBuilder() {
+        }
+
+        public static UserDTOBuilder anUserDTO() {
+            return new UserDTOBuilder();
+        }
+
+        public UserDTOBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public UserDTOBuilder withLogin(String login) {
+            this.login = login;
+            return this;
+        }
+
+        public UserDTOBuilder withFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        public UserDTOBuilder withLastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        public UserDTOBuilder withEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserDTOBuilder withImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
+        public UserDTOBuilder withActivated(boolean activated) {
+            this.activated = activated;
+            return this;
+        }
+
+        public UserDTOBuilder withSocialLogin(boolean socialLogin) {
+            this.socialLogin = socialLogin;
+            return this;
+        }
+
+        public UserDTOBuilder withLangKey(String langKey) {
+            this.langKey = langKey;
+            return this;
+        }
+
+        public UserDTOBuilder withCreatedBy(String createdBy) {
+            this.createdBy = createdBy;
+            return this;
+        }
+
+        public UserDTOBuilder withCreatedDate(Instant createdDate) {
+            this.createdDate = createdDate;
+            return this;
+        }
+
+        public UserDTOBuilder withLastModifiedBy(String lastModifiedBy) {
+            this.lastModifiedBy = lastModifiedBy;
+            return this;
+        }
+
+        public UserDTOBuilder withLastModifiedDate(Instant lastModifiedDate) {
+            this.lastModifiedDate = lastModifiedDate;
+            return this;
+        }
+
+        public UserDTOBuilder withAuthorities(Set<String> authorities) {
+            this.authorities = authorities;
+            return this;
+        }
+
+        public UserDTO build() {
+            UserDTO userDTO = new UserDTO();
+            userDTO.setId(id);
+            userDTO.setLogin(login);
+            userDTO.setFirstName(firstName);
+            userDTO.setLastName(lastName);
+            userDTO.setEmail(email);
+            userDTO.setImageUrl(imageUrl);
+            userDTO.setActivated(activated);
+            userDTO.setSocialLogin(socialLogin);
+            userDTO.setLangKey(langKey);
+            userDTO.setCreatedBy(createdBy);
+            userDTO.setCreatedDate(createdDate);
+            userDTO.setLastModifiedBy(lastModifiedBy);
+            userDTO.setLastModifiedDate(lastModifiedDate);
+            userDTO.setAuthorities(authorities);
+            return userDTO;
+        }
     }
 }

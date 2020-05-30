@@ -1,6 +1,6 @@
 import { InformationCard } from './information-card';
 import { BoardColumn } from './columns';
-
+import { Account } from '../../core/user/account.model';
 export class BoardSummary {
   id: string;
   name: string;
@@ -8,6 +8,7 @@ export class BoardSummary {
   columnDefinitions: Array<BoardColumn>;
   createdAt: Date;
   totalCards: number;
+  owner: Account;
 }
 
 export class Board extends BoardSummary {

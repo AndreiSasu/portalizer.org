@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { BoardSummary } from 'app/retro/model/boards';
 import { ColorsService } from 'app/retro/colors.service';
 import { faEye, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,7 @@ import { faEye, faTrash, faArchive, faPlusSquare, faClock } from '@fortawesome/f
   templateUrl: './board-summary-card.component.html',
   styleUrls: ['./board-summary-card.component.scss']
 })
-export class BoardSummaryCardComponent implements OnInit {
+export class BoardSummaryCardComponent {
   @Input() boardsummary: BoardSummary;
   @Output() delete = new EventEmitter<BoardSummary>();
 
@@ -21,6 +21,4 @@ export class BoardSummaryCardComponent implements OnInit {
   constructor(colorService: ColorsService) {
     this.colorService = colorService;
   }
-
-  ngOnInit() {}
 }

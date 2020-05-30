@@ -12,7 +12,7 @@
 
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
-                <span id="home-logged-message" *ngIf="account"> You are logged in as user "{{account.login}}". </span>
+                <span id="home-logged-message" *ngIf="account"> You are logged in as "{{account.firstName}} {{account.lastName}}". </span>
             </div>
 
             <div class="alert alert-light">
@@ -22,9 +22,9 @@
 
             <div class="alert alert-info">
                 <span><b>Note: </b> <br>
-                    This is a demo version and contains randomly generated boards to showcase all features. <br>
+                    This is a demo version and contains randomly generated boards and users to showcase all features. <br>
 
-                    The boards are all wiped out and new ones generated every day at 23:00 PM GMT. <br><br>
+                    The data is wiped out re-generated every day at 23:00 PM GMT. <br><br>
 
                     If you are looking for a Docker container which you can deploy on your local network, have a look at
                     <a class="alert-link" href="https://hub.docker.com/repository/docker/andreisasu/portalizer">Docker
