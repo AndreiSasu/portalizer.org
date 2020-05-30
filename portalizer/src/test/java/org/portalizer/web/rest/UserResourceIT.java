@@ -520,7 +520,7 @@ public class UserResourceIT {
         userDTO.setLastModifiedBy(DEFAULT_LOGIN);
         userDTO.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        User user = userMapper.userDTOToUser(userDTO);
+        User user = userMapper.toEntity(userDTO);
         assertThat(user.getId()).isEqualTo(DEFAULT_ID);
         assertThat(user.getLogin()).isEqualTo(DEFAULT_LOGIN);
         assertThat(user.getFirstName()).isEqualTo(DEFAULT_FIRSTNAME);
@@ -549,7 +549,7 @@ public class UserResourceIT {
         authorities.add(authority);
         user.setAuthorities(authorities);
 
-        UserDTO userDTO = userMapper.userToUserDTO(user);
+        UserDTO userDTO = userMapper.toDto(user);
 
         assertThat(userDTO.getId()).isEqualTo(DEFAULT_ID);
         assertThat(userDTO.getLogin()).isEqualTo(DEFAULT_LOGIN);

@@ -57,6 +57,17 @@ public class Board implements Serializable {
     @OneToMany(targetEntity = InformationCard.class, mappedBy = "board", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<InformationCard> informationCards;
 
+    @ManyToOne(targetEntity = User.class)
+    private User owner;
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     public int getTotalCards() {
         return totalCards;
     }

@@ -30,13 +30,10 @@ public class SetupDefaultUsers implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
 
         final String defaultAdminPass = Optional.ofNullable(environment.getProperty("ADMIN_PASS"))
             .orElseThrow(() -> new IllegalArgumentException("Cannot set default admin password, did you set ADMIN_PASS env variable?"));
-
-        final String defaultUserPass = Optional.ofNullable(environment.getProperty("USER_PASS"))
-            .orElseThrow(() -> new IllegalArgumentException("Cannot set default user password, did you set USER_PASS env variable?"));
 
         User admin = this.userRepository.findOneByLogin("admin").get();
         admin.setActivated(true);
@@ -44,10 +41,5 @@ public class SetupDefaultUsers implements ApplicationRunner {
         userRepository.save(admin);
         logger.info("Set admin password.");
 
-        User user = this.userRepository.findOneByLogin("user").get();
-        user.setActivated(true);
-        user.setPassword(passwordEncoder.encode(defaultUserPass));
-        userRepository.save(user);
-        logger.info("Set user password.");
     }
 }

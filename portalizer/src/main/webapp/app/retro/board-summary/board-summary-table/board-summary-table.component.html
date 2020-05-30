@@ -8,6 +8,7 @@
             <th scope="col">
                 <fa-icon [icon]="faClock"></fa-icon> Created At
             </th>
+            <th scope="col">Created By</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
@@ -19,10 +20,14 @@
                     [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.title)]">{{columnDefinition.title}}</span>
             </td>
             <td><span class="badge badge-primary badge-pill">{{boardsummary.totalCards}} Cards</span></td>
-            <td> <button type="button" class="btn btn-link disabled">
+            <td><button type="button" class="btn btn-link disabled">
 
                     {{ boardsummary.createdAt | date: 'short' }}
                 </button></td>
+            <td>
+                <small>{{boardsummary.owner?.firstName}} {{boardsummary.owner?.lastName}}</small>
+                <img *ngIf="boardsummary.owner?.imageUrl" src="{{boardsummary.owner?.imageUrl}}" class="profile-image rounded-circle round-avatar">
+            </td>
             <td><a routerLink="{{boardsummary.id}}" class="btn btn-primary active">
                     <fa-icon [icon]="faEye"></fa-icon> View
                 </a>

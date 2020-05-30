@@ -157,11 +157,14 @@ jhipster:
 portalizer:
   demo:
     max-boards: 500
+    max-users: 80
     max-random-columns: 10
     max-cards-per-column: 10
     boards:
       # every day at 23:00
       refresh-cron: 0 0 23 * * ?
+    avatars:
+      base-url: https://s3-eu-west-1.amazonaws.com/portalizer.org/avatars/
 
 github:
   client:
