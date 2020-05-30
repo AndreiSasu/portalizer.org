@@ -163,6 +163,8 @@ portalizer:
     boards:
       # every day at 23:00
       refresh-cron: 0 0 23 * * ?
+    avatars:
+      base-url: https://s3-eu-west-1.amazonaws.com/portalizer.org/avatars/
 
 github:
   client:

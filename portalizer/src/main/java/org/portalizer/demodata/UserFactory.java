@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import org.portalizer.domain.User;
 import org.portalizer.service.UserService;
 import org.portalizer.service.dto.UserDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -14,9 +15,12 @@ public class UserFactory {
 
     private UserService userService;
     private Faker faker;
-    public UserFactory(Faker faker, UserService userService) {
+    private AvatarUrlProvider avatarUrlProvider;
+
+    public UserFactory(AvatarUrlProvider avatarUrlProvider, Faker faker, UserService userService) {
         this.userService = userService;
         this.faker = faker;
+        this.avatarUrlProvider = avatarUrlProvider;
     }
 
     public User newUser() {
@@ -31,7 +35,7 @@ public class UserFactory {
             .withSocialLogin(true)
             .withEmail(faker.internet().emailAddress())
             .withAuthorities(roles)
-            .withImageUrl(faker.avatar().image())
+            .withImageUrl(avatarUrlProvider.get())
             .build();
         return userService.createUser(userDTO);
     }
