@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         <tr class="table-light" *ngFor="let boardsummary of boardSummaries">
-            <th scope="row">{{boardsummary.name}}</th>
+            <th scope="row"><a style="color:black" routerLink="{{boardsummary.id}}">{{boardsummary.name}}<a></th>
             <td>{{boardsummary.description}}</td>
             <td><span *ngFor="let columnDefinition of boardsummary.columnDefinitions"
                     [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.title)]">{{columnDefinition.title}}</span>
@@ -25,8 +25,9 @@
                     {{ boardsummary.createdAt | date: 'short' }}
                 </button></td>
             <td>
+                <img *ngIf="boardsummary.owner?.imageUrl" src="{{boardsummary.owner?.imageUrl}}"
+                    class="profile-image rounded-circle round-avatar">
                 <small>{{boardsummary.owner?.firstName}} {{boardsummary.owner?.lastName}}</small>
-                <img *ngIf="boardsummary.owner?.imageUrl" src="{{boardsummary.owner?.imageUrl}}" class="profile-image rounded-circle round-avatar">
             </td>
             <td><a routerLink="{{boardsummary.id}}" class="btn btn-primary active">
                     <fa-icon [icon]="faEye"></fa-icon> View

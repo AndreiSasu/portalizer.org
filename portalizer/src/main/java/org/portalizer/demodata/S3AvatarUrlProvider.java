@@ -17,6 +17,6 @@ public class S3AvatarUrlProvider implements AvatarUrlProvider {
 
     @Override
     public String get() {
-        return baseUrl + faker.number().numberBetween(1, 100) + ".svg";
+        return baseUrl + faker.number().numberBetween(1, 180) + ".svg";
     }
 }
