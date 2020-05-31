@@ -8,4 +8,8 @@ if (module['hot']) {
   module['hot'].accept();
 }
 
-platformBrowserDynamic().bootstrapModule(PortalizerAppModule, { preserveWhitespaces: true });
+platformBrowserDynamic()
+  .bootstrapModule(PortalizerAppModule, { preserveWhitespaces: true })
+  // eslint-disable-next-line no-console
+  .then(success => console.log('Application started'))
+  .catch(err => console.error(err));
