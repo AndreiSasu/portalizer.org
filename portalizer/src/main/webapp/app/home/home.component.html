@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
 
         <div class="card">
             <div class="card-body">
@@ -35,7 +35,7 @@
         </div>
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
                 <span id="home-logged-message" *ngIf="account"> You are logged in as "{{account.firstName}}
@@ -48,21 +48,20 @@
                     This is a demo version and contains randomly generated boards and users to showcase all features.
                     <br><br>
 
-                    The data is wiped out and re-generated every day at 23:00 PM GMT. <br><br>
-
-                    If you are looking for a Docker container have a look at
-                    <a class="alert-link" href="https://hub.docker.com/repository/docker/andreisasu/portalizer">
-                        <fa-icon [icon]="faDocker" class="fa-2x"></fa-icon> Docker
-                        Hub
-                    </a>.
+                    The data is wiped out and re-generated every day at 23:00 PM GMT.
                 </span>&nbsp;
             </div>
+
+            <div class="alert alert-light">
+                If you are looking for a container to install in your own environment, have a look at
+                <a class="alert-link" href="https://hub.docker.com/repository/docker/andreisasu/portalizer">Docker Hub.
+                </a>
+                <br><br>
+                <span>If you like Portalizer, give it a star on</span> <a
+                    href="https://github.com/AndreiSasu/portalizer.org" target="_blank" rel="noopener noreferrer">GitHub.
+                </a>
+            </div>
         </div>
-        <p>
-            <span>If you like Portalizer, don't forget to give it a star on</span> <a
-                href="https://github.com/AndreiSasu/portalizer.org" target="_blank" rel="noopener noreferrer">
-                <fa-icon [icon]="faGithub" class="fa-2x"></fa-icon>GitHub
-            </a>!
-        </p>
+
     </div>
 </div>
