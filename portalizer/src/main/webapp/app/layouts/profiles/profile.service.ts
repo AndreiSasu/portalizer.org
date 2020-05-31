@@ -32,6 +32,7 @@ export class ProfileService {
               pi.registrationEnabled = pi.activeProfiles.includes('registration-enabled');
               pi.githubLoginEnabled = pi.activeProfiles.includes('github-login');
               pi.googleLoginEnabled = pi.activeProfiles.includes('google-login');
+              pi.insightsEnabled = pi.activeProfiles.includes('insights-enabled');
             }
             return pi;
           })
