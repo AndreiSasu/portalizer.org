@@ -11,6 +11,8 @@ import { single } from './data';
 import { faGithub, faDocker } from '@fortawesome/free-brands-svg-icons';
 import { colorSets } from '@swimlane/ngx-charts';
 
+import { InsightsService } from 'app/insights/insights.service';
+
 @Component({
   selector: 'jhi-home',
   templateUrl: './home.component.html',
@@ -31,7 +33,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   colorScheme: any;
   cardColor = '#FFFFFF';
 
-  constructor(private accountService: AccountService, private loginModalService: LoginModalService, private eventManager: JhiEventManager) {
+  constructor(
+    private accountService: AccountService,
+    private loginModalService: LoginModalService,
+    private insightsService: InsightsService,
+    private eventManager: JhiEventManager
+  ) {
     Object.assign(this, { single, colorSets });
     this.colorScheme = this.colorSets.find(s => s.name === 'vivid');
   }
