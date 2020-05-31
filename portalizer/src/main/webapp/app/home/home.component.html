@@ -1,41 +1,62 @@
 <div class="row">
-    <div class="col-md-2">
-        <span class="hipster img-fluid rounded"></span>
+    <div class="col-md-8">
+
+        <div class="card">
+            <div class="card-body">
+                <h1 class="display-4">Welcome to Portalizer!</h1>
+                <p class="lead">
+                    The project is an open-source Kanban-style list application and aims to be used for sprint
+                    retrospective,
+                    activity planning and task tracking.
+                </p>
+                <div class="alert alert-light">
+                    <strong>To start</strong>, <a routerLink="retro/boards" style="color: #343a40;">
+                        <fa-icon icon="chalkboard-teacher" class="fa-2x"></fa-icon> open the boards
+                    </a> or <a routerLink="retro/insights" style="color:#343a40;">
+                        <fa-icon icon="chart-line" class="fa-2x"></fa-icon> open insights
+                    </a> and feel
+                    free to poke around.
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <ngx-charts-number-card [scheme]="colorScheme" [results]="single" [cardColor]="cardColor"
+                    (select)="onSelect($event)">
+                </ngx-charts-number-card>
+            </div>
+        </div>
+
     </div>
-    <div class="col-md-9">
-
-        <h1 class="display-4">Welcome to Portalizer!</h1>
-        <p class="lead">
-            The project is an open-source Kanban-style list application and aims to be used for sprint retrospective,
-            activity planning and task tracking.
-        </p>
-
+    <div class="col-md-4">
         <div [ngSwitch]="isAuthenticated()">
             <div class="alert alert-success" *ngSwitchCase="true">
-                <span id="home-logged-message" *ngIf="account"> You are logged in as "{{account.firstName}} {{account.lastName}}". </span>
-            </div>
-
-            <div class="alert alert-light">
-                <strong>To start</strong>, <a routerLink="retro/boards">open the boards </a> and feel
-                free to poke around .
+                <span id="home-logged-message" *ngIf="account"> You are logged in as "{{account.firstName}}
+                    {{account.lastName}}". </span>
             </div>
 
             <div class="alert alert-info">
-                <span><fa-icon [icon]="faInfoCircle"></fa-icon> <b>Note: </b> <br>
-                    This is a demo version and contains randomly generated boards and users to showcase all features. <br>
+                <span>
+                    <fa-icon [icon]="faInfoCircle"></fa-icon> <b>Note: </b> <br>
+                    This is a demo version and contains randomly generated boards and users to showcase all features.
+                    <br>
 
-                    The data is wiped out re-generated every day at 23:00 PM GMT. <br><br>
+                    The data is wiped out and re-generated every day at 23:00 PM GMT. <br><br>
 
-                    If you are looking for a Docker container which you can deploy on your local network, have a look at
-                    <a class="alert-link" href="https://hub.docker.com/repository/docker/andreisasu/portalizer">Docker
-                        Hub</a>.
+                    If you are looking for a Docker container have a look at
+                    <a class="alert-link" href="https://hub.docker.com/repository/docker/andreisasu/portalizer">
+                        <fa-icon [icon]="faDocker" class="fa-2x"></fa-icon> Docker
+                        Hub
+                    </a>.
                 </span>&nbsp;
             </div>
         </div>
         <p>
             <span>If you like Portalizer, don't forget to give it a star on</span> <a
-                href="https://github.com/AndreiSasu/portalizer.org" target="_blank"
-                rel="noopener noreferrer">GitHub</a>!
+                href="https://github.com/AndreiSasu/portalizer.org" target="_blank" rel="noopener noreferrer">
+                <fa-icon [icon]="faGithub" class="fa-2x"></fa-icon>GitHub
+            </a>!
         </p>
     </div>
 </div>

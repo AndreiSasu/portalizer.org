@@ -7,6 +7,8 @@ import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { single } from './data';
+import { faGithub, faDocker } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'jhi-home',
@@ -18,12 +20,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   authSubscription: Subscription;
   modalRef: NgbModalRef;
   faInfoCircle = faInfoCircle;
+  faDocker = faDocker;
+  faGithub = faGithub;
 
-  constructor(
-    private accountService: AccountService,
-    private loginModalService: LoginModalService,
-    private eventManager: JhiEventManager
-  ) {}
+  single: any[];
+  view: any[] = [700, 400];
+
+  colorScheme = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
+  cardColor = '#FFFFFF';
+
+  constructor(private accountService: AccountService, private loginModalService: LoginModalService, private eventManager: JhiEventManager) {
+    Object.assign(this, { single });
+  }
 
   ngOnInit() {
     this.accountService.identity().then((account: Account) => {
