@@ -24,5 +24,6 @@
     "skipMetadataEmit": true,
     "fullTemplateTypeCheck": true,
     "preserveWhitespaces": true
-  }
+  },
+  "files": ["src/main/webapp/app/app.main.ts", "src/main/webapp/app/polyfills.ts"]
 }

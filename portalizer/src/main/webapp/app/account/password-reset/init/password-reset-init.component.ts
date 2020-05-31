@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, Renderer2, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { EMAIL_NOT_FOUND_TYPE } from 'app/shared/constants/error.constants';
@@ -19,12 +19,13 @@ export class PasswordResetInitComponent implements AfterViewInit {
   constructor(
     private passwordResetInitService: PasswordResetInitService,
     private elementRef: ElementRef,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private fb: FormBuilder
   ) {}
 
   ngAfterViewInit() {
-    this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#email'), 'focus', []);
+    const renderElement = this.elementRef.nativeElement.querySelector('#email');
+    (renderElement)['focus'].apply(renderElement, []);
   }
 
   requestReset() {
