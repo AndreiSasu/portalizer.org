@@ -25,6 +25,8 @@ import { BoardSummaryTableComponent } from './board-summary/board-summary-table/
 import { BoardDisplayContainerComponent } from './board-summary/board-display-container/board-display-container.component';
 import { InsightsComponent } from './insights/insights.component';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 @NgModule({
   declarations: [
     SortByPipe,
@@ -52,6 +54,7 @@ import { InsightsComponent } from './insights/insights.component';
     FormsModule,
     RetroRoutingModule,
     PortalizerSharedModule,
+    NgxChartsModule,
     DragulaModule.forRoot()
   ],
   entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent, AddColumnModalComponent, DeleteColumnModalComponent]

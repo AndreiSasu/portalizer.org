@@ -6,4 +6,5 @@ export class ProfileInfo {
   registrationEnabled: boolean;
   googleLoginEnabled: boolean;
   githubLoginEnabled: boolean;
+  insightsEnabled: boolean;
 }

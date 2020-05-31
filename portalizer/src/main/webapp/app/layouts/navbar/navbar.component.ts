@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
   languages: any[];
   swaggerEnabled: boolean;
   registrationEnabled: boolean;
+  insightsEnabled: boolean;
   modalRef: NgbModalRef;
   version: string;
   account: Account;
@@ -40,6 +41,7 @@ export class NavbarComponent implements OnInit {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
       this.registrationEnabled = profileInfo.registrationEnabled;
+      this.insightsEnabled = profileInfo.insightsEnabled;
     });
 
     this.accountService.identity().then((account: Account) => {
