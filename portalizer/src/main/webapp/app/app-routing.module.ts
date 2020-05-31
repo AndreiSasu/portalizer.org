@@ -22,6 +22,10 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           path: 'retro',
           loadChildren: () => import('./retro/retro.module').then(m => m.RetroModule)
         },
+        {
+          path: 'insights',
+          loadChildren: () => import('./insights/insights.module').then(m => m.InsightsModule)
+        },
         ...LAYOUT_ROUTES
       ],
       { enableTracing: DEBUG_INFO_ENABLED }
