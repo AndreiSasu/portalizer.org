@@ -23,9 +23,6 @@ import { BoardSummmaryControlsComponent } from './board-summary-controls/board-s
 import { HumanizePipe } from './humanize.pipe';
 import { BoardSummaryTableComponent } from './board-summary/board-summary-table/board-summary-table.component';
 import { BoardDisplayContainerComponent } from './board-summary/board-display-container/board-display-container.component';
-import { InsightsComponent } from './insights/insights.component';
-
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -44,8 +41,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     BoardSummmaryControlsComponent,
     HumanizePipe,
     BoardSummaryTableComponent,
-    BoardDisplayContainerComponent,
-    InsightsComponent
+    BoardDisplayContainerComponent
   ],
   imports: [
     FontAwesomeModule,
@@ -54,7 +50,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     FormsModule,
     RetroRoutingModule,
     PortalizerSharedModule,
-    NgxChartsModule,
     DragulaModule.forRoot()
   ],
   entryComponents: [CreateBoardModalComponent, DeleteConfirmationModalComponent, AddColumnModalComponent, DeleteColumnModalComponent]
