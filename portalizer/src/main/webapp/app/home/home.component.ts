@@ -9,6 +9,7 @@ import { Account } from 'app/core/user/account.model';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { single } from './data';
 import { faGithub, faDocker } from '@fortawesome/free-brands-svg-icons';
+import { colorSets } from '@swimlane/ngx-charts';
 
 @Component({
   selector: 'jhi-home',
@@ -24,15 +25,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   faGithub = faGithub;
 
   single: any[];
+  colorSets: any;
   view: any[] = [700, 400];
 
-  colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
-  };
+  colorScheme: any;
   cardColor = '#FFFFFF';
 
   constructor(private accountService: AccountService, private loginModalService: LoginModalService, private eventManager: JhiEventManager) {
-    Object.assign(this, { single });
+    Object.assign(this, { single, colorSets });
+    this.colorScheme = this.colorSets.find(s => s.name === 'vivid');
   }
 
   ngOnInit() {
