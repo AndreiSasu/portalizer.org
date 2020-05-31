@@ -7,6 +7,7 @@ import org.portalizer.service.dto.CounterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class CounterService {
         final long totalBoards = boardRepository.count();
         final long totalCards = informationCardRepository.count();
 
-        return Arrays.asList(new CounterDTO("Total Users", totalUsers),
-            new CounterDTO("Total Boards", totalBoards),
-            new CounterDTO("Total Cards", totalCards));
+        return Arrays.asList(new CounterDTO("Total users", totalUsers),
+            new CounterDTO("Total boards", totalBoards),
+            new CounterDTO("Total cards", totalCards));
     }
 }

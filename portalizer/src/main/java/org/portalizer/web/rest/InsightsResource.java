@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/retro/insights")
+@RequestMapping("/api/insights")
 public class InsightsResource {
 
     private CounterService counterService;

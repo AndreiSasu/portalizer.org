@@ -7,11 +7,11 @@ import { LoginModalService } from 'app/core/login/login-modal.service';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { single } from './data';
 import { faGithub, faDocker } from '@fortawesome/free-brands-svg-icons';
 import { colorSets } from '@swimlane/ngx-charts';
 
 import { InsightsService } from 'app/insights/insights.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-home',
@@ -26,9 +26,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   faDocker = faDocker;
   faGithub = faGithub;
 
-  single: any[];
+  counters: any[];
   colorSets: any;
-  view: any[] = [700, 400];
 
   colorScheme: any;
   cardColor = '#FFFFFF';
@@ -37,9 +36,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private loginModalService: LoginModalService,
     private insightsService: InsightsService,
-    private eventManager: JhiEventManager
+    private eventManager: JhiEventManager,
+    private router: Router
   ) {
-    Object.assign(this, { single, colorSets });
+    Object.assign(this, { colorSets });
     this.colorScheme = this.colorSets.find(s => s.name === 'vivid');
   }
 
@@ -48,6 +48,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.account = account;
     });
     this.registerAuthenticationSuccess();
+
+    this.insightsService.getCounters().then(counters => {
+      this.counters = counters;
+    });
   }
 
   registerAuthenticationSuccess() {
@@ -70,5 +74,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.authSubscription) {
       this.eventManager.destroy(this.authSubscription);
     }
+  }
+
+  onSelect(event: any) {
+    this.router.navigateByUrl('retro/boards');
   }
 }

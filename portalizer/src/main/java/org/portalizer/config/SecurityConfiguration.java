@@ -111,8 +111,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         .and()
             .authorizeRequests();
 
-            if(profiles.doesNotContain("enable-auth"))
+            if(profiles.doesNotContain("enable-auth")) {
                 urlRegistry.antMatchers("/api/retro/**").permitAll();
+                urlRegistry.antMatchers("/api/insights/**").permitAll();
+            }
 
             urlRegistry.antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/register").permitAll()

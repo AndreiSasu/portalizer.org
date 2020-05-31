@@ -12,17 +12,23 @@
                 <div class="alert alert-light">
                     <strong>To start</strong>, <a routerLink="retro/boards" style="color: #343a40;">
                         <fa-icon icon="chalkboard-teacher" class="fa-2x"></fa-icon> open the boards
+                    </a> and feel
+                    free to poke around.
+                </div>
+                <!-- <div class="alert alert-light">
+                    <strong>To start</strong>, <a routerLink="retro/boards" style="color: #343a40;">
+                        <fa-icon icon="chalkboard-teacher" class="fa-2x"></fa-icon> open the boards
                     </a> or <a routerLink="retro/insights" style="color:#343a40;">
                         <fa-icon icon="chart-line" class="fa-2x"></fa-icon> open insights
                     </a> and feel
                     free to poke around.
-                </div>
+                </div> -->
             </div>
         </div>
 
         <div class="card">
             <div class="card-body">
-                <ngx-charts-number-card [scheme]="colorScheme" [results]="single" [cardColor]="cardColor"
+                <ngx-charts-number-card [scheme]="colorScheme" [results]="counters" [cardColor]="cardColor"
                     (select)="onSelect($event)">
                 </ngx-charts-number-card>
             </div>
@@ -40,7 +46,7 @@
                 <span>
                     <fa-icon [icon]="faInfoCircle"></fa-icon> <b>Note: </b> <br>
                     This is a demo version and contains randomly generated boards and users to showcase all features.
-                    <br>
+                    <br><br>
 
                     The data is wiped out and re-generated every day at 23:00 PM GMT. <br><br>
 
