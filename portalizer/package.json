@@ -30,7 +30,7 @@
     "@swimlane/ngx-charts": "^14.0.0",
     "bootstrap": "^4.4.1",
     "core-js": "3.5.0",
-    "jquery": "^1.9.1",
+    "jquery": "^3.5.0",
     "moment": "2.24.0",
     "ng-jhipster": "^0.13.0",
     "ng2-dragula": "^2.1.1",
