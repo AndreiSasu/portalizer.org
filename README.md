@@ -68,7 +68,7 @@ MySQL is also available with the `mysql` spring profile.
 _You might need a mysql container up and running_:
 https://github.com/AndreiSasu/portalizer.org/tree/master/portalizer#using-docker-to-simplify-development-optional
 
-`docker run -e _JAVA_OPTIONS="-Dspring.profiles.active=prod,mysql" -e ADMIN_PASS=<admin_password> -e USER_PASS=<user_password> <container_id>`
+`docker run -e _JAVA_OPTIONS="-Dspring.profiles.active=prod,mysql" -e ADMIN_PASS=<admin_password> <container_id>`
 
 You can override the mysql user / password by specifying: `-Dspring.datasource.user=<username> -Dspring.datasource.password=<password>` and the url by specifying `-Dspring.datasource.url=jdbc:mysql://<hostname>:<port>/<schema>?option1=value1&option2=value2` if you need to.
 
