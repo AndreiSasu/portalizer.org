@@ -23,6 +23,7 @@ import { BoardSummmaryControlsComponent } from './board-summary-controls/board-s
 import { HumanizePipe } from './humanize.pipe';
 import { BoardSummaryTableComponent } from './board-summary/board-summary-table/board-summary-table.component';
 import { BoardDisplayContainerComponent } from './board-summary/board-display-container/board-display-container.component';
+import { InsightsComponent } from './insights/insights.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { BoardDisplayContainerComponent } from './board-summary/board-display-co
     BoardSummmaryControlsComponent,
     HumanizePipe,
     BoardSummaryTableComponent,
-    BoardDisplayContainerComponent
+    BoardDisplayContainerComponent,
+    InsightsComponent
   ],
   imports: [
     FontAwesomeModule,

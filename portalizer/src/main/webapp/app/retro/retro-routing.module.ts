@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { BoardSummaryComponent } from './board-summary/board-summary.component';
 import { BoardDetailsComponent } from './board-details/board-details.component';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { InsightsComponent } from './insights/insights.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,15 @@ const routes: Routes = [
     data: {
       authorities: [],
       pageTitle: 'Board Details'
+    }
+  },
+  {
+    path: 'insights',
+    component: InsightsComponent,
+    canActivate: [UserRouteAccessService],
+    data: {
+      authorities: [],
+      pageTitle: 'Board Insights'
     }
   }
 ];
