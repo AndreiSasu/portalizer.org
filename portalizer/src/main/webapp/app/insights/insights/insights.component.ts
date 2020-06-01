@@ -13,7 +13,8 @@ export class InsightsComponent implements OnInit {
     colorScheme: {
       domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
     },
-    cardColor: '#232837'
+    cardColor: '#232837',
+    onSelect: function onSelect(event: any) {}
   };
 
   treeMap = {
@@ -30,7 +31,8 @@ export class InsightsComponent implements OnInit {
 
     labelFormatting: function labelFormatting(c) {
       return `${c.label} Population`;
-    }
+    },
+    onSelect: function onSelect(event: any) {}
   };
 
   pieChart = {
@@ -46,7 +48,11 @@ export class InsightsComponent implements OnInit {
 
     colorScheme: {
       domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-    }
+    },
+
+    onSelect: function onSelect(event: any) {},
+    onActivate: function onActivate(event: any) {},
+    onDeactivate: function onDeactivate(event: any) {}
   };
 
   constructor() {}
