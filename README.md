@@ -110,7 +110,7 @@ https://console.developers.google.com/apis/credentials
 ## Changelog
 **1.0.3-RELEASE**
 
-Maintenance release, upgrading Angular 8 -> 9
+Maintenance release, upgrading Angular 8 -> 9 and Java 8 -> 11
 
 **1.0.2-RELEASE**
 
