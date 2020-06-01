@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-@Profile("prod")
+@Profile("demo")
 public class SetupDefaultUsers implements ApplicationRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(SetupDefaultUsers.class);
@@ -30,28 +30,16 @@ public class SetupDefaultUsers implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
 
         final String defaultAdminPass = Optional.ofNullable(environment.getProperty("ADMIN_PASS"))
             .orElseThrow(() -> new IllegalArgumentException("Cannot set default admin password, did you set ADMIN_PASS env variable?"));
 
-        final String defaultUserPass = Optional.ofNullable(environment.getProperty("USER_PASS"))
-            .orElseThrow(() -> new IllegalArgumentException("Cannot set default user password, did you set USER_PASS env variable?"));
-
         User admin = this.userRepository.findOneByLogin("admin").get();
-        if(!admin.getActivated()) {
-            admin.setActivated(true);
-            admin.setPassword(passwordEncoder.encode(defaultAdminPass));
-            userRepository.save(admin);
-            logger.info("Set admin password.");
-        }
+        admin.setActivated(true);
+        admin.setPassword(passwordEncoder.encode(defaultAdminPass));
+        userRepository.save(admin);
+        logger.info("Set admin password.");
 
-        User user = this.userRepository.findOneByLogin("user").get();
-        if(!user.getActivated()) {
-            user.setActivated(true);
-            user.setPassword(passwordEncoder.encode(defaultUserPass));
-            userRepository.save(user);
-            logger.info("Set user password.");
-        }
     }
 }

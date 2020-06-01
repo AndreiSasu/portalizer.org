@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, Renderer2, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
@@ -6,12 +6,17 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
-
+import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons';
 @Component({
   selector: 'jhi-login-modal',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
+  styleUrls: ['./login-component.scss']
 })
-export class JhiLoginModalComponent implements AfterViewInit {
+export class JhiLoginModalComponent implements OnInit, AfterViewInit {
+  faGithub = faGithub;
+  faGoogle = faGoogle;
+
   authenticationError: boolean;
 
   loginForm = this.fb.group({
@@ -20,19 +25,35 @@ export class JhiLoginModalComponent implements AfterViewInit {
     rememberMe: [false]
   });
 
+  registrationEnabled: boolean;
+  googleLoginEnabled: boolean;
+  githubLoginEnabled: boolean;
+
   constructor(
     private eventManager: JhiEventManager,
     private loginService: LoginService,
     private stateStorageService: StateStorageService,
     private elementRef: ElementRef,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private router: Router,
     public activeModal: NgbActiveModal,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private profileService: ProfileService
   ) {}
 
+  ngOnInit() {
+    this.profileService.getProfileInfo().then(profileInfo => {
+      this.registrationEnabled = profileInfo.registrationEnabled;
+      this.googleLoginEnabled = profileInfo.googleLoginEnabled;
+      this.githubLoginEnabled = profileInfo.githubLoginEnabled;
+    });
+  }
+
   ngAfterViewInit() {
-    setTimeout(() => this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#username'), 'focus', []), 0);
+    setTimeout(() => {
+      const renderElement = this.elementRef.nativeElement.querySelector('#username');
+      renderElement['focus'].apply(renderElement, []);
+    }, 0);
   }
 
   cancel() {

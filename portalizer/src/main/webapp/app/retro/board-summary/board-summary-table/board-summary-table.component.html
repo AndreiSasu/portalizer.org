@@ -8,22 +8,28 @@
             <th scope="col">
                 <fa-icon [icon]="faClock"></fa-icon> Created At
             </th>
+            <th scope="col">Created By</th>
             <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
         <tr class="table-light" *ngFor="let boardsummary of boardSummaries">
-            <th scope="row">{{boardsummary.name}}</th>
+            <th scope="row"><a style="color:black" routerLink="{{boardsummary.id}}">{{boardsummary.name}}<a></th>
             <td>{{boardsummary.description}}</td>
             <td><span *ngFor="let columnDefinition of boardsummary.columnDefinitions"
                     [ngClass]="['badge', 'badge-'+colorService.getColor(columnDefinition.title)]">{{columnDefinition.title}}</span>
             </td>
             <td><span class="badge badge-primary badge-pill">{{boardsummary.totalCards}} Cards</span></td>
-            <td> <button type="button" class="btn btn-link disabled">
+            <td><button type="button" class="btn btn-link disabled">
 
                     {{ boardsummary.createdAt | date: 'short' }}
                 </button></td>
-            <td><a href="retro/boards/{{boardsummary.id}}" class="btn btn-primary active">
+            <td>
+                <img *ngIf="boardsummary.owner?.imageUrl" src="{{boardsummary.owner?.imageUrl}}"
+                    class="profile-image rounded-circle round-avatar">
+                <small>{{boardsummary.owner?.firstName}} {{boardsummary.owner?.lastName}}</small>
+            </td>
+            <td><a routerLink="{{boardsummary.id}}" class="btn btn-primary active">
                     <fa-icon [icon]="faEye"></fa-icon> View
                 </a>
                 <button class="btn btn-secondary card-link" data-dismiss="modal"

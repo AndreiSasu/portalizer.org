@@ -1,0 +1,44 @@
+<ngx-charts-number-card
+  [view]="numberCard.view"
+  [scheme]="numberCard.colorScheme"
+  [results]="numberCard.single"
+  [cardColor]="numberCard.cardColor"
+  (select)="numberCard.onSelect($event)">
+</ngx-charts-number-card>
+
+
+<ngx-charts-tree-map
+  [view]="treeMap.view"
+  [scheme]="treeMap.colorScheme"
+  [results]="treeMap.single"
+  [gradient]="treeMap.gradient"
+  [animations]="treeMap.animations"
+  [labelFormatting]="treeMap.labelFormatting"
+  (select)="treeMap.onSelect($event)">
+</ngx-charts-tree-map>
+
+<ngx-charts-pie-chart
+  [view]="pieChart.view"
+  [scheme]="pieChart.colorScheme"
+  [results]="pieChart.single"
+  [gradient]="pieChart.gradient"
+  [legend]="pieChart.showLegend"
+  [legendPosition]="pieChart.legendPosition"
+  [labels]="pieChart.showLabels"
+  [doughnut]="pieChart.isDoughnut"
+  (select)="pieChart.onSelect($event)"
+  (activate)="pieChart.onActivate($event)"
+  (deactivate)="pieChart.onDeactivate($event)"
+  >
+</ngx-charts-pie-chart>
+
+<ngx-charts-advanced-pie-chart
+[view]="pieChart.view"
+[scheme]="pieChart.colorScheme"
+[results]="pieChart.single"
+[gradient]="pieChart.gradient"
+(select)="pieChart.onSelect($event)"
+(activate)="pieChart.onActivate($event)"
+(deactivate)="pieChart.onDeactivate($event)"
+>
+</ngx-charts-advanced-pie-chart>

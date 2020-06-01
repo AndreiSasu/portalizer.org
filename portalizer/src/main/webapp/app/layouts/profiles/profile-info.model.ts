@@ -3,4 +3,8 @@ export class ProfileInfo {
   ribbonEnv: string;
   inProduction: boolean;
   swaggerEnabled: boolean;
+  registrationEnabled: boolean;
+  googleLoginEnabled: boolean;
+  githubLoginEnabled: boolean;
+  insightsEnabled: boolean;
 }

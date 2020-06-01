@@ -29,6 +29,10 @@ export class ProfileService {
               }
               pi.inProduction = pi.activeProfiles.includes('prod');
               pi.swaggerEnabled = pi.activeProfiles.includes('swagger');
+              pi.registrationEnabled = pi.activeProfiles.includes('registration-enabled');
+              pi.githubLoginEnabled = pi.activeProfiles.includes('github-login');
+              pi.googleLoginEnabled = pi.activeProfiles.includes('google-login');
+              pi.insightsEnabled = pi.activeProfiles.includes('insights-enabled');
             }
             return pi;
           })

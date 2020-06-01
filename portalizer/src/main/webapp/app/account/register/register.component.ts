@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, Renderer, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Renderer2, ElementRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     private loginModalService: LoginModalService,
     private registerService: Register,
     private elementRef: ElementRef,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private fb: FormBuilder
   ) {}
 
@@ -39,7 +39,8 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#login'), 'focus', []);
+    const renderElement = this.elementRef.nativeElement.querySelector('#login');
+    [renderElement]['focus'].apply(renderElement, []);
   }
 
   register() {

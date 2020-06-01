@@ -8,7 +8,7 @@ import org.portalizer.service.dto.BoardDTO;
 
 import java.util.UUID;
 
-@Mapper(componentModel = "spring", uses = {ColumnDefinitionMapper.class, InformationCardMapper.class})
+@Mapper(componentModel = "spring", uses = {ColumnDefinitionMapper.class, UserMapper.class, InformationCardMapper.class})
 public interface BoardMapper extends EntityMapper<BoardDTO, Board> {
 
     @Override

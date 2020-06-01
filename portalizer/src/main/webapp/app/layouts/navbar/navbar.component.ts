@@ -7,6 +7,7 @@ import { AccountService } from 'app/core/auth/account.service';
 import { LoginModalService } from 'app/core/login/login-modal.service';
 import { LoginService } from 'app/core/login/login.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
+import { Account } from 'app/core/user/account.model';
 
 @Component({
   selector: 'jhi-navbar',
@@ -18,8 +19,11 @@ export class NavbarComponent implements OnInit {
   isNavbarCollapsed: boolean;
   languages: any[];
   swaggerEnabled: boolean;
+  registrationEnabled: boolean;
+  insightsEnabled: boolean;
   modalRef: NgbModalRef;
   version: string;
+  account: Account;
 
   constructor(
     private loginService: LoginService,
@@ -36,6 +40,12 @@ export class NavbarComponent implements OnInit {
     this.profileService.getProfileInfo().then(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
+      this.registrationEnabled = profileInfo.registrationEnabled;
+      this.insightsEnabled = profileInfo.insightsEnabled;
+    });
+
+    this.accountService.identity().then((account: Account) => {
+      this.account = account;
     });
   }
 

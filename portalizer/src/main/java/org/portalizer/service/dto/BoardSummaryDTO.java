@@ -12,6 +12,15 @@ public class BoardSummaryDTO implements Serializable {
     private LocalDateTime createdAt;
     private List<ColumnDefinitionDTO> columnDefinitions;
     private long totalCards;
+    private UserDTO owner;
+
+    public UserDTO getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserDTO owner) {
+        this.owner = owner;
+    }
 
     public UUID getId() {
         return id;

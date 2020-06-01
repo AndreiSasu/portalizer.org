@@ -52,6 +52,7 @@ export class AuthServerProvider {
   }
 
   logout(): Observable<any> {
+    this.http.post('logout', {}).subscribe(success => {}, error => {});
     return new Observable(observer => {
       this.$localStorage.clear('authenticationToken');
       this.$sessionStorage.clear('authenticationToken');

@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -89,6 +90,29 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    @NotNull
+    @Column(nullable = false)
+    private boolean socialLogin = false;
+
+    @OneToMany(targetEntity = Board.class, fetch = FetchType.LAZY, mappedBy = "owner")
+    private List<Board> boards;
+
+    public List<Board> getBoards() {
+        return boards;
+    }
+
+    public void setBoards(List<Board> boards) {
+        this.boards = boards;
+    }
+
+    public boolean isSocialLogin() {
+        return socialLogin;
+    }
+
+    public void setSocialLogin(boolean socialLogin) {
+        this.socialLogin = socialLogin;
+    }
 
     public Long getId() {
         return id;
