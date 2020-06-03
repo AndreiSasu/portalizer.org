@@ -48,7 +48,7 @@
 
 * [Spring Boot](https://spring.io/projects/spring-boot) 
 
-* [Angular 8](https://angular.io/)
+* [Angular 9](https://angular.io/)
 
 * [Bootstrap 4](https://getbootstrap.com/) 
 
