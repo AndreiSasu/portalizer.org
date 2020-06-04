@@ -12,10 +12,12 @@
 
 <table>
   <tr>
+     <td>Google / Github Login Window</td>
      <td>Boards Page</td>
      <td>Board Details</td>
   </tr>
   <tr>
+    <td><img src="screenshots/login.png" width=480 height=200></td>
     <td><img src="screenshots/screenshot1.png" width=480 height=200></td>
     <td><img src="screenshots/screenshot2.png" width=480 height=200></td>
   </tr>
