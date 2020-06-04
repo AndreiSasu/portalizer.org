@@ -52,18 +52,16 @@
                     plugins: [
                         SwaggerUIBundle.plugins.DownloadUrl
                     ],
+                    // https://github.com/jhipster/jhipster-registry/pull/405/files
+                    // https://github.com/springfox/springfox/issues/2708
+                    // TODO: migrate to springdoc: https://github.com/springdoc/springdoc-openapi
                     requestInterceptor: function (req) {
-                        axios.get("/management/info").then(function (response) {
-
-                            // working only with JWT authentication
-                            var authToken = JSON.parse(localStorage.getItem("jhi-authenticationtoken")
-                                || sessionStorage.getItem("jhi-authenticationtoken"));
-                            if (authToken) {
-                                console.log('hello');
-                                req.headers['Authorization'] = "Bearer " + authToken;
-                            }
-                            return req;
-                        });
+                        // working only with JWT authentication
+                        var authToken = JSON.parse(localStorage.getItem("jhi-authenticationtoken")
+                            || sessionStorage.getItem("jhi-authenticationtoken"));
+                        if (authToken) {
+                            req.headers['Authorization'] = "Bearer " + authToken;
+                        }
                         return req;
                     }
                 });
@@ -72,7 +70,6 @@
             });
 
         };
-
     </script>
 </body>
 
