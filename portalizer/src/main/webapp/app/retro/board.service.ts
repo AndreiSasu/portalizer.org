@@ -22,7 +22,6 @@ export class BoardService {
   BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards';
   BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/retro/boardtemplates/';
   BOARDS_SEARCH_LIGHT_URL = SERVER_API_URL + '/api/retro/boards/search/light';
-  BOARDS_SEARCH_HEAVY_URL = SERVER_API_URL + '/api/retro/boards/search/heavy';
 
   constructor(private http: HttpClient) {}
 
@@ -31,21 +30,21 @@ export class BoardService {
   }
 
   deleteColumn(columnDeleteRequest: ColumnDeleteRequest): Observable<any> {
-    return this.http.delete<any>(`${this.BOARDS_URL}${columnDeleteRequest.boardId}/delete-column/${columnDeleteRequest.columnId}`).pipe(
-      tap(_ => console.log(`deleted column  ${columnDeleteRequest.boardId}/delete-column/${columnDeleteRequest.columnId}`)),
+    return this.http.delete<any>(`${this.BOARDS_URL}${columnDeleteRequest.boardId}/columns/${columnDeleteRequest.columnId}`).pipe(
+      tap(_ => console.log(`deleted column  ${columnDeleteRequest.boardId}/columns/${columnDeleteRequest.columnId}`)),
       catchError(this.handleError<any>(`deleteColumn ${columnDeleteRequest.columnId}`))
     );
   }
 
   addColumn(boardId: string, columnAddRequest: ColumnAddRequest): Observable<BoardColumn> {
-    return this.http.post<BoardColumn>(this.BOARDS_URL + boardId + '/add-column', columnAddRequest, this.httpOptions).pipe(
+    return this.http.post<BoardColumn>(this.BOARDS_URL + boardId + '/columns', columnAddRequest, this.httpOptions).pipe(
       tap((newColumn: BoardColumn) => console.log(`added column w/ key=${newColumn.key}`)),
       catchError(this.handleError<BoardColumn>('addColumn'))
     );
   }
 
-  reorderColumns(boardId: string, updateColumnOrdering: ColumnsUpdateRequest): Observable<any> {
-    return this.http.put<any>(this.BOARDS_URL + boardId + '/reorder-columns', updateColumnOrdering, this.httpOptions).pipe(
+  reorderColumns(boardId: string, columnsUpdateRequest: ColumnsUpdateRequest): Observable<any> {
+    return this.http.put<any>(this.BOARDS_URL + boardId + '/columns', columnsUpdateRequest, this.httpOptions).pipe(
       tap(_ => console.log(`updated columns ${this.BOARDS_URL}${boardId}`)),
       catchError(this.handleError<any>(`updateColumnOrdering ${boardId}`))
     );
