@@ -12,32 +12,34 @@
 
 <table>
   <tr>
-     <td>Boards Page</td>
-     <td>Board Details</td>
+     <td>Login page</td>
+     <td>Boards page</td>
   </tr>
   <tr>
-    <td><img src="screenshots/screenshot1.png" width=480 height=200></td>
-    <td><img src="screenshots/screenshot2.png" width=480 height=200></td>
+    <td><img src="screenshots/login.png" width=480 height=200></td>
+    <td><img src="screenshots/boards.png" width=480 height=200></td>
   </tr>
  </table>
 
 
  <table>
   <tr>
-     <td>Drag and drop</td>
-     <td>Search</td>
+    <td>Board details page</td>
+    <td>Drag and drop cards and columns</td>
   </tr>
   <tr>
+    <td><img src="screenshots/board-details.png" width=480 height=200></td>
     <td><img src="screenshots/dragndrop.gif" width=480 height=200></td>
-    <td><img src="screenshots/search.gif" width=480 height=200></td>
   </tr>
  </table>
 
   <table>
   <tr>
-     <td>Custom Board</td>
+     <td>Search boards</td>
+     <td>Create custom board</td>
   </tr>
   <tr>
+    <td><img src="screenshots/search.gif" width=480 height=200></td>
     <td><img src="screenshots/custom_board.gif" width=480 height=200></td>
   </tr>
  </table>
