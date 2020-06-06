@@ -1,14 +1,15 @@
 package org.portalizer.service.impl;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.InformationCard;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.repository.InformationCardRepository;
 import org.portalizer.service.InformationCardService;
+import org.portalizer.service.dto.AddCardDTO;
 import org.portalizer.service.dto.InformationCardDTO;
 import org.portalizer.service.dto.ReorderCardDTO;
+import org.portalizer.service.dto.UpdateCardDTO;
 import org.portalizer.service.mapper.InformationCardMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -33,12 +34,14 @@ public class InformationCardServiceImpl implements InformationCardService {
     }
 
     @Override
-    public InformationCardDTO add(@Valid InformationCardDTO informationCardDTO) {
+    public InformationCardDTO add(@Valid AddCardDTO informationCardDTO) {
         final UUID boardId = informationCardDTO.getBoardId();
         validateBoardId(boardId);
 
-        final InformationCard toAdd = informationCardMapper.toEntity(informationCardDTO);
-        toAdd.setId(null);
+        final InformationCard toAdd = new InformationCard();
+        toAdd.setText(informationCardDTO.getText());
+        toAdd.setColumnKey(informationCardDTO.getColumnKey());
+        toAdd.setText(informationCardDTO.getText());
 
         final Board board = boardRepository.findById(boardId).get();
         toAdd.setBoard(board);
@@ -48,27 +51,24 @@ public class InformationCardServiceImpl implements InformationCardService {
     }
 
     @Override
-    public InformationCardDTO update(@Valid InformationCardDTO informationCardDTO) {
-        final UUID boardId = informationCardDTO.getBoardId();
-        final UUID cardId = informationCardDTO.getId();
+    public InformationCardDTO update(final UUID cardId, @Valid UpdateCardDTO updateCardDTO) {
+        final UUID boardId = updateCardDTO.getBoardId();
         validateCardId(cardId, boardId);
-        final InformationCard beforeUpdate = informationCardRepository.findById(cardId).get();
-        InformationCard informationCard = informationCardMapper.toEntity(informationCardDTO);
-        informationCard.setBoard(beforeUpdate.getBoard());
-        informationCard.setCreatedAt(beforeUpdate.getCreatedAt());
-        informationCard = informationCardRepository.save(informationCard);
-        return informationCardMapper.toDto(informationCard);
+        final InformationCard informationCard = informationCardRepository.findById(cardId).get();
+        informationCard.setColumnKey(updateCardDTO.getColumnKey());
+        informationCard.setText(updateCardDTO.getText());
+        return informationCardMapper.toDto(informationCardRepository.save(informationCard));
     }
 
     @Override
-    public InformationCardDTO reorder(@Valid ReorderCardDTO reorderCardDTO) {
-        final InformationCard informationCard = informationCardRepository.findById(reorderCardDTO.getId()).get();
+    public InformationCardDTO reorder(final UUID cardId, @Valid ReorderCardDTO reorderCardDTO) {
+        final InformationCard informationCard = informationCardRepository.findById(cardId).get();
         informationCard.setColumnKey(reorderCardDTO.getNewColumn());
         return  informationCardMapper.toDto(informationCardRepository.save(informationCard));
     }
 
     @Override
-    public void delete(UUID cardId) {
+    public void delete(final UUID cardId) {
         informationCardRepository.deleteById(cardId);
     }
 

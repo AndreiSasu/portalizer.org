@@ -17,28 +17,29 @@ export class InformationCardService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  CARDS_URL = SERVER_API_URL + '/api/retro/information-card/';
-  REORDER_CARDS_URL = SERVER_API_URL + '/api/retro/information-card/reorder';
+  CARDS_URL = SERVER_API_URL + '/api/retro/cards/';
 
   constructor(private http: HttpClient) {}
 
-  addCard(createCardRequest: CreateCardRequest): Observable<InformationCard> {
+  createCard(createCardRequest: CreateCardRequest): Observable<InformationCard> {
     return this.http
       .post<InformationCard>(this.CARDS_URL, createCardRequest, this.httpOptions)
       .pipe(tap((newCard: InformationCard) => console.log(`added card w/ id=${newCard.id}`)));
   }
+
   removeCard(id: string): Observable<any> {
     return this.http.delete(this.CARDS_URL + id).pipe(tap(response => console.log(response)));
   }
-  updateCard(updateCardRequest: UpdateCardRequest): Observable<InformationCard> {
+
+  updateCard(cardId: string, updateCardRequest: UpdateCardRequest): Observable<InformationCard> {
     return this.http
-      .put<InformationCard>(this.CARDS_URL, updateCardRequest, this.httpOptions)
+      .put<InformationCard>(`${this.CARDS_URL}/${cardId}`, updateCardRequest, this.httpOptions)
       .pipe(tap((updateCard: InformationCard) => console.log(`updated card w/ id=${updateCard.id}`)));
   }
 
-  moveCard(reorderCardRequest: ReorderCardRequest): Observable<InformationCard> {
+  reorderCard(cardId: string, reorderCardRequest: ReorderCardRequest): Observable<InformationCard> {
     return this.http
-      .put<InformationCard>(this.REORDER_CARDS_URL, reorderCardRequest, this.httpOptions)
+      .put<InformationCard>(`${this.CARDS_URL}${cardId}/reorder`, reorderCardRequest, this.httpOptions)
       .pipe(tap((updateCard: InformationCard) => console.log(`updated card w/ id=${updateCard.id}`)));
   }
 }

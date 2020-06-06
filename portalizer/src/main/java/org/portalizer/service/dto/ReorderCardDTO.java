@@ -3,19 +3,10 @@ package org.portalizer.service.dto;
 import java.util.UUID;
 
 public class ReorderCardDTO {
-    private UUID id;
     private int oldIndex;
     private int newIndex;
     private UUID oldColumn;
     private UUID newColumn;
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public int getOldIndex() {
         return oldIndex;
