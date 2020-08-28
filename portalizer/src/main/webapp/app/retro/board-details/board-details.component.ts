@@ -77,6 +77,10 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     this.cardStorageService.initBoardStorageIfNecessary(this.boardId);
     this.refreshBoard();
 
+    if (this.dragulaService.find('COLUMNS')) {
+      this.dragulaService.destroy('COLUMNS');
+    }
+
     this.dragulaService.createGroup('COLUMNS', {
       direction: 'horizontal',
       moves: (el, source, handle: any) => {
