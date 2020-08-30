@@ -33,7 +33,7 @@ export class InformationCardService {
 
   updateCard(cardId: string, updateCardRequest: UpdateCardRequest): Observable<InformationCard> {
     return this.http
-      .put<InformationCard>(`${this.CARDS_URL}/${cardId}`, updateCardRequest, this.httpOptions)
+      .put<InformationCard>(`${this.CARDS_URL}${cardId}`, updateCardRequest, this.httpOptions)
       .pipe(tap((updateCard: InformationCard) => console.log(`updated card w/ id=${updateCard.id}`)));
   }
 
