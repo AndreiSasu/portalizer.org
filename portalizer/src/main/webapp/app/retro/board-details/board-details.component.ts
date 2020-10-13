@@ -128,7 +128,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
             targetBoardColumnVM.key
           );
 
-          this.informationCardService.moveCard(reorderCardRequest).subscribe(success => {
+          this.informationCardService.reorderCard(card.id, reorderCardRequest).subscribe(success => {
             sourceBoardColumnVM.informationCards = [
               ...sourceBoardColumnVM.informationCards.filter(informationCard => informationCard.id != cardId)
             ];
@@ -239,7 +239,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     createCardRequest.columnKey = informationCardVM.columnKey;
     createCardRequest.text = informationCardVM.text;
 
-    this.informationCardService.addCard(createCardRequest).subscribe(
+    this.informationCardService.createCard(createCardRequest).subscribe(
       informationCard => {
         console.log(informationCard);
         const boardColumnVM = this.columnAndCards.get(informationCard.columnKey);
@@ -268,7 +268,7 @@ export class BoardDetailsComponent implements OnInit, OnDestroy {
     updateCardRequest.text = informationCardVM.text;
     updateCardRequest.columnKey = informationCardVM.columnKey;
 
-    this.informationCardService.updateCard(updateCardRequest).subscribe(
+    this.informationCardService.updateCard(informationCardVM.id, updateCardRequest).subscribe(
       updatedCard => {
         console.log(updatedCard);
         const boardColumnVM = this.columnAndCards.get(updatedCard.columnKey);

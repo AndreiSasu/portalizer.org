@@ -11,7 +11,9 @@ import org.portalizer.domain.InformationCard;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.repository.InformationCardRepository;
 import org.portalizer.service.InformationCardService;
+import org.portalizer.service.dto.AddCardDTO;
 import org.portalizer.service.dto.InformationCardDTO;
+import org.portalizer.service.dto.UpdateCardDTO;
 import org.portalizer.service.mapper.InformationCardMapper;
 import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +47,9 @@ public class InformationCardServiceTest {
     }
 
     @Test
-    public void testInformationCardDTOValidation() {
-        InformationCardDTO informationCardDTO = new InformationCardDTO();
-        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.add(informationCardDTO));
+    public void testAddCardDTOValidation() {
+        AddCardDTO addCardDTO = new AddCardDTO();
+        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.add(addCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("boardId")
             .hasMessageContaining("columnKey")
@@ -56,51 +58,51 @@ public class InformationCardServiceTest {
 
     @Test
     public void testExceptionThrownIfBoardIdNotFoundForCreate() {
-        InformationCardDTO informationCardDTO = new InformationCardDTO();
-        informationCardDTO.setColumnKey(UUID.randomUUID());
-        informationCardDTO.setText("Test");
+        AddCardDTO addCardDTO = new AddCardDTO();
+        addCardDTO.setColumnKey(UUID.randomUUID());
+        addCardDTO.setText("Test");
 
         final UUID doesNotExist = UUID.randomUUID();
-        informationCardDTO.setBoardId(doesNotExist);
+        addCardDTO.setBoardId(doesNotExist);
 
-        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.add(informationCardDTO));
+        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.add(addCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
             .hasMessageContaining(String.format("Board with id: %s does not exist!", doesNotExist));
     }
 
     @Test
     public void testExceptionThrownIfCardIdNotFoundForUpdate() {
-        InformationCardDTO informationCardDTO = new InformationCardDTO();
-        informationCardDTO.setBoardId(savedBoard.getId());
-        informationCardDTO.setColumnKey(UUID.randomUUID());
-        informationCardDTO.setText("Some text");
-
-        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(informationCardDTO));
+        UpdateCardDTO updateCardDTO = new UpdateCardDTO();
+        updateCardDTO.setBoardId(savedBoard.getId());
+        updateCardDTO.setColumnKey(UUID.randomUUID());
+        updateCardDTO.setText("Some text");
+        final UUID cardId = UUID.randomUUID();
+        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(cardId, updateCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
-            .hasMessageContaining(String.format("Board with board id: %s and card id: %s does not exist!", informationCardDTO.getBoardId(),
-                informationCardDTO.getId()));
+            .hasMessageContaining(String.format("Board with board id: %s and card id: %s does not exist!", updateCardDTO.getBoardId(),
+                cardId));
     }
 
     @Test
     public void testExceptionThrownIfBoardIdNotFoundForUpdate() {
-        InformationCardDTO informationCardDTO = new InformationCardDTO();
-        informationCardDTO.setColumnKey(UUID.randomUUID());
-        informationCardDTO.setText("Some text");
+        UpdateCardDTO updateCardDTO = new UpdateCardDTO();
+        updateCardDTO.setColumnKey(UUID.randomUUID());
+        updateCardDTO.setText("Some text");
         final UUID doesNotExist = UUID.randomUUID();
-        informationCardDTO.setBoardId(doesNotExist);
-
-        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(informationCardDTO));
+        updateCardDTO.setBoardId(doesNotExist);
+        final UUID cardId = UUID.randomUUID();
+        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(cardId, updateCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
-            .hasMessageContaining(String.format("Board with board id: %s and card id: %s does not exist!", informationCardDTO.getBoardId(),
-                informationCardDTO.getId()));
+            .hasMessageContaining(String.format("Board with board id: %s and card id: %s does not exist!", updateCardDTO.getBoardId(),
+                cardId));
     }
 
     @Test
     public void testExceptionThrownAddIfBoardDoesNotHaveColumnKey() {
-        InformationCardDTO informationCardDTO = new InformationCardDTO();
-        informationCardDTO.setText("Some text");
-        informationCardDTO.setBoardId(savedBoard.getId());
-        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.add(informationCardDTO));
+        AddCardDTO addCardDTO = new AddCardDTO();
+        addCardDTO.setText("Some text");
+        addCardDTO.setBoardId(savedBoard.getId());
+        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.add(addCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
             .hasMessageContaining("columnKey");
     }
@@ -108,9 +110,11 @@ public class InformationCardServiceTest {
     @Test
     public void testExceptionThrownUpdateIfBoardDoesNotHaveColumnKey() {
         final InformationCard informationCard = savedBoard.getInformationCards().get(0);
-        final InformationCardDTO informationCardDTO = informationCardMapper.toDto(informationCard);
-        informationCardDTO.setColumnKey(null);
-        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(informationCardDTO));
+        final UpdateCardDTO updateCardDTO = new UpdateCardDTO();
+        updateCardDTO.setColumnKey(null);
+        updateCardDTO.setBoardId(informationCard.getBoard().getId());
+        updateCardDTO.setText(informationCard.getText());
+        final Throwable throwable = Assertions.catchThrowable(() -> informationCardService.update(UUID.randomUUID(), updateCardDTO));
         Assertions.assertThat(throwable).isInstanceOf(ValidationException.class)
             .hasMessageContaining("columnKey");
     }
@@ -118,11 +122,13 @@ public class InformationCardServiceTest {
     @Test
     public void testUpdateExistingInformationCardHappyPath() {
         final InformationCard beforeUpdate = savedBoard.getInformationCards().get(0);
-        final InformationCardDTO informationCardDTO = informationCardMapper.toDto(beforeUpdate);
-        informationCardDTO.setText("This has changed");
-        informationCardService.update(informationCardDTO);
+        final UpdateCardDTO updateCardDTO = new UpdateCardDTO();
+        updateCardDTO.setText("This has changed");
+        updateCardDTO.setBoardId(beforeUpdate.getBoard().getId());
+        updateCardDTO.setColumnKey(beforeUpdate.getColumnKey());
+        informationCardService.update(beforeUpdate.getId(), updateCardDTO);
 
-        final InformationCard afterUpdate = informationCardRepository.findById(informationCardDTO.getId()).get();
+        final InformationCard afterUpdate = informationCardRepository.findById(beforeUpdate.getId()).get();
         Assertions.assertThat(afterUpdate.getText()).isEqualTo("This has changed");
         Assertions.assertThat(afterUpdate.getCreatedAt()).isEqualTo(beforeUpdate.getCreatedAt());
         Assertions.assertThat(afterUpdate.getUpdatedAt()).isAfter(beforeUpdate.getUpdatedAt());
@@ -144,7 +150,7 @@ public class InformationCardServiceTest {
     @Test
     public void testAddInformationCardHappyPath() {
         final UUID columnKey = UUID.randomUUID();
-        final InformationCardDTO toAdd = new InformationCardDTO();
+        final AddCardDTO toAdd = new AddCardDTO();
         toAdd.setBoardId(savedBoard.getId());
         toAdd.setText("Added text");
         toAdd.setColumnKey(columnKey);

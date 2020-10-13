@@ -67,7 +67,7 @@ public class BoardResource {
             "board", id.toString())).build();
     }
 
-    @PutMapping("/boards/{id}/reorder-columns")
+    @PutMapping("/boards/{id}/columns")
     public ResponseEntity<Void> reorderColumns(@PathVariable UUID id, @RequestBody ReorderColumnsDTO reorderColumnsDTO) {
         final BoardDTO boardDTO = boardService.reorderColumns(id, reorderColumnsDTO);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert("",
@@ -75,13 +75,13 @@ public class BoardResource {
             "board", boardDTO.getId().toString())).build();
     }
 
-    @PostMapping("/boards/{id}/add-column")
+    @PostMapping("/boards/{id}/columns")
     public ResponseEntity<ColumnDefinitionDTO> addColumn(@PathVariable UUID id, @RequestBody AddColumnDTO addColumnDTO) {
         final ColumnDefinitionDTO columnDefinitionDTO = boardService.addColumn(id, addColumnDTO);
         return new ResponseEntity<>(columnDefinitionDTO, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/boards/{boardId}/delete-column/{columnKey}")
+    @DeleteMapping("/boards/{boardId}/columns/{columnKey}")
     public ResponseEntity<Void> deleteColumn(@PathVariable UUID boardId, @PathVariable UUID columnKey) {
         boardService.removeColumn(boardId, columnKey);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert("",
