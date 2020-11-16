@@ -20,8 +20,8 @@ export class BoardService {
 
   BOARDS_URL = SERVER_API_URL + '/api/retro/boards/';
   BOARDS_PAGING_URL = SERVER_API_URL + '/api/retro/boards';
-  BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/retro/boardtemplates/';
-  BOARDS_SEARCH_LIGHT_URL = SERVER_API_URL + '/api/retro/boards/search/light';
+  BOARD_TEMPLATES_URL = SERVER_API_URL + '/api/retro/board-templates';
+  BOARDS_SEARCH_LIGHT_URL = SERVER_API_URL + '/api/retro/board-projections';
 
   constructor(private http: HttpClient) {}
 
