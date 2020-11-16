@@ -18,7 +18,7 @@ public class BoardTemplateResource {
         this.boardTemplateService = boardTemplateService;
     }
 
-    @GetMapping("/boardtemplates")
+    @GetMapping("/board-templates")
     public List<BoardTemplateDTO> getBoardTemplates() {
         return this.boardTemplateService.getBoardTemplates();
     }
