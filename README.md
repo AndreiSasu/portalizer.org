@@ -1,4 +1,4 @@
-# <img src="screenshots/logo.png" width="50"/> Portalizer
+# <img src="img/logo.png" width="50"/> Portalizer
 
 ### The project is an open-source Kanban-style list application and aims to be used for sprint retrospective, activity planning and task tracking.
 
@@ -16,8 +16,8 @@
      <td>Boards page</td>
   </tr>
   <tr>
-    <td><img src="screenshots/login.png" width=480 height=200></td>
-    <td><img src="screenshots/boards.png" width=480 height=200></td>
+    <td><img src="img/login.png" width=480 height=200></td>
+    <td><img src="img/boards.png" width=480 height=200></td>
   </tr>
  </table>
 
@@ -28,8 +28,8 @@
     <td>Drag and drop cards and columns</td>
   </tr>
   <tr>
-    <td><img src="screenshots/board-details.png" width=480 height=200></td>
-    <td><img src="screenshots/dragndrop.gif" width=480 height=200></td>
+    <td><img src="img/board-details.png" width=480 height=200></td>
+    <td><img src="img/dragndrop.gif" width=480 height=200></td>
   </tr>
  </table>
 
@@ -39,8 +39,8 @@
      <td>Create custom board</td>
   </tr>
   <tr>
-    <td><img src="screenshots/search.gif" width=480 height=200></td>
-    <td><img src="screenshots/custom_board.gif" width=480 height=200></td>
+    <td><img src="img/search.gif" width=480 height=200></td>
+    <td><img src="img/custom_board.gif" width=480 height=200></td>
   </tr>
  </table>
 
@@ -168,6 +168,16 @@ Initial version
    - Support for adding / removing board columns
    - Drag and drop support for cards and board columns
    - Search boards by Name and Description.
+
+## API Diagram:
+<table>
+  <tr>
+    <td>REST endpoints and DTOs</td>
+  </tr>
+  <tr>
+    <td><img src="img/api_diagram.svg" width=960 height=400></td>
+  </tr>
+ </table>
 
 ## TODO:
  - WebSocket support to broadcast all board/card events to connected users.
