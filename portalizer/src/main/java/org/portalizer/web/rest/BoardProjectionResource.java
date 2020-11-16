@@ -13,16 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/retro/boards/search")
-public class BoardSearchResource {
+@RequestMapping("/api/retro/board-projections")
+public class BoardProjectionResource {
 
     private BoardService boardService;
 
-    public BoardSearchResource(BoardService boardService) {
+    public BoardProjectionResource(BoardService boardService) {
         this.boardService = boardService;
     }
 
-    @GetMapping("/light")
+    @GetMapping
     public ResponseEntity<List<BoardProjectionDTO>> getBoardProjections(@RequestParam(required = true) final String fieldName, @RequestParam(required = true) final String search) {
         return new ResponseEntity<>(boardService.search(fieldName, search), HttpStatus.OK);
     }
