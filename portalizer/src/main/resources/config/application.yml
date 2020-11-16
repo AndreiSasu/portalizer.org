@@ -123,14 +123,14 @@ info:
 jhipster:
   clientApp:
     name: 'portalizerApp'
-  # By default CORS is disabled. Uncomment to enable.
-  # cors:
-  #     allowed-origins: "*"
-  #     allowed-methods: "*"
-  #     allowed-headers: "*"
-  #     exposed-headers: "Authorization,Link,X-Total-Count"
-  #     allow-credentials: true
-  #     max-age: 1800
+  # CORS needed for websocket support
+  cors:
+    allowed-origins: 'https://portalizer.org'
+    allowed-methods: '*'
+    allowed-headers: '*'
+    exposed-headers: 'Authorization,Link,X-Total-Count'
+    allow-credentials: true
+    max-age: 1800
   mail:
     from: portalizer@localhost
   swagger:
