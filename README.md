@@ -172,12 +172,14 @@ Initial version
 ## API Diagram:
 <table>
   <tr>
-    <td>REST endpoints and DTOs</td>
+    <td>REST endpoints and DTOs  <a href="https://raw.githubusercontent.com/AndreiSasu/portalizer.org/master/img/api_diagram.svg">full size version</a>.</td>
   </tr>
   <tr>
     <td><img src="img/api_diagram.svg" width=960 height=400></td>
   </tr>
  </table>
+ 
+Generated using [Swagger to UML](https://github.com/nlohmann/swagger_to_uml)
 
 ## TODO:
  - WebSocket support to broadcast all board/card events to connected users.
