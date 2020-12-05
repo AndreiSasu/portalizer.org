@@ -1,0 +1,30 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="andrei (generated)" id="1607193484013-1">
+        <createTable tableName="board_template">
+            <column name="id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="title" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1607193484013-2">
+        <createTable tableName="board_template_column_definition">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="board_template_column_definitionPK"/>
+            </column>
+            <column name="priority" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="board_template_id" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1607193484013-3">
+        <addPrimaryKey columnNames="id" constraintName="board_templatePK" tableName="board_template"/>
+    </changeSet>
+    <changeSet author="andrei (generated)" id="1607193484013-4">
+        <addForeignKeyConstraint baseColumnNames="board_template_id" baseTableName="board_template_column_definition" constraintName="FK8gjf9oqm8cg60ooefc50xsyab" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="board_template"/>
+    </changeSet>
+</databaseChangeLog>
