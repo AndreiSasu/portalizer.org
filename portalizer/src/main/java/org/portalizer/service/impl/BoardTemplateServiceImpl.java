@@ -1,7 +1,6 @@
 package org.portalizer.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.portalizer.domain.ColumnType;
 import org.portalizer.service.BoardTemplateService;
 import org.portalizer.service.dto.BoardTemplateDTO;
 import org.portalizer.service.dto.ColumnDefinitionDTO;

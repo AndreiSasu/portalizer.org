@@ -7,14 +7,12 @@ import org.junit.jupiter.api.TestInstance;
 import org.portalizer.PortalizerApp;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
-import org.portalizer.domain.ColumnType;
 import org.portalizer.domain.InformationCard;
 import org.portalizer.utils.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.SortedSet;
 import java.util.UUID;
 
 @SpringBootTest(classes = PortalizerApp.class)

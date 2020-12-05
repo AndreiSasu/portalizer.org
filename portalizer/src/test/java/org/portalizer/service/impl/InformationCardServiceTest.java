@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.portalizer.PortalizerApp;
 import org.portalizer.domain.Board;
-import org.portalizer.domain.ColumnType;
 import org.portalizer.domain.InformationCard;
 import org.portalizer.repository.BoardRepository;
 import org.portalizer.repository.InformationCardRepository;
