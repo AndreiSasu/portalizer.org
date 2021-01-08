@@ -1,4 +1,4 @@
-package org.portalizer;
+package org.portalizer.setup;
 
 import org.portalizer.domain.User;
 import org.portalizer.repository.UserRepository;

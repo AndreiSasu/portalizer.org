@@ -5,7 +5,7 @@
             <column name="id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="description" type="VARCHAR(255)"/>
+            <column name="description" type="VARCHAR(2048)"/>
             <column name="title" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>

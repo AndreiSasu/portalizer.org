@@ -1,14 +1,13 @@
 package org.portalizer.utils;
 
 import com.github.javafaker.Faker;
+import org.portalizer.setup.DefaultBoardTemplates;
 import org.portalizer.domain.Board;
 import org.portalizer.domain.ColumnDefinition;
 import org.portalizer.domain.InformationCard;
-import org.portalizer.service.BoardTemplateService;
 import org.portalizer.service.dto.BoardTemplateDTO;
-import org.portalizer.service.impl.BoardTemplateServiceImpl;
-import org.portalizer.service.mapper.ColumnDefinitionMapper;
-import org.portalizer.service.mapper.ColumnDefinitionMapperImpl;
+import org.portalizer.service.mapper.ColumnDefinitionTemplateMapper;
+import org.portalizer.service.mapper.ColumnDefinitionTemplateMapperImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +51,9 @@ public class EntityUtils {
     }
 
     public static List<ColumnDefinition> buildRandomColumnDefinitionsFromTemplate(final Board board) {
-        final BoardTemplateService boardTemplateService = new BoardTemplateServiceImpl();
-        final ColumnDefinitionMapper columnDefinitionMapper = new ColumnDefinitionMapperImpl();
-        final int size = boardTemplateService.getBoardTemplates().size();
-        final BoardTemplateDTO boardTemplateDTO = boardTemplateService.getBoardTemplates().get(new Random().nextInt(size));
+        final ColumnDefinitionTemplateMapper columnDefinitionMapper = new ColumnDefinitionTemplateMapperImpl();
+        final int size = DefaultBoardTemplates.get().size();
+        final BoardTemplateDTO boardTemplateDTO = DefaultBoardTemplates.get().get(new Random().nextInt(size));
         final List<ColumnDefinition> columnDefinitions = columnDefinitionMapper.toEntity(boardTemplateDTO.getBoardColumns());
         columnDefinitions.forEach(columnDefinition -> columnDefinition.setBoard(board));
         return columnDefinitions;

@@ -154,5 +154,20 @@ public class BoardRepositoryTest {
         });
     }
 
+    @Test
+    public void testColumnKeySavedWhenPersistingColumnDefinition() {
+        final Board board = new Board();
+        board.setName("test name");
+        final ColumnDefinition columnDefinition = new ColumnDefinition();
+        columnDefinition.setTitle("test title");
+        columnDefinition.setBoard(board);
+        board.setColumnDefinitions(List.of(columnDefinition));
+        final UUID boardId = this.boardRepository.save(board).getId();
+
+        this.boardRepository.findFullBoardById(boardId).get().getColumnDefinitions().forEach(savedColumnDefinition -> {
+            Assertions.assertThat(savedColumnDefinition.getKey()).isNotNull();
+        });
+    }
+
 
 }

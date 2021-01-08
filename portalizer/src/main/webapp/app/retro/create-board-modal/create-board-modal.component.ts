@@ -13,7 +13,7 @@ import { CommunicationService } from '../communication.service';
 export class CreateBoardModalComponent implements OnInit {
   formModel = {
     boardName: '',
-    templateKey: '',
+    templateTitle: '',
     description: ''
   };
 
@@ -31,16 +31,16 @@ export class CreateBoardModalComponent implements OnInit {
   }
 
   formModelToRequest(formModel: any): CreateBoardRequest {
-    const key = formModel.templateKey;
+    const title = formModel.templateTitle;
     const columnDefinitions: BoardColumn[] = this.boardTemplates.filter(boardTemplate => {
-      return boardTemplate.key === key;
+      return boardTemplate.title === title;
     })[0].boardColumns;
     return new CreateBoardRequest(formModel.boardName, formModel.description, columnDefinitions);
   }
 
   onSelect(boardName: string) {
     const boardTemplate = this.boardTemplates.filter(b => {
-      return b.key === boardName;
+      return b.title === boardName;
     })[0];
     this.currentDescription = boardTemplate.description;
   }

@@ -1,4 +1,4 @@
-package org.portalizer;
+package org.portalizer.setup;
 
 
 import javax.persistence.*;

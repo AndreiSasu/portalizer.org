@@ -96,4 +96,11 @@ public class ColumnDefinition {
             '}';
     }
 
+    @PrePersist
+    public void prePersist() {
+        if(null == key) {
+            this.key = UUID.randomUUID();
+        }
+    }
+
 }

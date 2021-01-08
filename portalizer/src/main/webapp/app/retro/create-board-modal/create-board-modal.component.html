@@ -9,7 +9,7 @@
 
     <div class="toast show" *ngIf="currentDescription" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
-            <strong class="mr-auto">{{formModel.templateKey}}</strong>
+            <strong class="mr-auto">{{formModel.templateTitle}}</strong>
         </div>
         <div class="toast-body">
             {{currentDescription}}
@@ -30,10 +30,10 @@
 
             <div class="form-group">
                 <select class="custom-select" (change)="onSelect($event.target.value)"
-                    [(ngModel)]="formModel.templateKey" name="templateKey" required>
+                    [(ngModel)]="formModel.templateTitle" name="templateTitle" required>
                     <option value="" selected disabled hidden>Choose Board template</option>
                     <option *ngFor="let boardTemplate of boardTemplates">
-                        {{boardTemplate.key}} </option>
+                        {{boardTemplate.title}} </option>
                 </select>
             </div>
 

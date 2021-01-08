@@ -3,12 +3,12 @@ package org.portalizer.service.dto;
 import java.util.List;
 
 public class BoardTemplateDTO {
-    private String key;
-    private List<ColumnDefinitionDTO> boardColumns;
+    private String title;
+    private List<BoardTemplateColumnDefinitionDTO> boardColumns;
     private String description;
 
-    public BoardTemplateDTO(String key, List<ColumnDefinitionDTO> boardColumns, String description) {
-        this.key = key;
+    public BoardTemplateDTO(String title, List<BoardTemplateColumnDefinitionDTO> boardColumns, String description) {
+        this.title = title;
         this.boardColumns = boardColumns;
         this.description = description;
     }
@@ -17,11 +17,11 @@ public class BoardTemplateDTO {
         return description;
     }
 
-    public String getKey() {
-        return key;
+    public String getTitle() {
+        return title;
     }
 
-    public List<ColumnDefinitionDTO> getBoardColumns() {
+    public List<BoardTemplateColumnDefinitionDTO> getBoardColumns() {
         return boardColumns;
     }
 }

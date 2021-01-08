@@ -16,7 +16,7 @@ export class Board extends BoardSummary {
 }
 
 export class BoardTemplate {
-  constructor(public key: string, public boardColumns: Array<BoardColumn>, public description?: string) {}
+  constructor(public title: string, public boardColumns: Array<BoardColumn>, public description?: string) {}
 }
 
 export class CreateBoardRequest {
